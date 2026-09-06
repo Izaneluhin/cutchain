@@ -34,7 +34,7 @@ promises a payout: the clipper pool is exactly as big as the week's fees.
 ## Install
 
 ```sh
-git clone https://github.com/<you>/cutchain && cd cutchain
+git clone https://github.com/Izaneluhin/cutchain && cd cutchain
 npm install                      # root CLI, no dependencies
 pip install -r watch/requirements.txt
 cd mint && npm install && cd ..
