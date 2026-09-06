@@ -8,7 +8,6 @@
   <a href="https://cutchain.live">cutchain.live</a> ·
   <a href="./docs/CLIPPERS.md">rules for clippers</a> ·
   <a href="./docs/PAYOUTS.md">weekly payouts</a> ·
-  <a href="./docs/LAUNCH.md">launch checklist</a> ·
   <a href="./docs/ARCHITECTURE.md">architecture</a>
 </p>
 
