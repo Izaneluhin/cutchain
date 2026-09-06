@@ -1,0 +1,74 @@
+{
+  "_status": "PonsV2LaunchLocker 0x267444D099b10fB5Ed7c3Cc7B7c767AdcA574952 — Hand-derived from the official Solidity source (github.com/ponsdotdev/ponsfamily, contractsV2/src/v2, commit 845bd54) and docs.ponsfamily.com/v2. NOT compiled and NOT fetched from the explorer (unreachable from the build sandbox). The scripts verify each selector they send against the deployed bytecode first.",
+  "abi": [
+    {
+      "name": "factory",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
+    },
+    {
+      "name": "positionManager",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
+    },
+    {
+      "name": "isLocked",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "token"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "PositionLocked",
+      "type": "event",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "token",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "tokenId",
+          "indexed": true
+        }
+      ]
+    },
+    {
+      "name": "TokenSupplyLocked",
+      "type": "event",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "token",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "amount"
+        }
+      ]
+    }
+  ]
+}

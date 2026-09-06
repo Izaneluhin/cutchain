@@ -1,0 +1,1453 @@
+{
+  "_status": "PonsV2LaunchFactory 0x7eD598BcEf8bd9Edd8C97A195C6d13f40801EC7e — Hand-derived from the official Solidity source (github.com/ponsdotdev/ponsfamily, contractsV2/src/v2, commit 845bd54) and docs.ponsfamily.com/v2. NOT compiled and NOT fetched from the explorer (unreachable from the build sandbox). The scripts verify each selector they send against the deployed bytecode first.",
+  "abi": [
+    {
+      "name": "launchFee",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "launchEnabled",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "whitelistedLaunchers",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "launcher"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "canLaunch",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "launcher"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "maxCreatorTaxBps",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "snipeTaxStartBps",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "snipeTaxSeconds",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "launchConfigCount",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "getLaunchConfig",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "id"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "tuple",
+          "components": [
+            {
+              "type": "uint256",
+              "name": "supply"
+            },
+            {
+              "type": "uint256",
+              "name": "curveFeeBps"
+            },
+            {
+              "type": "uint256",
+              "name": "phantomQuote"
+            },
+            {
+              "type": "uint256",
+              "name": "graduationThreshold"
+            },
+            {
+              "type": "uint24",
+              "name": "poolFee"
+            },
+            {
+              "type": "int24",
+              "name": "tickSpacing"
+            },
+            {
+              "type": "bool",
+              "name": "enabled"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "getLaunchedToken",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "token"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "tuple",
+          "components": [
+            {
+              "type": "address",
+              "name": "token"
+            },
+            {
+              "type": "address",
+              "name": "curve"
+            },
+            {
+              "type": "address",
+              "name": "deployer"
+            },
+            {
+              "type": "address",
+              "name": "creatorFeeRecipient"
+            },
+            {
+              "type": "address",
+              "name": "pairToken"
+            },
+            {
+              "type": "uint256",
+              "name": "graduationThreshold"
+            },
+            {
+              "type": "uint24",
+              "name": "poolFee"
+            },
+            {
+              "type": "int24",
+              "name": "tickSpacing"
+            },
+            {
+              "type": "uint16",
+              "name": "creatorTaxBps"
+            },
+            {
+              "type": "bool",
+              "name": "buybackEnabled"
+            },
+            {
+              "type": "uint8",
+              "name": "phase"
+            },
+            {
+              "type": "uint256",
+              "name": "sweptQuote"
+            },
+            {
+              "type": "uint256",
+              "name": "sweptTokens"
+            },
+            {
+              "type": "uint256",
+              "name": "sweptAt"
+            },
+            {
+              "type": "bool",
+              "name": "exists"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "getLaunchFeePolicy",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "token"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "tuple",
+          "components": [
+            {
+              "type": "address",
+              "name": "protocolFeeRecipient"
+            },
+            {
+              "type": "uint16",
+              "name": "protocolFeeShareBps"
+            },
+            {
+              "type": "uint16",
+              "name": "buybackBurnBps"
+            },
+            {
+              "type": "uint16",
+              "name": "hookFeeBps"
+            },
+            {
+              "type": "uint16",
+              "name": "maxInternalPriceImpactBps"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "previewLaunchEconomics",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "launchConfigId"
+        },
+        {
+          "type": "address",
+          "name": "pairToken"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "bytes32"
+        }
+      ]
+    },
+    {
+      "name": "approvedPairTokens",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "pairToken"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "pairTokenEconomics",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "pairToken"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "phantomQuote"
+        },
+        {
+          "type": "uint256",
+          "name": "graduationThreshold"
+        },
+        {
+          "type": "uint8",
+          "name": "decimals"
+        }
+      ]
+    },
+    {
+      "name": "pendingCreatorFeeRecipient",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "token"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "address",
+          "name": "newRecipient"
+        },
+        {
+          "type": "uint256",
+          "name": "effectiveAt"
+        },
+        {
+          "type": "uint256",
+          "name": "expiresAt"
+        }
+      ]
+    },
+    {
+      "name": "poolManager",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
+    },
+    {
+      "name": "positionManager",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
+    },
+    {
+      "name": "permit2",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
+    },
+    {
+      "name": "locker",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
+    },
+    {
+      "name": "memeHook",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
+    },
+    {
+      "name": "feeEscrow",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
+    },
+    {
+      "name": "buybackVault",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
+    },
+    {
+      "name": "graduationExecutor",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
+    },
+    {
+      "name": "launchDeployer",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
+    },
+    {
+      "name": "launchForwarder",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
+    },
+    {
+      "name": "graduationGuard",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
+    },
+    {
+      "name": "owner",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
+    },
+    {
+      "name": "CREATOR_FEE_RECIPIENT_TIMELOCK",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "GRADUATION_RESCUE_DELAY",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "launchToken",
+      "type": "function",
+      "stateMutability": "payable",
+      "inputs": [
+        {
+          "type": "tuple",
+          "name": "params",
+          "components": [
+            {
+              "type": "string",
+              "name": "name"
+            },
+            {
+              "type": "string",
+              "name": "symbol"
+            },
+            {
+              "type": "string",
+              "name": "logo"
+            },
+            {
+              "type": "string",
+              "name": "description"
+            },
+            {
+              "type": "tuple",
+              "name": "socials",
+              "components": [
+                {
+                  "type": "string",
+                  "name": "twitter"
+                },
+                {
+                  "type": "string",
+                  "name": "telegram"
+                },
+                {
+                  "type": "string",
+                  "name": "discord"
+                },
+                {
+                  "type": "string",
+                  "name": "website"
+                },
+                {
+                  "type": "string",
+                  "name": "farcaster"
+                }
+              ]
+            },
+            {
+              "type": "address",
+              "name": "creatorFeeRecipient"
+            },
+            {
+              "type": "uint16",
+              "name": "creatorTaxBps"
+            },
+            {
+              "type": "bool",
+              "name": "buybackEnabled"
+            },
+            {
+              "type": "bytes32",
+              "name": "expectedEconomics"
+            },
+            {
+              "type": "bytes32",
+              "name": "salt"
+            }
+          ]
+        },
+        {
+          "type": "uint256",
+          "name": "launchConfigId"
+        },
+        {
+          "type": "address",
+          "name": "pairToken"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "address",
+          "name": "token"
+        },
+        {
+          "type": "address",
+          "name": "curve"
+        }
+      ]
+    },
+    {
+      "name": "launchToken",
+      "type": "function",
+      "stateMutability": "payable",
+      "inputs": [
+        {
+          "type": "tuple",
+          "name": "params",
+          "components": [
+            {
+              "type": "string",
+              "name": "name"
+            },
+            {
+              "type": "string",
+              "name": "symbol"
+            },
+            {
+              "type": "string",
+              "name": "logo"
+            },
+            {
+              "type": "string",
+              "name": "description"
+            },
+            {
+              "type": "tuple",
+              "name": "socials",
+              "components": [
+                {
+                  "type": "string",
+                  "name": "twitter"
+                },
+                {
+                  "type": "string",
+                  "name": "telegram"
+                },
+                {
+                  "type": "string",
+                  "name": "discord"
+                },
+                {
+                  "type": "string",
+                  "name": "website"
+                },
+                {
+                  "type": "string",
+                  "name": "farcaster"
+                }
+              ]
+            },
+            {
+              "type": "address",
+              "name": "creatorFeeRecipient"
+            },
+            {
+              "type": "uint16",
+              "name": "creatorTaxBps"
+            },
+            {
+              "type": "bool",
+              "name": "buybackEnabled"
+            },
+            {
+              "type": "bytes32",
+              "name": "expectedEconomics"
+            },
+            {
+              "type": "bytes32",
+              "name": "salt"
+            }
+          ]
+        },
+        {
+          "type": "uint256",
+          "name": "launchConfigId"
+        },
+        {
+          "type": "address",
+          "name": "pairToken"
+        },
+        {
+          "type": "address[]",
+          "name": "snipeTaxExemptions"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "address",
+          "name": "token"
+        },
+        {
+          "type": "address",
+          "name": "curve"
+        }
+      ]
+    },
+    {
+      "name": "launchTokenFor",
+      "type": "function",
+      "stateMutability": "payable",
+      "inputs": [
+        {
+          "type": "tuple",
+          "name": "params",
+          "components": [
+            {
+              "type": "string",
+              "name": "name"
+            },
+            {
+              "type": "string",
+              "name": "symbol"
+            },
+            {
+              "type": "string",
+              "name": "logo"
+            },
+            {
+              "type": "string",
+              "name": "description"
+            },
+            {
+              "type": "tuple",
+              "name": "socials",
+              "components": [
+                {
+                  "type": "string",
+                  "name": "twitter"
+                },
+                {
+                  "type": "string",
+                  "name": "telegram"
+                },
+                {
+                  "type": "string",
+                  "name": "discord"
+                },
+                {
+                  "type": "string",
+                  "name": "website"
+                },
+                {
+                  "type": "string",
+                  "name": "farcaster"
+                }
+              ]
+            },
+            {
+              "type": "address",
+              "name": "creatorFeeRecipient"
+            },
+            {
+              "type": "uint16",
+              "name": "creatorTaxBps"
+            },
+            {
+              "type": "bool",
+              "name": "buybackEnabled"
+            },
+            {
+              "type": "bytes32",
+              "name": "expectedEconomics"
+            },
+            {
+              "type": "bytes32",
+              "name": "salt"
+            }
+          ]
+        },
+        {
+          "type": "uint256",
+          "name": "launchConfigId"
+        },
+        {
+          "type": "address",
+          "name": "pairToken"
+        },
+        {
+          "type": "address",
+          "name": "originalDeployer"
+        },
+        {
+          "type": "address[]",
+          "name": "snipeTaxExemptions"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "address",
+          "name": "token"
+        },
+        {
+          "type": "address",
+          "name": "curve"
+        }
+      ]
+    },
+    {
+      "name": "transferCreatorFeeRecipient",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "token"
+        },
+        {
+          "type": "address",
+          "name": "newRecipient"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "name": "setBuybackEnabled",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "token"
+        },
+        {
+          "type": "bool",
+          "name": "enabled"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "name": "executeCreatorFeeRecipientChange",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "token"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "name": "graduate",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "token"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "name": "createGraduatedPool",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "token"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "positionId"
+        }
+      ]
+    },
+    {
+      "name": "TokenLaunched",
+      "type": "event",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "token",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "curve",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "deployer",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "pairToken"
+        },
+        {
+          "type": "uint256",
+          "name": "launchConfigId"
+        },
+        {
+          "type": "uint256",
+          "name": "graduationThreshold"
+        }
+      ]
+    },
+    {
+      "name": "LaunchSwept",
+      "type": "event",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "token",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "quoteOut"
+        },
+        {
+          "type": "uint256",
+          "name": "tokenOut"
+        }
+      ]
+    },
+    {
+      "name": "LaunchForceSwept",
+      "type": "event",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "token",
+          "indexed": true
+        }
+      ]
+    },
+    {
+      "name": "PoolGraduated",
+      "type": "event",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "token",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "positionId"
+        },
+        {
+          "type": "uint256",
+          "name": "tokenAmount"
+        },
+        {
+          "type": "uint256",
+          "name": "pairTokenAmount"
+        }
+      ]
+    },
+    {
+      "name": "CreatorFeeRecipientUpdated",
+      "type": "event",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "token",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "previousRecipient",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "newRecipient",
+          "indexed": true
+        }
+      ]
+    },
+    {
+      "name": "CreatorFeeRecipientChangeProposed",
+      "type": "event",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "token",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "currentRecipient",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "proposedRecipient",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "effectiveAt"
+        },
+        {
+          "type": "uint256",
+          "name": "expiresAt"
+        }
+      ]
+    },
+    {
+      "name": "CreatorFeeRecipientChangeCancelled",
+      "type": "event",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "token",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "proposedRecipient",
+          "indexed": true
+        }
+      ]
+    },
+    {
+      "name": "BuybackEnabledUpdated",
+      "type": "event",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "token",
+          "indexed": true
+        },
+        {
+          "type": "bool",
+          "name": "enabled"
+        },
+        {
+          "type": "address",
+          "name": "controller",
+          "indexed": true
+        }
+      ]
+    },
+    {
+      "name": "GraduationTokensPermanentlyLocked",
+      "type": "event",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "token",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "amount"
+        }
+      ]
+    },
+    {
+      "name": "LaunchGraduationRescued",
+      "type": "event",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "token",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "recipient",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "quoteAmount"
+        },
+        {
+          "type": "uint256",
+          "name": "tokenAmount"
+        }
+      ]
+    },
+    {
+      "name": "LaunchConfigAdded",
+      "type": "event",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "id",
+          "indexed": true
+        }
+      ]
+    },
+    {
+      "name": "LaunchConfigUpdated",
+      "type": "event",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "id",
+          "indexed": true
+        }
+      ]
+    },
+    {
+      "name": "LaunchFeeUpdated",
+      "type": "event",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "launchFee"
+        }
+      ]
+    },
+    {
+      "name": "LaunchEnabledUpdated",
+      "type": "event",
+      "inputs": [
+        {
+          "type": "bool",
+          "name": "enabled"
+        }
+      ]
+    },
+    {
+      "name": "MaxCreatorTaxUpdated",
+      "type": "event",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "bps"
+        }
+      ]
+    },
+    {
+      "name": "SnipeTaxStartBpsUpdated",
+      "type": "event",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "bps"
+        }
+      ]
+    },
+    {
+      "name": "SnipeTaxSecondsUpdated",
+      "type": "event",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "secondsWindow"
+        }
+      ]
+    },
+    {
+      "name": "PairTokenApprovalUpdated",
+      "type": "event",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "pairToken",
+          "indexed": true
+        },
+        {
+          "type": "bool",
+          "name": "approved"
+        }
+      ]
+    },
+    {
+      "name": "InvalidLaunchConfigId",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "LaunchConfigDisabled",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "InvalidBasisPoints",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "ExemptionListTooLong",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "InvalidSnipeTaxWindow",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "CurveFeeTooHigh",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "CreatorTaxTooHigh",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "CombinedFeeTooHigh",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "SupplyTooLow",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "SupplyTooHigh",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "InvalidTickSpacing",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "LaunchFeeNotPaid",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "NotWhitelisted",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "FeeTransferFailed",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "ZeroAddress",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "AlreadySet",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "InvalidTokenParams",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "TokenNotFound",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "WrongGraduationPhase",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "GraduationStillViable",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "NothingToGraduate",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "SqrtPriceOutOfBounds",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "GraduationExecutorNotSet",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "LaunchDeployerNotSet",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "NotLaunchForwarder",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "NotCreatorFeeRecipient",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "NoPendingChange",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "TimelockNotElapsed",
+      "type": "error",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "effectiveAt"
+        }
+      ]
+    },
+    {
+      "name": "TimelockExpired",
+      "type": "error",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "expiresAt"
+        }
+      ]
+    },
+    {
+      "name": "LaunchDependenciesNotWired",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "PairTokenNotApproved",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "PairTokenValidationFailed",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "NotBuybackController",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "CoreLpFeeMustBeZero",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "InvalidGraduationThreshold",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "InvalidPhantomQuote",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "CurveNotQuotable",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "PairTokenEconomicsInvalid",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "PairTokenDecimalsMismatch",
+      "type": "error",
+      "inputs": [
+        {
+          "type": "uint8",
+          "name": "expected"
+        },
+        {
+          "type": "uint8",
+          "name": "actual"
+        }
+      ]
+    },
+    {
+      "name": "PairTokenDecimalsUnavailable",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "LaunchEconomicsMismatch",
+      "type": "error",
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "expected"
+        },
+        {
+          "type": "bytes32",
+          "name": "actual"
+        }
+      ]
+    },
+    {
+      "name": "InexactTransfer",
+      "type": "error",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "token"
+        },
+        {
+          "type": "uint256",
+          "name": "expected"
+        },
+        {
+          "type": "uint256",
+          "name": "received"
+        }
+      ]
+    },
+    {
+      "name": "GraduationSeedNotViable",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "GraduationRescueTooEarly",
+      "type": "error",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "availableAt"
+        }
+      ]
+    },
+    {
+      "name": "NotReadyToGraduate",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "OwnableUnauthorizedAccount",
+      "type": "error",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "account"
+        }
+      ]
+    },
+    {
+      "name": "ReentrancyGuardReentrantCall",
+      "type": "error",
+      "inputs": []
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+.env
+data/moments.jsonl
+data/watch.db
+data/chat.log
+__pycache__/

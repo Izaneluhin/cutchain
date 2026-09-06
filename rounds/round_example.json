@@ -1,0 +1,63 @@
+{
+  "round": 202637,
+  "token": "0x000000000000000000000000000000000000BbBB",
+  "total": "5000000000000000000000",
+  "totalViews": 474999,
+  "recipients": 4,
+  "merkleRoot": "0x0bf055b218d9175a89c7279a6490e674e35e1126040530ea5f4d24b206245037",
+  "leafEncoding": "keccak256(bytes.concat(keccak256(abi.encode(uint256 roundId, uint256 index, address account, uint256 amount))))",
+  "pairHashing": "keccak256(min(a,b) \u2016 max(a,b)); odd node carried up unchanged",
+  "claims": [
+    {
+      "index": 0,
+      "account": "0x70997970C51812dc3A010C7d01b50e0d17dc79C8",
+      "handle": "@clipper_one",
+      "views": 120000,
+      "amount": "1263160554022218994145",
+      "proof": [
+        "0xa832345cd0304b0cec763204b9c25189ecd30a9b2f8de2bffd39b386e90091e5",
+        "0x1be02b6ed2bc91a673f5b8c01fb0573cf80f0651144dec0649d755dfeac5911c"
+      ]
+    },
+    {
+      "index": 1,
+      "account": "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
+      "handle": "@clipper_two",
+      "views": 45000,
+      "amount": "473685207758332122804",
+      "proof": [
+        "0x276ffe2f5a93abaad94ecb224600d18f025810640b4cc4f6f1c4d1df3a847b76",
+        "0x1be02b6ed2bc91a673f5b8c01fb0573cf80f0651144dec0649d755dfeac5911c"
+      ]
+    },
+    {
+      "index": 2,
+      "account": "0x90F79bf6EB2c4f870365E785982E1f101E93b906",
+      "handle": "@clipper_three",
+      "views": 300000,
+      "amount": "3157901385055547485363",
+      "proof": [
+        "0xc37f00588e3cec895e53473591831c12f30e08f939c65641c1c230e82c31d0ec",
+        "0xd0115e1c2dab7bc707a2b6f565517f4098c0805575947fd2214ce62f38707d7f"
+      ]
+    },
+    {
+      "index": 3,
+      "account": "0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65",
+      "handle": "@clipper_four",
+      "views": 9999,
+      "amount": "105252853163901397688",
+      "proof": [
+        "0x662ffdd0ba2ff8a0140d8c101d460310b4f2c08cce670565858cbb0c984012fd",
+        "0xd0115e1c2dab7bc707a2b6f565517f4098c0805575947fd2214ce62f38707d7f"
+      ]
+    }
+  ],
+  "excluded": [
+    {
+      "account": "0x9965507D1a55bcC2695C58ba16FB37d819B0A4dc",
+      "handle": "@clipper_five",
+      "views": 0
+    }
+  ]
+}

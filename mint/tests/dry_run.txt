@@ -1,0 +1,786 @@
+cutchain/mint dry-run log — generated 2026-09-06T16:57:38Z
+Environment: node v22.22.2, viem 2.56.3, sandbox with NO outbound RPC access (rpc.mainnet.chain.robinhood.com blocked by proxy).
+Target: Pons V2 (factory 0x7eD598BcEf8bd9Edd8C97A195C6d13f40801EC7e). V1 scripts appear in the appendix.
+
+########################################################################
+# 1. tsx launch.ts --name CutTest --symbol CUTT --dry-run   (OFFLINE)
+########################################################################
+
+────────────────────────────────────────────────────────────────────────
+Pons V2 launch (DRY RUN)
+────────────────────────────────────────────────────────────────────────
+token    : CutTest (CUTT)   logo: (none)
+factory  : 0x7eD598BcEf8bd9Edd8C97A195C6d13f40801EC7e  https://robinhoodchain.blockscout.com/address/0x7eD598BcEf8bd9Edd8C97A195C6d13f40801EC7e
+sender   : 0x000000000000000000000000000000000000dEaD  (no PRIVATE_KEY — placeholder / --from)
+creator  : fee recipient 0x000000000000000000000000000000000000dEaD, creator tax 0 bps (0%), buybacks off
+pair     : native ETH
+! RPC https://rpc.mainnet.chain.robinhood.com unreachable: HTTP request failed.
+rpc      : OFFLINE — calldata only
+
+! offline: launchConfigId=0 (UNVERIFIED default), launch fee 0.0005 ETH (V1 docs value; V2 reads launchFee() live), no economics pin
+
+────────────────────────────────────────────────────────────────────────
+Fee model for this launch
+────────────────────────────────────────────────────────────────────────
+  per trade (quote leg): base fee 0 bps (unknown offline) + creator tax 0 bps  = 0 bps
+  split                : protocol share / buyback slice / creator remainder — read from memeHook.currentFeePolicy() when online
+  snipe tax            : 99% of a buy decaying to 0 over the first seconds (docs: 5 s); launcher + creator recipient exempt; buyer nets ≥ 1%
+
+────────────────────────────────────────────────────────────────────────
+ABI self-check
+────────────────────────────────────────────────────────────────────────
+  skipped (offline) — hand-derived ABI, see CHAIN.md
+
+▶ PonsV2LaunchFactory.launchToken(params, launchConfigId, pairToken)
+  to      : 0x7eD598BcEf8bd9Edd8C97A195C6d13f40801EC7e
+  from    : 0x000000000000000000000000000000000000dEaD  (placeholder — no PRIVATE_KEY)
+  value   : 0.0005 ETH (500000000000000 wei)
+  args    : [
+              {
+                "name": "CutTest",
+                "symbol": "CUTT",
+                "logo": "",
+                "description": "",
+                "socials": {
+                  "twitter": "",
+                  "telegram": "",
+                  "discord": "",
+                  "website": "",
+                  "farcaster": ""
+                },
+                "creatorFeeRecipient": "0x000000000000000000000000000000000000dEaD",
+                "creatorTaxBps": 0,
+                "buybackEnabled": false,
+                "expectedEconomics": "0x0000000000000000000000000000000000000000000000000000000000000000",
+                "salt": "0xe71c6f590272d4d6e7ac06c335a4ca676621c0fb56b552e8e5ed267ae05af70a"
+              },
+              "0",
+              "0x0000000000000000000000000000000000000000"
+            ]
+  calldata: 0xf35abbcf0000000000000000000000000000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000140000000000000000000000000000000000000000000000000000000000000018000000000000000000000000000000000000000000000000000000000000001c000000000000000000000000000000000000000000000000000000000000001e00000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000dead000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000e71c6f590272d4d6e7ac06c335a4ca676621c0fb56b552e8e5ed267ae05af70a00000000000000000000000000000000000000000000000000000000000000074375745465737400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000443555454000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000e00000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000012000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  selector: 0xf35abbcf  (932 bytes)
+  simulate: skipped (RPC unreachable)
+
+────────────────────────────────────────────────────────────────────────
+Dry run summary
+────────────────────────────────────────────────────────────────────────
+  would send exactly 0.0005 ETH to 0x7eD598BcEf8bd9Edd8C97A195C6d13f40801EC7e
+
+########################################################################
+# 2. tsx pool.ts --token 0x0000000000000000000000000000000000000001 --dry-run   (OFFLINE)
+########################################################################
+
+────────────────────────────────────────────────────────────────────────
+Uniswap V3 pool (DRY RUN)
+────────────────────────────────────────────────────────────────────────
+! RPC https://rpc.mainnet.chain.robinhood.com unreachable: HTTP request failed.
+rpc      : OFFLINE — calldata only
+sender   : 0x000000000000000000000000000000000000dEaD  (no PRIVATE_KEY — placeholder / --from)
+! offline: assuming 18 decimals for both tokens (Pons tokens and Stock Tokens are 18-decimal)
+token    : 0x0000000000000000000000000000000000000001 (TOKEN, 18 dec)
+quote    : 0x12f190a9f9d7d37a250758b26824b97ce941bf54 (QUOTE, 18 dec)
+ordering : token0=0x0000000000000000000000000000000000000001 (TOKEN)  token1=0x12f190a9f9d7d37a250758b26824b97ce941bf54 (QUOTE)  ← token0 is the lower address
+fee tier : 10000 (1%)  tick spacing 200
+pool addr: 0x3789D6be68FB2E8A15578753c83e35C46926FD38 (CREATE2 prediction)  https://robinhoodchain.blockscout.com/address/0x3789D6be68FB2E8A15578753c83e35C46926FD38
+
+────────────────────────────────────────────────────────────────────────
+Price
+────────────────────────────────────────────────────────────────────────
+  ! no --price given; DRY RUN uses a placeholder of 1 QUOTE per TOKEN. Live runs require --price.
+  input          : 1 QUOTE per TOKEN
+  P (raw t1/t0)  : 1000000000000000000 / 1000000000000000000
+  sqrtPriceX96   : 79228162514264337593543950336
+  tick (approx)  : 0
+  round-trip     : 1 QUOTE/TOKEN  |  1 TOKEN/QUOTE
+
+▶ NonfungiblePositionManager.createAndInitializePoolIfNecessary(token0, token1, fee, sqrtPriceX96)
+  to      : 0x73991a25C818Bf1f1128dEAaB1492D45638DE0D3
+  from    : 0x000000000000000000000000000000000000dEaD  (placeholder — no PRIVATE_KEY)
+  value   : 0 ETH (0 wei)
+  args    : [
+              "0x0000000000000000000000000000000000000001",
+              "0x12f190a9f9d7d37a250758b26824b97ce941bf54",
+              10000,
+              "79228162514264337593543950336"
+            ]
+  calldata: 0x13ead562000000000000000000000000000000000000000000000000000000000000000100000000000000000000000012f190a9f9d7d37a250758b26824b97ce941bf5400000000000000000000000000000000000000000000000000000000000027100000000000000000000000000000000000000001000000000000000000000000
+  selector: 0x13ead562  (132 bytes)
+  simulate: skipped (RPC unreachable)
+
+────────────────────────────────────────────────────────────────────────
+Done
+────────────────────────────────────────────────────────────────────────
+  pool: 0x3789D6be68FB2E8A15578753c83e35C46926FD38  https://robinhoodchain.blockscout.com/address/0x3789D6be68FB2E8A15578753c83e35C46926FD38
+  (no --amount-token/--amount-quote given → no liquidity added)
+
+########################################################################
+# 3. tsx claim.ts --token 0x0000000000000000000000000000000000000001 --dry-run   (OFFLINE)
+########################################################################
+
+────────────────────────────────────────────────────────────────────────
+Pons V2 fee claim (DRY RUN)
+────────────────────────────────────────────────────────────────────────
+! RPC https://rpc.mainnet.chain.robinhood.com unreachable: HTTP request failed.
+rpc      : OFFLINE — calldata only
+token    : 0x0000000000000000000000000000000000000001  https://robinhoodchain.blockscout.com/token/0x0000000000000000000000000000000000000001
+sender   : 0x000000000000000000000000000000000000dEaD  (no PRIVATE_KEY — placeholder / --from)
+escrow   : 0xd3AFEB2a57f70eF218Aa82451c51B2fb0416Ac9e  https://robinhoodchain.blockscout.com/address/0xd3AFEB2a57f70eF218Aa82451c51B2fb0416Ac9e
+
+! offline: assuming a native-ETH launch → claim()
+
+────────────────────────────────────────────────────────────────────────
+Claim
+────────────────────────────────────────────────────────────────────────
+  function         : claim()  (bytecode unchecked — offline)
+
+▶ PonsV2FeeEscrow.claim()
+  to      : 0xd3AFEB2a57f70eF218Aa82451c51B2fb0416Ac9e
+  from    : 0x000000000000000000000000000000000000dEaD  (placeholder — no PRIVATE_KEY)
+  value   : 0 ETH (0 wei)
+  args    : []
+  calldata: 0x4e71d92d
+  selector: 0x4e71d92d  (4 bytes)
+  simulate: skipped (RPC unreachable)
+
+────────────────────────────────────────────────────────────────────────
+Dry run summary
+────────────────────────────────────────────────────────────────────────
+  nothing sent.
+
+########################################################################
+# 4. tsx launch.ts --creator-tax-bps 1500 --dry-run   (OFFLINE; must refuse: above source ceiling)
+########################################################################
+
+ERROR: --creator-tax-bps must be 0..1000 (source ceiling MAX_CREATOR_TAX_CEILING_BPS)
+
+########################################################################
+# APPENDIX A — Pons V2 against tests/mock_rpc.ts (canned ABI-encoded answers, chain id 4663).
+# Exercises the ONLINE code paths: config listing, economics pin, ABI self-check, simulation,
+# receipt/event parsing, dev buy, status, escrow claim. NOT a chain simulation.
+########################################################################
+
+# A1. RPC_URL=mock tsx launch.ts --name CutTest --symbol CUTT --image ipfs://QmTest --creator-tax-bps 100 --buybacks --dev-buy-eth 0.01 --dry-run
+
+────────────────────────────────────────────────────────────────────────
+Pons V2 launch (DRY RUN)
+────────────────────────────────────────────────────────────────────────
+token    : CutTest (CUTT)   logo: ipfs://QmTest
+factory  : 0x7eD598BcEf8bd9Edd8C97A195C6d13f40801EC7e  https://robinhoodchain.blockscout.com/address/0x7eD598BcEf8bd9Edd8C97A195C6d13f40801EC7e
+sender   : 0x000000000000000000000000000000000000dEaD  (no PRIVATE_KEY — placeholder / --from)
+creator  : fee recipient 0x000000000000000000000000000000000000dEaD, creator tax 100 bps (1%), buybacks ON
+pair     : native ETH
+rpc      : online (chain 4663)
+
+────────────────────────────────────────────────────────────────────────
+Factory state
+────────────────────────────────────────────────────────────────────────
+  launchFee          : 0.0005 ETH (live)
+  canLaunch(sender)  : true
+  maxCreatorTaxBps   : 500   snipe tax: 9900 bps decaying over 5 s
+  feeEscrow          : 0xd3AFEB2a57f70eF218Aa82451c51B2fb0416Ac9e ✓ matches CHAIN.md
+  memeHook           : 0xE5e702641Ea86F4ae6cC3cDaeD2B886f976Be044 ✓
+  locker             : 0x267444D099b10fB5Ed7c3Cc7B7c767AdcA574952 ✓
+  launchDeployer     : 0x3711ceA4feaDE896C913C68F01Eda97Cb06D1A42
+  launchConfig[0]    : supply=1000000000 curveFee=100bps phantomQuote=2 threshold=6 poolFee=0 tickSpacing=60 enabled=true
+  selected           : launchConfigId=0
+  economics pin      : 0x56570de287d73cd1cb6092bb8fdee6173974955fdef345ae579ee9f475ea7432
+
+────────────────────────────────────────────────────────────────────────
+Curve economics (from the selected config)
+────────────────────────────────────────────────────────────────────────
+  supply             : 1000000000 CUTT (100% minted to the curve)
+  sellable on curve  : 750000000 CUTT (75.00%)
+  reserved for V4 LP : 250000000 CUTT (25.00%)
+  opening price      : 2.0000e-9 ETH/CUTT  (FDV 2 ETH)
+  graduation         : after 6 ETH raised → price 3.2000e-8 ETH/CUTT, FDV ≈ 32.0000 ETH
+
+────────────────────────────────────────────────────────────────────────
+Fee model for this launch
+────────────────────────────────────────────────────────────────────────
+  per trade (quote leg): base fee 100 bps + creator tax 100 bps  = 200 bps
+  split of base fee    : protocol 3000 bps of fee → then 5000 bps of the remainder bought back & locked (5y vest) → rest to creator
+  creator tax          : 100% to the creator, on top
+  post-graduation      : Uniswap V4 pool fee 0; meme hook charges 100 bps + creator tax, same split, accrues in the Fee Escrow
+  example 1 ETH buy    : fee 0.01 + tax 0.01 → protocol 0.003, buyback 0.0035, creator 0.0135 ETH
+  snipe tax            : 99% of a buy decaying to 0 over the first seconds (docs: 5 s); launcher + creator recipient exempt; buyer nets ≥ 1%
+
+────────────────────────────────────────────────────────────────────────
+ABI self-check
+────────────────────────────────────────────────────────────────────────
+  factory bytecode 36 bytes; launchToken selector PRESENT ✓
+  previewLaunchEconomics(uint256,address)  present
+  launchFee()                              present
+  maxCreatorTaxBps()                       present
+  canLaunch(address)                       present
+
+▶ PonsV2LaunchFactory.launchToken(params, launchConfigId, pairToken)
+  to      : 0x7eD598BcEf8bd9Edd8C97A195C6d13f40801EC7e
+  from    : 0x000000000000000000000000000000000000dEaD  (placeholder — no PRIVATE_KEY)
+  value   : 0.0005 ETH (500000000000000 wei)
+  args    : [
+              {
+                "name": "CutTest",
+                "symbol": "CUTT",
+                "logo": "ipfs://QmTest",
+                "description": "",
+                "socials": {
+                  "twitter": "",
+                  "telegram": "",
+                  "discord": "",
+                  "website": "",
+                  "farcaster": ""
+                },
+                "creatorFeeRecipient": "0x000000000000000000000000000000000000dEaD",
+                "creatorTaxBps": 100,
+                "buybackEnabled": true,
+                "expectedEconomics": "0x56570de287d73cd1cb6092bb8fdee6173974955fdef345ae579ee9f475ea7432",
+                "salt": "0x44d23afed16f542dfbf333d26fbdc6801ed5096daa7b50b136a56e5406523ca3"
+              },
+              "0",
+              "0x0000000000000000000000000000000000000000"
+            ]
+  selector: 0xf35abbcf  (964 bytes)
+  eth_call: OK → [   [     "0x3333333333333333333333333333333333333333",     "0x4444444444444444444444444444444444444444"   ] ]
+  gas     : 2000000 ≈ 0.0002 ETH at 0.1 gwei
+  dry-run : nothing sent
+
+────────────────────────────────────────────────────────────────────────
+Dry run summary
+────────────────────────────────────────────────────────────────────────
+  would send exactly 0.0005 ETH to 0x7eD598BcEf8bd9Edd8C97A195C6d13f40801EC7e
+  simulated token/curve: 0x3333333333333333333333333333333333333333 / 0x4444444444444444444444444444444444444444
+  then a 2nd tx: curve.buy(0.01 ETH, minTokensOut, 0x000000000000000000000000000000000000dEaD) value 0.01 ETH — curve address is only known after the launch
+  dev buy quote        : ≈ 4876107.075330878694397452 CUTT (0.49% of supply), fee 0.0001 + creator tax 0.0001 ETH
+
+# A2. RPC_URL=mock PRIVATE_KEY=<throwaway random key> tsx launch.ts ... --dev-buy-eth 0.01   (LIVE against the mock: send + receipt + TokenLaunched + curve.buy)
+▶ PonsV2LaunchFactory.launchToken(params, launchConfigId, pairToken)
+  to      : 0x7eD598BcEf8bd9Edd8C97A195C6d13f40801EC7e
+  from    : 0x03D2bD0C969A42D426c5cF2c75C44379Bd6b31B9
+  value   : 0.0005 ETH (500000000000000 wei)
+  args    : [
+              {
+                "name": "CutTest",
+                "symbol": "CUTT",
+                "logo": "",
+                "description": "",
+                "socials": {
+                  "twitter": "",
+                  "telegram": "",
+                  "discord": "",
+                  "website": "",
+                  "farcaster": ""
+                },
+                "creatorFeeRecipient": "0x03D2bD0C969A42D426c5cF2c75C44379Bd6b31B9",
+                "creatorTaxBps": 100,
+                "buybackEnabled": true,
+                "expectedEconomics": "0x56570de287d73cd1cb6092bb8fdee6173974955fdef345ae579ee9f475ea7432",
+                "salt": "0x62d8cf9304f5f0da6d6d0d5dce10bef726130e014c240be0090f92700e1aa2fd"
+              },
+              "0",
+              "0x0000000000000000000000000000000000000000"
+            ]
+  selector: 0xf35abbcf  (932 bytes)
+  eth_call: OK → [   [     "0x3333333333333333333333333333333333333333",     "0x4444444444444444444444444444444444444444"   ] ]
+  gas     : 2000000 ≈ 0.0002 ETH at 0.1 gwei
+  sent    : 0x84dceb2055c416bafb92c53bd290ed5a0733ebd7cd2b35f2612bbba76aff8aa0
+            https://robinhoodchain.blockscout.com/tx/0x84dceb2055c416bafb92c53bd290ed5a0733ebd7cd2b35f2612bbba76aff8aa0
+  status  : success in block 257, gas used 1500000
+
+────────────────────────────────────────────────────────────────────────
+Launched
+────────────────────────────────────────────────────────────────────────
+  token              : 0x3333333333333333333333333333333333333333
+                       https://robinhoodchain.blockscout.com/token/0x3333333333333333333333333333333333333333
+                       https://robinscan.io/address/0x3333333333333333333333333333333333333333
+  bonding curve      : 0x4444444444444444444444444444444444444444  https://robinhoodchain.blockscout.com/address/0x4444444444444444444444444444444444444444
+  deployer           : 0x000000000000000000000000000000000000dEaD
+  pair token         : native ETH
+  config / threshold : 0 / 6 ETH
+  V4 pool id (after graduation): 0x37fb6455c3d520b08ff980eb4e47e1be3cf74abc185a8654187d3998b762cdde
+  tx                 : https://robinhoodchain.blockscout.com/tx/0x84dceb2055c416bafb92c53bd290ed5a0733ebd7cd2b35f2612bbba76aff8aa0
+
+────────────────────────────────────────────────────────────────────────
+Dev buy
+────────────────────────────────────────────────────────────────────────
+  snipe tax for sender: 0 bps (exempt ✓)
+  quote               : 0.01 ETH → ≈ 1595532.508974870362983645 CUTT; minTokensOut 1579577.183885121659353808
+
+▶ PonsV2BondingCurve.buy(quoteIn, minTokensOut, recipient)
+  to      : 0x4444444444444444444444444444444444444444
+  from    : 0x03D2bD0C969A42D426c5cF2c75C44379Bd6b31B9
+  value   : 0.01 ETH (10000000000000000 wei)
+  args    : [
+              "10000000000000000",
+              "1579577183885121659353808",
+              "0x03D2bD0C969A42D426c5cF2c75C44379Bd6b31B9"
+            ]
+  selector: 0x59a87bc1  (100 bytes)
+  eth_call: OK → [   "1595532508974870362983645" ]
+  gas     : 2000000 ≈ 0.0002 ETH at 0.1 gwei
+  sent    : 0x271555971ed62dc32acedad8609e1c698794d9ffda024bbb52c98469c42f0f97
+            https://robinhoodchain.blockscout.com/tx/0x271555971ed62dc32acedad8609e1c698794d9ffda024bbb52c98469c42f0f97
+  status  : success in block 257, gas used 1500000
+  bought              : 4975124 CUTT for 0.01 (fee 0.0001, tax 0.0001)
+
+Next: tsx status.ts --token 0x3333333333333333333333333333333333333333
+
+# A3. RPC_URL=mock tsx launch.ts --creator-tax-bps 600 --dry-run   (mock maxCreatorTaxBps=500 → must refuse)
+
+ERROR: --creator-tax-bps 600 exceeds the live factory maximum 500
+
+# A4. RPC_URL=mock tsx launch.ts --dev-buy-eth 0.02 --atomic --exempt 0x...beef --dry-run   (Launch-and-Buy router, docs-only ABI)
+ABI self-check
+────────────────────────────────────────────────────────────────────────
+  factory bytecode 36 bytes; launchToken selector PRESENT ✓
+  previewLaunchEconomics(uint256,address)  present
+  launchFee()                              present
+  maxCreatorTaxBps()                       present
+  canLaunch(address)                       present
+  router bytecode: launchAndBuy selector PRESENT ✓
+  dev buy quote: 0.02 ETH → ≈ 9802950.787206654124170709 CUTT (fee 0.0002, tax 0); minTokensOut 9704921.279334587582929001
+
+▶ PonsV2LaunchAndBuy.launchAndBuy(params, launchConfigId, pairToken, quoteIn, minTokensOut, recipient, exemptions) [UNVERIFIED ABI]
+  to      : 0xe33E9E479dF8802cb0866d5d05258bEc4cF62948
+  from    : 0x000000000000000000000000000000000000dEaD  (placeholder — no PRIVATE_KEY)
+  value   : 0.0205 ETH (20500000000000000 wei)
+  args    : [
+              {
+                "name": "CutTest",
+                "symbol": "CUTT",
+                "logo": "",
+                "description": "",
+                "socials": {
+                  "twitter": "",
+                  "telegram": "",
+                  "discord": "",
+                  "website": "",
+                  "farcaster": ""
+                },
+                "creatorFeeRecipient": "0x000000000000000000000000000000000000dEaD",
+                "creatorTaxBps": 0,
+                "buybackEnabled": false,
+                "expectedEconomics": "0x56570de287d73cd1cb6092bb8fdee6173974955fdef345ae579ee9f475ea7432",
+                "salt": "0x62af4e7020e295e873d31fab956e034baa38cac90b8849bee747847b4922fd80"
+              },
+              "0",
+              "0x0000000000000000000000000000000000000000",
+              "20000000000000000",
+              "9704921279334587582929001",
+              "0x000000000000000000000000000000000000dEaD",
+              [
+                "0x000000000000000000000000000000000000beef"
+              ]
+            ]
+  selector: 0xf85f8e41  (1124 bytes)
+  eth_call: OK → [   [     "0x3333333333333333333333333333333333333333",     "0x4444444444444444444444444444444444444444",     "9704892057833234303822539"   ] ]
+  gas     : 2000000 ≈ 0.0002 ETH at 0.1 gwei
+  dry-run : nothing sent
+
+────────────────────────────────────────────────────────────────────────
+Dry run summary
+────────────────────────────────────────────────────────────────────────
+  would send exactly 0.0005 ETH to 0xe33E9E479dF8802cb0866d5d05258bEc4cF62948 (+ 0.02 ETH dev buy)
+  simulated token/curve: 0x3333333333333333333333333333333333333333 / 0x4444444444444444444444444444444444444444
+
+# A5. RPC_URL=mock tsx status.ts --token 0x3333...3333 --for 0x...beef
+
+────────────────────────────────────────────────────────────────────────
+Pons V2 token status
+────────────────────────────────────────────────────────────────────────
+token     : 0x3333333333333333333333333333333333333333
+explorer  : https://robinhoodchain.blockscout.com/token/0x3333333333333333333333333333333333333333
+robinscan : https://robinscan.io/address/0x3333333333333333333333333333333333333333
+
+────────────────────────────────────────────────────────────────────────
+Launch record (PonsV2LaunchFactory.getLaunchedToken)
+────────────────────────────────────────────────────────────────────────
+  curve            : 0x4444444444444444444444444444444444444444  https://robinhoodchain.blockscout.com/address/0x4444444444444444444444444444444444444444
+  deployer         : 0x000000000000000000000000000000000000dEaD
+  creator recipient: 0x000000000000000000000000000000000000dEaD
+  pair token       : native ETH
+  phase            : 0 = NotGraduated (trading on curve)
+  creator tax      : 100 bps   buybacks: ON
+  graduation       : 6 ETH threshold; V4 pool fee 0 tickSpacing 60
+  fee policy (snap): protocol 3000 bps of fee, buyback 5000 bps of remainder, hook fee 100 bps, recipient 0x5555555555555555555555555555555555555555
+
+────────────────────────────────────────────────────────────────────────
+Token (PonsV2LauncherToken)
+────────────────────────────────────────────────────────────────────────
+  name/symbol      : Mock V2 Token (MV2)   supply 1000000000
+  logo             : ipfs://v2logo
+  description      : mock v2
+  socials          : ["","","","",""]
+
+────────────────────────────────────────────────────────────────────────
+Bonding curve
+────────────────────────────────────────────────────────────────────────
+  state            : trading
+  progress (tokens): 428571428.571428571428571429 / 750000000 MV2 sold = 57.14%
+  progress (quote) : 1.5 / 6 ETH raised = 25.00%
+  reserved for LP  : 250000000 MV2 (25.00% of supply)
+  reserves         : quote 3.5 ETH (incl. phantom 2) / tokens 571428571.428571428571428571 MV2
+  spot price       : 6.125000e-9 ETH per MV2   |   163,265,306 MV2 per ETH
+  FDV              : 6.125000 ETH
+  1 ETH buys       : ≈ 1628001.628001628001628001 MV2 after 100 bps fee + 100 bps creator tax + 0.97 ETH snipe tax (for 0x000000000000000000000000000000000000beef)
+  snipe tax now    : 9900 bps for 0x000000000000000000000000000000000000beef
+  unswept fees     : base 0.015 + creator tax 0.015 ETH → on sweep: protocol 0.0045, buyback 0, creator 0.0255 ETH
+
+────────────────────────────────────────────────────────────────────────
+Fee Escrow (claimable now) & Buyback Vault
+────────────────────────────────────────────────────────────────────────
+  claimable by 0x000000000000000000000000000000000000dEaD: 0.0421 ETH (creator fee recipient — all their launches combined)
+  claimable by 0x000000000000000000000000000000000000beef: 0.0421 ETH
+  buyback vault    : locked 1234567 MV2, released 0, releasable now 12 (5-year linear vest)
+
+────────────────────────────────────────────────────────────────────────
+Uniswap V4 pool (meme hook)
+────────────────────────────────────────────────────────────────────────
+  pool id          : 0x37fb6455c3d520b08ff980eb4e47e1be3cf74abc185a8654187d3998b762cdde  (currency0/1 sorted, fee 0, tickSpacing 60, hooks 0xE5e702641Ea86F4ae6cC3cDaeD2B886f976Be044)
+  not graduated yet
+
+
+# A6. RPC_URL=mock tsx claim.ts --token 0x3333...3333 --from 0x...dEaD --sweep --dry-run
+
+────────────────────────────────────────────────────────────────────────
+Pons V2 fee claim (DRY RUN)
+────────────────────────────────────────────────────────────────────────
+rpc      : online (chain 4663)
+token    : 0x3333333333333333333333333333333333333333  https://robinhoodchain.blockscout.com/token/0x3333333333333333333333333333333333333333
+sender   : 0x000000000000000000000000000000000000dEaD  (no PRIVATE_KEY — placeholder / --from)
+escrow   : 0xd3AFEB2a57f70eF218Aa82451c51B2fb0416Ac9e  https://robinhoodchain.blockscout.com/address/0xd3AFEB2a57f70eF218Aa82451c51B2fb0416Ac9e
+
+────────────────────────────────────────────────────────────────────────
+Launch record
+────────────────────────────────────────────────────────────────────────
+  curve            : 0x4444444444444444444444444444444444444444
+  pair token       : native ETH
+  creator recipient: 0x000000000000000000000000000000000000dEaD (= sender ✓)
+  unswept on curve : 0.015 fee + 0.015 tax → creator ≈ 0.0255
+  curve.sweepFees selector present ✓
+
+▶ PonsV2BondingCurve.sweepFees(0)
+  to      : 0x4444444444444444444444444444444444444444
+  from    : 0x000000000000000000000000000000000000dEaD  (placeholder — no PRIVATE_KEY)
+  value   : 0 ETH (0 wei)
+  args    : [
+              "0"
+            ]
+  selector: 0x3729bb9a  (36 bytes)
+  eth_call: OK → [   null ]
+  gas     : 2000000 ≈ 0.0002 ETH at 0.1 gwei
+  dry-run : nothing sent
+
+────────────────────────────────────────────────────────────────────────
+Fee Escrow balance
+────────────────────────────────────────────────────────────────────────
+  claimable by sender: 0.0421 ETH
+
+────────────────────────────────────────────────────────────────────────
+Claim
+────────────────────────────────────────────────────────────────────────
+  function         : claim()  (selector present in escrow bytecode ✓)
+
+▶ PonsV2FeeEscrow.claim()
+  to      : 0xd3AFEB2a57f70eF218Aa82451c51B2fb0416Ac9e
+  from    : 0x000000000000000000000000000000000000dEaD  (placeholder — no PRIVATE_KEY)
+  value   : 0 ETH (0 wei)
+  args    : []
+  selector: 0x4e71d92d  (4 bytes)
+  eth_call: OK → [   "42100000000000000" ]
+  gas     : 2000000 ≈ 0.0002 ETH at 0.1 gwei
+  dry-run : nothing sent
+
+────────────────────────────────────────────────────────────────────────
+Dry run summary
+────────────────────────────────────────────────────────────────────────
+  nothing sent.
+
+# A7. RPC_URL=mock tsx pool.ts --token 0x3333...3333 --price 0.001 --amount-token 1000000 --dry-run   (V3 side pool vs AMZN)
+
+────────────────────────────────────────────────────────────────────────
+Uniswap V3 pool (DRY RUN)
+────────────────────────────────────────────────────────────────────────
+rpc      : online (chain 4663)
+sender   : 0x000000000000000000000000000000000000dEaD  (no PRIVATE_KEY — placeholder / --from)
+token    : 0x3333333333333333333333333333333333333333 (MV2, 18 dec)
+quote    : 0x12f190a9f9d7d37a250758b26824b97ce941bf54 (AMZN, 18 dec)
+ordering : token0=0x12f190a9f9d7d37a250758b26824b97ce941bf54 (AMZN)  token1=0x3333333333333333333333333333333333333333 (MV2)  ← token0 is the lower address
+fee tier : 10000 (1%)  tick spacing 200
+pool addr: 0xFA7958216fD56d2f14b984a498cacCd9e5cf8B91 (CREATE2 prediction)  https://robinhoodchain.blockscout.com/address/0xFA7958216fD56d2f14b984a498cacCd9e5cf8B91
+existing : none
+
+────────────────────────────────────────────────────────────────────────
+Price
+────────────────────────────────────────────────────────────────────────
+  input          : 0.001 AMZN per MV2
+  P (raw t1/t0)  : 1000000000000000000000 / 1000000000000000000
+  sqrtPriceX96   : 2505414483750479311864138015696
+  tick (approx)  : 69081
+  round-trip     : 1000 MV2/AMZN  |  0.001 AMZN/MV2
+
+▶ NonfungiblePositionManager.createAndInitializePoolIfNecessary(token0, token1, fee, sqrtPriceX96)
+  to      : 0x73991a25C818Bf1f1128dEAaB1492D45638DE0D3
+  from    : 0x000000000000000000000000000000000000dEaD  (placeholder — no PRIVATE_KEY)
+  value   : 0 ETH (0 wei)
+  args    : [
+              "0x12f190a9f9d7d37a250758b26824b97ce941bf54",
+              "0x3333333333333333333333333333333333333333",
+              10000,
+              "2505414483750479311864138015696"
+            ]
+  selector: 0x13ead562  (132 bytes)
+  eth_call: OK → [   "0x2222222222222222222222222222222222222222" ]
+  gas     : 2000000 ≈ 0.0002 ETH at 0.1 gwei
+  dry-run : nothing sent
+
+────────────────────────────────────────────────────────────────────────
+Liquidity (full range)
+────────────────────────────────────────────────────────────────────────
+  ticks          : [-887200, 887200] (spacing 200)
+  derived quote  : 999.999999999999998281 AMZN
+  desired        : 999.999999999999998281 AMZN + 1000000 MV2
+  will consume   : 999.99999999999999828 AMZN + 999999.999999999999999799 MV2  (liquidity 31622776601683793320037)
+  ! insufficient MV2: have 1000, need 1000000
+
+▶ AMZN.approve(NonfungiblePositionManager, amount)
+  to      : 0x12f190a9f9d7d37a250758b26824b97ce941bf54
+  from    : 0x000000000000000000000000000000000000dEaD  (placeholder — no PRIVATE_KEY)
+  value   : 0 ETH (0 wei)
+  args    : [
+              "0x73991a25C818Bf1f1128dEAaB1492D45638DE0D3",
+              "999999999999999998281"
+            ]
+  selector: 0x095ea7b3  (68 bytes)
+  eth_call: OK → [   true ]
+  gas     : 2000000 ≈ 0.0002 ETH at 0.1 gwei
+  dry-run : nothing sent
+
+▶ MV2.approve(NonfungiblePositionManager, amount)
+  to      : 0x3333333333333333333333333333333333333333
+  from    : 0x000000000000000000000000000000000000dEaD  (placeholder — no PRIVATE_KEY)
+  value   : 0 ETH (0 wei)
+  args    : [
+              "0x73991a25C818Bf1f1128dEAaB1492D45638DE0D3",
+              "1000000000000000000000000"
+            ]
+  selector: 0x095ea7b3  (68 bytes)
+  eth_call: OK → [   true ]
+  gas     : 2000000 ≈ 0.0002 ETH at 0.1 gwei
+  dry-run : nothing sent
+
+▶ NonfungiblePositionManager.mint(MintParams)
+  to      : 0x73991a25C818Bf1f1128dEAaB1492D45638DE0D3
+  from    : 0x000000000000000000000000000000000000dEaD  (placeholder — no PRIVATE_KEY)
+  value   : 0 ETH (0 wei)
+  args    : [
+              {
+                "token0": "0x12f190a9f9d7d37a250758b26824b97ce941bf54",
+                "token1": "0x3333333333333333333333333333333333333333",
+                "fee": 10000,
+                "tickLower": -887200,
+                "tickUpper": 887200,
+                "amount0Desired": "999999999999999998281",
+                "amount1Desired": "1000000000000000000000000",
+                "amount0Min": "989999999999999998297",
+                "amount1Min": "989999999999999999999801",
+                "recipient": "0x000000000000000000000000000000000000dEaD",
+                "deadline": "1788715075"
+              }
+            ]
+  selector: 0x88316456  (356 bytes)
+  eth_call: OK → [   [     "7",     "31622776601683793320037",     "1000000000000000000000000",     "1000000000000000000000"   ] ]
+  gas     : 2000000 ≈ 0.0002 ETH at 0.1 gwei
+  dry-run : nothing sent
+
+────────────────────────────────────────────────────────────────────────
+Dry run summary
+────────────────────────────────────────────────────────────────────────
+  pool           : 0x2222222222222222222222222222222222222222  https://robinhoodchain.blockscout.com/address/0x2222222222222222222222222222222222222222
+  nothing sent
+
+########################################################################
+# APPENDIX B — legacy Pons V1 scripts against the mock
+########################################################################
+
+# B1. RPC_URL=mock tsx launch-v1.ts --name CutTest --symbol CUTT --dry-run
+
+────────────────────────────────────────────────────────────────────────
+Pons v1 launch (DRY RUN)
+────────────────────────────────────────────────────────────────────────
+token   : CutTest (CUTT)
+logo    : (none)
+factory : 0xA5aAb3F0c6EeadF30Ef1D3Eb997108E976351feB  https://robinhoodchain.blockscout.com/address/0xA5aAb3F0c6EeadF30Ef1D3Eb997108E976351feB
+sender  : 0x000000000000000000000000000000000000dEaD  (no PRIVATE_KEY — placeholder / --from)
+rpc     : online (chain 4663)
+
+────────────────────────────────────────────────────────────────────────
+Factory state
+────────────────────────────────────────────────────────────────────────
+  launchFee        : 0.0005 ETH (live)
+  launchEnabled    : true   whitelisted(sender): false
+  locker           : 0x736D76699C26D0d966744cAe304C000d471f7F35
+  launchConfig[0] : pair=0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73 supply=1000000000 initialTick=-230400 maxWallet=200bps maxTx=220bps restrictionBlocks=2 enabled=true
+  dexConfig[0]    : Uniswap V3 factory=0x1f7d7550B1b028f7571E69A784071F0205FD2EfA npm=0x73991a25C818Bf1f1128dEAaB1492D45638DE0D3 router=0xCaf681a66D020601342297493863E78C959E5cb2 fee=10000 spacing=200 enabled=true
+  selected         : launchConfigId=0 dexId=0
+
+────────────────────────────────────────────────────────────────────────
+Salt / predicted address
+────────────────────────────────────────────────────────────────────────
+  saltStart        : 0x93f35374571fdc9d2b5654b18680bda3be2467eba8130b7924ee63acbdf1b252
+  deploySalt       : 0x93f35374571fdc9d2b5654b18680bda3be2467eba8130b7924ee63acbdf1b252
+  predicted token  : 0x111111111111111111111111111111111111BBBB  (ends in bbbb ✓)
+
+────────────────────────────────────────────────────────────────────────
+Transaction
+────────────────────────────────────────────────────────────────────────
+  launch fee 0.0005 ETH + initial buy 0 ETH = value 0.0005 ETH
+
+▶ PonsLaunchFactory.launchToken(params, launchConfigId, dexId, salt)
+  to      : 0xA5aAb3F0c6EeadF30Ef1D3Eb997108E976351feB
+  from    : 0x000000000000000000000000000000000000dEaD  (placeholder — no PRIVATE_KEY)
+  value   : 0.0005 ETH (500000000000000 wei)
+  args    : [
+              {
+                "name": "CutTest",
+                "symbol": "CUTT",
+                "logo": "",
+                "description": "",
+                "socials": {
+                  "twitter": "",
+                  "telegram": "",
+                  "discord": "",
+                  "website": "",
+                  "farcaster": ""
+                },
+                "feeWallet": "0x0000000000000000000000000000000000000000"
+              },
+              "0",
+              "0",
+              "0x93f35374571fdc9d2b5654b18680bda3be2467eba8130b7924ee63acbdf1b252"
+            ]
+  selector: 0x686399cb  (836 bytes)
+  eth_call: OK → [   "0x111111111111111111111111111111111111BBBB" ]
+  gas     : 2000000 ≈ 0.0002 ETH at 0.1 gwei
+  dry-run : nothing sent
+
+────────────────────────────────────────────────────────────────────────
+Dry run summary
+────────────────────────────────────────────────────────────────────────
+  would send 0.0005 ETH to 0xA5aAb3F0c6EeadF30Ef1D3Eb997108E976351feB
+  simulated token  : 0x111111111111111111111111111111111111BBBB
+  pool             : WETH / CUTT fee 10000 on Uniswap V3
+  supply           : 1000000000 CUTT (all in the locked LP position)
+
+# B2. RPC_URL=mock tsx status-v1.ts --token 0x1111...bbbb
+
+────────────────────────────────────────────────────────────────────────
+Pons token status
+────────────────────────────────────────────────────────────────────────
+token    : 0x111111111111111111111111111111111111bbbb
+explorer : https://robinhoodchain.blockscout.com/token/0x111111111111111111111111111111111111bbbb
+robinscan: https://robinscan.io/address/0x111111111111111111111111111111111111bbbb
+
+────────────────────────────────────────────────────────────────────────
+Launch record (PonsLaunchFactory.getLaunchedToken)
+────────────────────────────────────────────────────────────────────────
+  factory         : 0xA5aAb3F0c6EeadF30Ef1D3Eb997108E976351feB (active)
+  deployer        : 0x000000000000000000000000000000000000dEaD
+  paired token    : 0x0Bd7D308f8E1639FAb988df18A8011f41EAcAD73 (WETH)
+  supply          : 1000000000
+  pool fee        : 10000 (1%)   token is token0
+  position NFT    : #42 on 0x73991a25C818Bf1f1128dEAaB1492D45638DE0D3
+  initial buy     : 0 ETH
+  config/dex ids  : 0 / 0
+
+────────────────────────────────────────────────────────────────────────
+Token (PonsLauncherToken)
+────────────────────────────────────────────────────────────────────────
+  name/symbol     : Mock Pons Token (MOCK)
+  total supply    : 1000000000
+  logo            : ipfs://logo
+  description     : mock
+  socials         : ["","","","",""]
+  anti-snipe      : until block 258 (now 256) → 2 blocks left
+  pool            : 0x2222222222222222222222222222222222222222  https://robinhoodchain.blockscout.com/address/0x2222222222222222222222222222222222222222
+
+────────────────────────────────────────────────────────────────────────
+Uniswap V3 pool
+────────────────────────────────────────────────────────────────────────
+  sqrtPriceX96    : 2505414483750479311864138015   tick -69082
+  price           : 1.000000e-3 WETH per MOCK   |   1,000 MOCK per WETH
+  FDV             : 1000000.0000 WETH
+  liquidity (L)   : 1000000000000000000000000
+  balances        : 1000000000 WETH  /  999000000 MOCK   (includes uncollected fees)
+
+────────────────────────────────────────────────────────────────────────
+Locked position & graduation
+────────────────────────────────────────────────────────────────────────
+  WETH principal in LP : 1.5 WETH
+  graduation      : 10 WETH threshold → 15.00%
+  NFT owner       : 0x736D76699C26D0d966744cAe304C000d471f7F35 (active locker)
+  range           : [-230400, 887200]  liquidity 1000000000000000000000000
+  principal       : 31612.841376717444191971 WETH + 31622776.601683793319934527 MOCK
+  tokensOwed      : 0 WETH + 0 MOCK (already accounted, not yet collected)
+  uncollected fees: 0.25 WETH + 12345 MOCK  (gross, simulated collect)
+  creator ~70%    : 0.175 WETH + 8641.5 MOCK  (docs split; locker is authoritative)
+
+────────────────────────────────────────────────────────────────────────
+Locker 0x736D76699C26D0d966744cAe304C000d471f7F35 (ABI unverified — bytecode probe)
+────────────────────────────────────────────────────────────────────────
+  write cands     : claimFees(address)
+  read cands      : protocolFeeRecipient(), feeRedirects(address)
+  protocolFeeRecipient: unavailable (The contract function "protocolFeeRecipient" returned no data ("0x").)
+
+
+# B3. RPC_URL=mock tsx claim-v1.ts --token 0x1111...bbbb --from 0x...dEaD --dry-run
+
+────────────────────────────────────────────────────────────────────────
+Pons creator fee claim (DRY RUN)
+────────────────────────────────────────────────────────────────────────
+rpc     : online (chain 4663)
+token   : 0x111111111111111111111111111111111111bbbb  https://robinhoodchain.blockscout.com/token/0x111111111111111111111111111111111111bbbb
+sender  : 0x000000000000000000000000000000000000dEaD  (no PRIVATE_KEY — placeholder / --from)
+
+────────────────────────────────────────────────────────────────────────
+Launch record
+────────────────────────────────────────────────────────────────────────
+  factory       : 0xA5aAb3F0c6EeadF30Ef1D3Eb997108E976351feB
+  deployer      : 0x000000000000000000000000000000000000dEaD (= sender)
+  position NFT  : #42 on 0x73991a25C818Bf1f1128dEAaB1492D45638DE0D3
+  NFT owner     : 0x736D76699C26D0d966744cAe304C000d471f7F35 (locker ✓)
+  locker        : 0x736D76699C26D0d966744cAe304C000d471f7F35  https://robinhoodchain.blockscout.com/address/0x736D76699C26D0d966744cAe304C000d471f7F35
+
+────────────────────────────────────────────────────────────────────────
+Uncollected LP fees (simulated NonfungiblePositionManager.collect as the locker)
+────────────────────────────────────────────────────────────────────────
+  gross         : 0.25 WETH + 12345 MOCK
+  creator ~70% : 0.175 WETH + 8641.5 MOCK  (split per docs; the locker decides the real amounts)
+
+────────────────────────────────────────────────────────────────────────
+Locker bytecode probe (ABI not published)
+────────────────────────────────────────────────────────────────────────
+  code size     : 31 bytes
+  write cands   : claimFees(address) [0x15a0ea6a]
+  read cands    : protocolFeeRecipient() [0x64df049e], feeRedirects(address) [0xdce780c2]
+  protocolFeeRecipient: unavailable (The contract function "protocolFeeRecipient" returned no data ("0x").)
+  feeRedirects(address): unavailable (The contract function "feeRedirects" returned no data ("0x").)
+  → using the single discovered candidate: claimFees(address)
+  chosen sig    : claimFees(address)  (selector present in locker bytecode ✓)
+
+▶ PonsLocker.claimFees(address)  
+  to      : 0x736D76699C26D0d966744cAe304C000d471f7F35
+  from    : 0x000000000000000000000000000000000000dEaD  (placeholder — no PRIVATE_KEY)
+  value   : 0 ETH (0 wei)
+  args    : [
+              "0x111111111111111111111111111111111111bbbb"
+            ]
+  selector: 0x15a0ea6a  (36 bytes)
+  eth_call: OK → [   null ]
+  gas     : 2000000 ≈ 0.0002 ETH at 0.1 gwei
+  dry-run : nothing sent
+
+────────────────────────────────────────────────────────────────────────
+Dry run summary
+────────────────────────────────────────────────────────────────────────
+  nothing sent. The locker claim ABI is unverified: verify the function on the explorer
+  (https://robinhoodchain.blockscout.com/address/0x736D76699C26D0d966744cAe304C000d471f7F35) and set LOCKER_CLAIM_SIGNATURE in .env before a live claim.

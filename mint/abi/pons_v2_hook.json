@@ -1,0 +1,434 @@
+{
+  "_status": "PonsV2MemeHook 0xE5e702641Ea86F4ae6cC3cDaeD2B886f976Be044 — Hand-derived from the official Solidity source (github.com/ponsdotdev/ponsfamily, contractsV2/src/v2, commit 845bd54) and docs.ponsfamily.com/v2. NOT compiled and NOT fetched from the explorer (unreachable from the build sandbox). The scripts verify each selector they send against the deployed bytecode first.",
+  "abi": [
+    {
+      "name": "currentFeePolicy",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "tuple",
+          "components": [
+            {
+              "type": "address",
+              "name": "protocolFeeRecipient"
+            },
+            {
+              "type": "uint16",
+              "name": "protocolFeeShareBps"
+            },
+            {
+              "type": "uint16",
+              "name": "buybackBurnBps"
+            },
+            {
+              "type": "uint16",
+              "name": "hookFeeBps"
+            },
+            {
+              "type": "uint16",
+              "name": "maxInternalPriceImpactBps"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "protocolFeeShareBps",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "buybackBurnBps",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "hookFeeBps",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "maxInternalPriceImpactBps",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "protocolFeeRecipient",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
+    },
+    {
+      "name": "feeSweepOperator",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
+    },
+    {
+      "name": "feeEscrow",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
+    },
+    {
+      "name": "factory",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
+    },
+    {
+      "name": "buybackVault",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
+    },
+    {
+      "name": "launches",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "poolId"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "bool",
+          "name": "registered"
+        },
+        {
+          "type": "bool",
+          "name": "memecoinIsCurrency0"
+        },
+        {
+          "type": "address",
+          "name": "memecoin"
+        },
+        {
+          "type": "address",
+          "name": "quoteToken"
+        },
+        {
+          "type": "address",
+          "name": "creator"
+        },
+        {
+          "type": "address",
+          "name": "buybackCreatorRecipient"
+        },
+        {
+          "type": "address",
+          "name": "protocolFeeRecipient"
+        },
+        {
+          "type": "uint16",
+          "name": "creatorTaxBps"
+        },
+        {
+          "type": "uint16",
+          "name": "protocolFeeShareBps"
+        },
+        {
+          "type": "uint16",
+          "name": "buybackBurnBps"
+        },
+        {
+          "type": "uint16",
+          "name": "hookFeeBps"
+        },
+        {
+          "type": "uint16",
+          "name": "maxInternalPriceImpactBps"
+        },
+        {
+          "type": "bool",
+          "name": "buybackEnabled"
+        }
+      ]
+    },
+    {
+      "name": "pendingFees",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "poolId"
+        },
+        {
+          "type": "address",
+          "name": "currency"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "pendingCreatorTax",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "poolId"
+        },
+        {
+          "type": "address",
+          "name": "currency"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "pendingBuyback",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "poolId"
+        },
+        {
+          "type": "address",
+          "name": "currency"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "sweepPoolFees",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "poolId"
+        },
+        {
+          "type": "uint256",
+          "name": "minConversionQuoteOut"
+        },
+        {
+          "type": "uint256",
+          "name": "minBuybackTokensOut"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "name": "PoolRegistered",
+      "type": "event",
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "poolId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "memecoin"
+        },
+        {
+          "type": "address",
+          "name": "quoteToken"
+        },
+        {
+          "type": "address",
+          "name": "creator"
+        }
+      ]
+    },
+    {
+      "name": "HookFeeCollected",
+      "type": "event",
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "poolId",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "currency"
+        },
+        {
+          "type": "uint256",
+          "name": "feeAmount"
+        },
+        {
+          "type": "uint256",
+          "name": "taxAmount"
+        }
+      ]
+    },
+    {
+      "name": "PoolFeesSwept",
+      "type": "event",
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "poolId",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "protocolAmount"
+        },
+        {
+          "type": "uint256",
+          "name": "buybackSpent"
+        },
+        {
+          "type": "uint256",
+          "name": "creatorAmount"
+        },
+        {
+          "type": "uint256",
+          "name": "tokensLocked"
+        }
+      ]
+    },
+    {
+      "name": "BuybackEnabledUpdated",
+      "type": "event",
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "poolId",
+          "indexed": true
+        },
+        {
+          "type": "bool",
+          "name": "enabled"
+        }
+      ]
+    },
+    {
+      "name": "PoolBuybackSkipped",
+      "type": "event",
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "poolId",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "foldedBackQuote"
+        }
+      ]
+    },
+    {
+      "name": "PoolConversionSkipped",
+      "type": "event",
+      "inputs": [
+        {
+          "type": "bytes32",
+          "name": "poolId",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "retainedMemecoin"
+        }
+      ]
+    },
+    {
+      "name": "UnknownPool",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "NotFeeSweepOperator",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "InternalSwapRequiresOperator",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "SlippageExceeded",
+      "type": "error",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "actual"
+        },
+        {
+          "type": "uint256",
+          "name": "minimum"
+        }
+      ]
+    },
+    {
+      "name": "MinimumOutputRequired",
+      "type": "error",
+      "inputs": []
+    }
+  ]
+}

@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Clip Twitch and Kick streams, post them with the CUT watermark, get paid every Sunday on Robinhood Chain by views.">
+<title>CUT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --bg:#0b0b10; --bg2:#101018; --line:#1e1e2a; --line2:#2a2a3a;
+    --ink:#f2f0f7; --ink2:#a9a6b8; --ink3:#6d6a7c;
+    --purple:#9146ff; --purple2:#b98cff; --green:#53fc18;
+    --display:'Poppins',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --body:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+    color-scheme:dark;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;
+    background-color:var(--bg);
+    background-image:linear-gradient(rgba(70,70,95,.16) 1px,transparent 1px),linear-gradient(90deg,rgba(70,70,95,.16) 1px,transparent 1px);
+    background-size:48px 48px}
+  .page{position:relative}
+  a{color:inherit}
+  h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance;line-height:1.05}
+  h1{font-weight:800;font-size:clamp(40px,6.6vw,84px);letter-spacing:-.02em}
+  h2{font-weight:800;font-size:clamp(28px,3.6vw,44px);letter-spacing:-.015em}
+  h3{font-weight:600;font-size:20px}
+  p{margin:0}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--green)}
+  .mono{font-family:var(--mono)}
+  .num{font-variant-numeric:tabular-nums}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+  section{padding:88px 0;border-top:1px solid var(--line)}
+  .lead{color:var(--ink2);max-width:62ch;font-size:18px}
+  img{max-width:100%;display:block}
+
+  nav{position:sticky;top:0;z-index:5;background:rgba(11,11,16,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;gap:28px;height:64px}
+  .brand{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:-.02em;display:flex;align-items:center;gap:10px;text-decoration:none}
+  .brand i{display:inline-block;width:14px;height:14px;background:var(--green);border-radius:2px;box-shadow:0 0 18px rgba(83,252,24,.6)}
+  nav .links{display:flex;gap:22px;margin-left:auto;font-family:var(--mono);font-size:13px}
+  nav .links a{text-decoration:none;color:var(--ink2)}
+  nav .links a:hover,nav .links a:focus-visible{color:var(--ink)}
+  .pill{font-family:var(--mono);font-size:12px;letter-spacing:.08em;padding:6px 10px;border:1px solid var(--line2);border-radius:999px;color:var(--ink2)}
+  @media (max-width:760px){nav .links{display:none}}
+
+  .hero{padding:80px 0 56px;border-top:0}
+  .hero .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+  .hero h1 .l1{display:block;color:var(--ink)}
+  .hero h1 .l2{display:block;color:var(--green)}
+  .hero h1 .l3{display:block;color:var(--purple2)}
+  .cta{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap}
+  .btn{font-family:var(--mono);font-size:14px;letter-spacing:.04em;padding:14px 20px;border-radius:6px;text-decoration:none;border:1px solid var(--line2);color:var(--ink);background:var(--bg2);text-align:center;display:inline-block}
+  .btn.primary{background:var(--green);color:#06120a;border-color:var(--green);font-weight:500}
+  .btn:hover,.btn:focus-visible{outline:2px solid var(--purple2);outline-offset:2px}
+  .btn[aria-disabled="true"]{opacity:.55;cursor:not-allowed}
+
+  .post{border:1px solid var(--line2);border-radius:12px;background:#000;display:flex;flex-direction:column;overflow:hidden}
+  .post .ph{display:flex;align-items:center;gap:10px;padding:14px 16px 0}
+  .post .av{width:40px;height:40px;border-radius:50%;object-fit:cover;flex:none}
+  .post .nm{font-weight:500;font-size:15px;line-height:1.2;display:flex;align-items:center;gap:5px}
+  .post .nm svg{width:16px;height:16px;flex:none}
+  .post .hd{font-family:var(--mono);font-size:12px;color:var(--ink3)}
+  .post .cap{padding:10px 16px 12px;font-size:15px;line-height:1.4;color:var(--ink);white-space:pre-line}
+  .post .still{position:relative;aspect-ratio:16/9;overflow:hidden;background:#111;margin:0 16px;border-radius:10px;border:1px solid var(--line)}
+  .post .still img{width:100%;height:100%;object-fit:cover;display:block}
+  .post .st{display:flex;justify-content:space-between;padding:12px 22px 14px;font-family:var(--mono);font-size:12.5px;color:var(--ink3)}
+  .post .st span{display:inline-flex;align-items:center;gap:6px}
+  .post .st svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+  .post .st .vw{color:var(--green)}
+  .post .meta{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding:14px 16px;background:var(--bg2);border-top:1px solid var(--line);margin-top:auto}
+  .post .big{font-family:var(--display);font-weight:800;font-size:34px;letter-spacing:-.02em;color:var(--green);line-height:1}
+  .post .big small{font-family:var(--mono);font-weight:400;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);display:block;margin-top:5px}
+  .post .who{font-family:var(--mono);font-size:12px;color:var(--ink2);text-align:right;line-height:1.5}
+  .post.hero-post{box-shadow:0 30px 80px rgba(145,70,255,.18)}
+  .post.hero-post .big{font-size:44px}
+  @media (max-width:860px){.hero .grid{grid-template-columns:1fr}}
+
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:40px}
+  .card.more{border:1px solid var(--line2);border-radius:12px;background:var(--bg2);display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:16px;padding:40px 44px;grid-column:span 2;text-align:left}
+  .card.more .big{font-family:var(--display);font-weight:800;font-size:44px;letter-spacing:-.02em;color:var(--green);line-height:1}
+  .card.more p{color:var(--ink2);max-width:44ch;font-size:19px;line-height:1.5}
+  @media (max-width:900px){.cards{grid-template-columns:1fr 1fr}.card.more{grid-column:span 2}}
+  @media (max-width:560px){.cards{grid-template-columns:1fr}.card.more{grid-column:auto}}
+
+  .strip{margin-top:64px;border:1px solid var(--line2);border-radius:10px;background:var(--bg2);display:grid;grid-template-columns:repeat(4,1fr)}
+  .strip>div{padding:18px 22px;border-right:1px solid var(--line)}
+  .strip>div:last-child{border-right:0}
+  .strip .k{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
+  .strip .v{font-family:var(--display);font-weight:800;font-size:30px;letter-spacing:-.02em;margin-top:4px}
+  .strip .s{font-family:var(--mono);font-size:12px;color:var(--ink2);margin-top:2px}
+  .strip .v.g{color:var(--green)} .strip .v.p{color:var(--purple2)}
+  @media (max-width:820px){.strip{grid-template-columns:1fr 1fr}.strip>div:nth-child(2){border-right:0}.strip>div:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:40px}
+  .step{border:1px solid var(--line2);border-radius:10px;padding:26px 24px;background:var(--bg2);display:flex;flex-direction:column;gap:12px}
+  .step .n{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--purple2)}
+  .step p{color:var(--ink2)}
+  .step .rule{font-family:var(--mono);font-size:12px;color:var(--ink3);border-top:1px dashed var(--line2);padding-top:12px;margin-top:auto}
+  @media (max-width:820px){.steps{grid-template-columns:1fr}}
+
+  .board{border:1px solid var(--line2);border-radius:10px;background:#07070b;margin-top:40px;overflow:hidden}
+  .board .head{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;padding:14px 18px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:12px;color:var(--ink2)}
+  .board .head .dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green);animation:pulse 1.4s infinite}
+  @keyframes pulse{50%{opacity:.35}}
+  .board .head .demo{margin-left:auto;color:var(--purple2);letter-spacing:.1em}
+  .board .cols{display:grid;grid-template-columns:1fr 1.15fr}
+  .board .col{padding:18px;min-width:0}
+  .board .col+.col{border-left:1px solid var(--line)}
+  .board h3{font-family:var(--mono);font-weight:500;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:14px}
+  .stream{display:grid;grid-template-columns:150px 1fr 74px;gap:14px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+  .stream:first-of-type{border-top:0}
+  .stream .who{font-family:var(--mono);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .stream .who small{display:block;color:var(--ink3);font-size:11px}
+  .stream canvas{width:100%;height:34px;display:block}
+  .stream .rate{font-family:var(--mono);font-size:13px;text-align:right}
+  .stream .rate small{display:block;color:var(--ink3);font-size:11px}
+  .stream.hot .rate{color:var(--green)}
+  table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:12.5px}
+  th{text-align:left;font-weight:500;color:var(--ink3);letter-spacing:.08em;text-transform:uppercase;font-size:11px;padding:0 0 10px;border-bottom:1px solid var(--line)}
+  td{padding:10px 8px 10px 0;border-bottom:1px solid var(--line);vertical-align:top;white-space:nowrap}
+  td.words{white-space:normal;color:var(--ink2)}
+  td .g{color:var(--green)} td .p{color:var(--purple2)}
+  td.views{text-align:right;color:var(--green);font-weight:500}
+  .tablewrap{overflow-x:auto}
+  .mos{display:flex;flex-direction:column;font-family:var(--mono);font-size:12.5px}
+  .mo{display:grid;grid-template-columns:150px 1fr 76px 84px;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+  .mo.hd{border-top:0;padding-top:0;color:var(--ink3);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+  .mo.hd span:last-child,.mo .v{text-align:right}
+  .mo .ts{display:flex;flex-direction:column;line-height:1.3}
+  .mo .ts b{font-weight:400;color:var(--ink3);font-size:11px}
+  .mo .w{color:var(--ink2)}
+  .mo .r i{font-style:normal;color:var(--green)}
+  .mo .v{color:var(--green);font-weight:500}
+  @media (max-width:640px){
+    .mo{grid-template-columns:1fr auto;grid-template-rows:auto auto;gap:4px 12px}
+    .mo.hd{display:none}
+    .mo .ts{grid-column:1;grid-row:1}
+    .mo .v{grid-column:2;grid-row:1;align-self:end}
+    .mo .w{grid-column:1;grid-row:2}
+    .mo .r{grid-column:2;grid-row:2;text-align:right;color:var(--ink3)}
+  }
+  @media (max-width:900px){.board .cols{grid-template-columns:1fr}.board .col+.col{border-left:0;border-top:1px solid var(--line)}.stream{grid-template-columns:120px 1fr 64px}}
+
+  .clip{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:36px;align-items:start}
+  .rules{list-style:none;padding:0;margin:0;display:flex;flex-direction:column}
+  .rules li{display:grid;grid-template-columns:28px 1fr;gap:12px;padding:14px 0;border-top:1px solid var(--line);color:var(--ink2)}
+  .rules li b{font-family:var(--mono);font-weight:500;color:var(--green);font-size:12px;padding-top:4px}
+  .rules li strong{color:var(--ink);font-weight:500}
+  form{border:1px solid var(--line2);border-radius:10px;padding:24px;background:var(--bg2);display:flex;flex-direction:column;gap:14px}
+  label{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);display:flex;flex-direction:column;gap:6px}
+  input{font-family:var(--mono);font-size:14px;padding:12px 14px;background:#07070b;border:1px solid var(--line2);border-radius:6px;color:var(--ink)}
+  input:focus-visible{outline:2px solid var(--purple2);outline-offset:1px}
+  form .fine{font-family:var(--mono);font-size:12px;color:var(--ink3);line-height:1.5}
+  form .ok{display:none;font-family:var(--mono);font-size:13px;color:var(--green)}
+  @media (max-width:820px){.clip{grid-template-columns:1fr}}
+
+  .repo{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:36px}
+  .repo div{border:1px solid var(--line2);border-radius:8px;padding:18px;background:var(--bg2)}
+  .repo .path{font-family:var(--mono);font-size:14px;color:var(--purple2)}
+  .repo p{color:var(--ink2);font-size:14px;margin-top:8px}
+  @media (max-width:900px){.repo{grid-template-columns:1fr 1fr}}
+  @media (max-width:520px){.repo{grid-template-columns:1fr}}
+
+  footer{border-top:1px solid var(--line);padding:40px 0 60px;font-family:var(--mono);font-size:12px;color:var(--ink3)}
+  footer .wrap{display:flex;gap:24px;flex-wrap:wrap;align-items:center}
+  footer .big{font-family:var(--display);font-weight:800;font-size:22px;color:var(--ink);letter-spacing:-.02em;margin-right:auto}
+
+  /* phones */
+  @media (max-width:640px){
+    .wrap{padding:0 18px}
+    section{padding:60px 0}
+    .hero{padding:48px 0 36px}
+    .hero .grid{gap:32px}
+    h1{font-size:clamp(38px,11.5vw,52px)}
+    h2{font-size:clamp(26px,7.2vw,34px)}
+    .lead{font-size:16px}
+    .cta{flex-direction:column;gap:10px}
+    .cta .btn{width:100%}
+    .strip{margin-top:40px}
+    .strip>div{padding:14px 16px}
+    .strip .v{font-size:26px}
+    .strip .s{font-size:11px}
+    .post .cap{font-size:14.5px}
+    .post .still{margin:0 12px}
+    .post .st{padding:10px 14px 12px;font-size:12px}
+    .post .meta{padding:12px 14px}
+    .post .big,.post.hero-post .big{font-size:30px}
+    .post .who{font-size:11px}
+    .cards{gap:14px}
+    .card.more{padding:28px 22px}
+    .card.more .big{font-size:36px}
+    .card.more p{font-size:16px}
+    .card.more .btn{width:100%}
+    .step{padding:22px 20px}
+    .board .col{padding:14px}
+    .stream{grid-template-columns:118px 1fr 62px;gap:8px}
+    .stream .who{font-size:12px}
+    .stream .rate{font-size:12px}
+    form{padding:20px}
+    footer .wrap{gap:10px 20px}
+    footer .big{width:100%;margin-right:0}
+  }
+  /* microwaves */
+  @media (max-width:380px){
+    .wrap{padding:0 14px}
+    .pill{display:none}
+    h1{font-size:36px}
+    .strip{grid-template-columns:1fr}
+    .strip>div{border-right:0;border-bottom:1px solid var(--line)}
+    .strip>div:last-child{border-bottom:0}
+    .strip>div:nth-child(2){border-right:0}
+    .post .st{gap:6px;padding:10px 12px}
+    .post .st span{gap:4px}
+    .stream{grid-template-columns:1fr 60px;grid-template-rows:auto auto}
+    .stream .who{grid-column:1/2}
+    .stream canvas{grid-column:1/-1;grid-row:2}
+    .stream .rate{grid-column:2/3;grid-row:1}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+</head>
+<body>
+<div class="page">
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#top"><i></i>CUT</a>
+    <span class="pill">ROBINHOOD CHAIN</span>
+    <div class="links">
+      <a href="#network">The numbers</a>
+      <a href="#how">How it works</a>
+      <a href="#board">Board</a>
+      <a href="#clippers">Clippers</a>
+      <a href="#repo">Open source</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <p class="eyebrow">Twitch · Kick · X · Robinhood Chain</p>
+        <h1 style="margin-top:18px">
+          <span class="l1">Clip streams.</span>
+          <span class="l2">Get paid</span>
+          <span class="l3">on Robinhood Chain.</span>
+        </h1>
+        <p class="lead" style="margin-top:26px">Post Twitch and Kick clips with the CUT watermark. Every Sunday you get paid by views, in CUT, on Robinhood Chain. The accounts already doing this did 71 million views last month.</p>
+        <div class="cta">
+          <a class="btn primary" href="#clippers">Start clipping</a>
+          <a class="btn" href="#network">See the numbers</a>
+          <a class="btn" href="#" aria-disabled="true" title="Trading opens at launch">Buy CUT · at launch</a>
+        </div>
+      </div>
+      <article class="post hero-post">
+        <div class="ph"><img class="av" src="img/av_marlow.jpg" alt="" width="40" height="40"><div><div class="nm">Marlow <svg viewBox="0 0 24 24" aria-label="verified"><circle cx="12" cy="12" r="11" fill="#1d9bf0"/><path d="M7 12.5l3 3 7-7" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="hd">@marlowxbt · Sep 4</div></div></div>
+        <p class="cap">Clavicular spent the entire night making moves on EVERY girl he met
+
+until guys waited outside and started a STREET FIGHT with him</p>
+        <div class="still"><img src="img/marlow_still.jpg" alt="Clip posted by @marlowxbt"></div>
+        <div class="st"><span><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-8 8H8l-4 3v-3.6A8 8 0 1 1 21 12z"/></svg>428</span><span><svg viewBox="0 0 24 24"><path d="M4 8h12l-3-3M20 16H8l3 3"/></svg>487</span><span><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>21K</span><span class="vw"><svg viewBox="0 0 24 24"><path d="M5 20v-7M12 20V4M19 20v-11"/></svg>3.8M</span></div>
+        <div class="meta"><div class="big">3.8M<small>views · one clip</small></div><div class="who">@marlowxbt<br>21K likes · 487 reposts</div></div>
+      </article>
+    </div>
+
+    <div class="strip" aria-label="Network numbers">
+      <div><div class="k">Network views · 30 days</div><div class="v num g">71.3M</div><div class="s">across the network</div></div>
+      <div><div class="k">Biggest clip this week</div><div class="v num p">3.8M</div><div class="s">one post, one night</div></div>
+      <div><div class="k">Biggest clip this month</div><div class="v num">6.6M</div><div class="s">@browomo · 45K likes</div></div>
+      <div><div class="k">Next payout</div><div class="v num" id="countdown">--:--:--</div><div class="s">Sunday 20:00 UTC · by views</div></div>
+    </div>
+  </div>
+</header>
+
+<section id="network">
+  <div class="wrap">
+    <p class="eyebrow">The numbers</p>
+    <h2 style="margin-top:14px">This is what one month on the network looks like.</h2>
+    <p class="lead" style="margin-top:18px">Real posts, real counters, every one of them public on the account that posted it. No compilation channels, no bought views. Twitch and Kick moments, cut and captioned within minutes of the chat asking for them.</p>
+    <div class="cards">
+      <article class="post">
+        <div class="ph"><img class="av" src="img/av_browomo.jpg" alt="" width="40" height="40"><div><div class="nm">Blaze <svg viewBox="0 0 24 24" aria-label="verified"><circle cx="12" cy="12" r="11" fill="#1d9bf0"/><path d="M7 12.5l3 3 7-7" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="hd">@browomo · Aug 20</div></div></div>
+        <p class="cap">Clavicular let THREE girls try to win him over, until one asked the question they ALL wanted answered 👀
+
+“Be honest… who was the best kisser?”</p>
+        <div class="still"><img src="img/browomo_still.jpg" alt="Clip posted by @browomo"></div>
+        <div class="st"><span><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-8 8H8l-4 3v-3.6A8 8 0 1 1 21 12z"/></svg>516</span><span><svg viewBox="0 0 24 24"><path d="M4 8h12l-3-3M20 16H8l3 3"/></svg>1.5K</span><span><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>45K</span><span class="vw"><svg viewBox="0 0 24 24"><path d="M5 20v-7M12 20V4M19 20v-11"/></svg>6.6M</span></div>
+        <div class="meta"><div class="big">6.6M<small>views · one clip</small></div><div class="who">@browomo<br>45K likes · 1.5K reposts</div></div>
+      </article>
+      <article class="post">
+        <div class="ph"><img class="av" src="img/av_marlow.jpg" alt="" width="40" height="40"><div><div class="nm">Marlow <svg viewBox="0 0 24 24" aria-label="verified"><circle cx="12" cy="12" r="11" fill="#1d9bf0"/><path d="M7 12.5l3 3 7-7" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="hd">@marlowxbt · Sep 4</div></div></div>
+        <p class="cap">Clavicular spent the entire night making moves on EVERY girl he met
+
+until guys waited outside and started a STREET FIGHT with him</p>
+        <div class="still"><img src="img/marlow_still.jpg" alt="Clip posted by @marlowxbt"></div>
+        <div class="st"><span><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-8 8H8l-4 3v-3.6A8 8 0 1 1 21 12z"/></svg>428</span><span><svg viewBox="0 0 24 24"><path d="M4 8h12l-3-3M20 16H8l3 3"/></svg>487</span><span><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>21K</span><span class="vw"><svg viewBox="0 0 24 24"><path d="M5 20v-7M12 20V4M19 20v-11"/></svg>3.8M</span></div>
+        <div class="meta"><div class="big">3.8M<small>views · one clip</small></div><div class="who">@marlowxbt<br>21K likes · 487 reposts</div></div>
+      </article>
+      <article class="post">
+        <div class="ph"><img class="av" src="img/av_selor.jpg" alt="" width="40" height="40"><div><div class="nm">Selor <svg viewBox="0 0 24 24" aria-label="verified"><circle cx="12" cy="12" r="11" fill="#1d9bf0"/><path d="M7 12.5l3 3 7-7" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="hd">@selorxbt · Sep 2</div></div></div>
+        <p class="cap">Clavicular thought he got a W at the club, but right after the kiss his face completely dropped and he started frantically wiping his tongue 👀
+
+“Wait, what the f*ck is in my mouth…”</p>
+        <div class="still"><img src="img/selor_still.jpg" alt="Clip posted by @selorxbt"></div>
+        <div class="st"><span><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-8 8H8l-4 3v-3.6A8 8 0 1 1 21 12z"/></svg>33</span><span><svg viewBox="0 0 24 24"><path d="M4 8h12l-3-3M20 16H8l3 3"/></svg>166</span><span><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>7.3K</span><span class="vw"><svg viewBox="0 0 24 24"><path d="M5 20v-7M12 20V4M19 20v-11"/></svg>1.6M</span></div>
+        <div class="meta"><div class="big">1.6M<small>views · one clip</small></div><div class="who">@selorxbt<br>7.3K likes · 166 reposts</div></div>
+      </article>
+      <article class="post">
+        <div class="ph"><img class="av" src="img/av_cassien.jpg" alt="" width="40" height="40"><div><div class="nm">Cassien <svg viewBox="0 0 24 24" aria-label="verified"><circle cx="12" cy="12" r="11" fill="#1d9bf0"/><path d="M7 12.5l3 3 7-7" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="hd">@cassienxbt · Sep 3</div></div></div>
+        <p class="cap">One girl thought kissing Clavicular meant she had WON, but her BEST FRIEND waited until the end to make the only move that mattered 😏
+
+“She got the kiss… I got his number.”</p>
+        <div class="still"><img src="img/cassien_still.jpg" alt="Clip posted by @cassienxbt"></div>
+        <div class="st"><span><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-8 8H8l-4 3v-3.6A8 8 0 1 1 21 12z"/></svg>3</span><span><svg viewBox="0 0 24 24"><path d="M4 8h12l-3-3M20 16H8l3 3"/></svg>23</span><span><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>1.2K</span><span class="vw"><svg viewBox="0 0 24 24"><path d="M5 20v-7M12 20V4M19 20v-11"/></svg>674K</span></div>
+        <div class="meta"><div class="big">674K<small>views · one clip</small></div><div class="who">@cassienxbt<br>1.2K likes · 23 reposts</div></div>
+      </article>
+      <div class="card more"><div class="big">CUT</div><p>From launch, every clip like these carries the watermark. Post yours the same way and get paid for the views it does, every Sunday, on Robinhood Chain.</p><a class="btn primary" href="#clippers">Join as a clipper</a></div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap">
+    <p class="eyebrow">How it works</p>
+    <h2 style="margin-top:14px">Three things. The third one happens by itself.</h2>
+    <div class="steps">
+      <div class="step">
+        <span class="n">01 · CLIP</span>
+        <h3>Cut the moment</h3>
+        <p>Any Twitch or Kick stream, any tool. Put the CUT watermark on the clip from second three, never on the first frame. That is the only branding rule.</p>
+        <span class="rule">watermark ≥ 3s · 1080p · no other logos</span>
+      </div>
+      <div class="step">
+        <span class="n">02 · POST</span>
+        <h3>Post it on X</h3>
+        <p>Your account, your caption, your audience. Register the account once with the wallet that should get paid. The network's own accounts post the same way, no special lane.</p>
+        <span class="rule">one wallet per account · verified accounts first</span>
+      </div>
+      <div class="step">
+        <span class="n">03 · PAID</span>
+        <h3>Get paid on Sunday</h3>
+        <p>Views on every watermarked clip are counted. The more views, the bigger your share. You get paid in CUT on Robinhood Chain, one claim, every week.</p>
+        <span class="rule">every Sunday 20:00 UTC · every payout on the explorer</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="board">
+  <div class="wrap">
+    <p class="eyebrow">Board</p>
+    <h2 style="margin-top:14px">Every moment, as chat calls it.</h2>
+    <p class="lead" style="margin-top:18px">The board is fed by the open-source watcher: it reads Twitch and Kick chat, measures chat speed against each stream's baseline, and logs the moment when chat spikes. That is where the clips come from. Until launch it shows demo data.</p>
+
+    <div class="board">
+      <div class="head"><span class="dot"></span><span>watch · 4 streams · chat speed vs 5-min baseline</span><span class="demo">DEMO · LIVE AT LAUNCH</span></div>
+      <div class="cols">
+        <div class="col">
+          <h3>Chat speed · msgs / 10s</h3>
+          <div id="streams"></div>
+        </div>
+        <div class="col">
+          <h3>Latest moments</h3>
+          <div class="mos" id="moments">
+            <div class="mo hd"><span>Time · stream</span><span>Chat said</span><span>Rate</span><span>Views</span></div>
+            <div class="mo"><span class="ts"><b>22:05:14</b>twitch/clavicular</span><span class="w">clip it · fight · lmaooo</span><span class="r"><i>40</i> vs 4.1</span><span class="v num">3,800,000</span></div>
+            <div class="mo"><span class="ts"><b>21:12:48</b>kick/adinross</span><span class="w">nahhh · cooked · clip</span><span class="r"><i>31</i> vs 6.8</span><span class="v num">614,000</span></div>
+            <div class="mo"><span class="ts"><b>19:40:02</b>twitch/jynxzi</span><span class="w">rage · kekw · clip that</span><span class="r"><i>27</i> vs 9.3</span><span class="v num">318,000</span></div>
+            <div class="mo"><span class="ts"><b>18:03:37</b>twitch/caseoh_</span><span class="w">omegalul · bro · clip</span><span class="r"><i>22</i> vs 5.5</span><span class="v num">205,000</span></div>
+            <div class="mo"><span class="ts"><b>16:48:10</b>kick/n3on</span><span class="w">w · clip · insane</span><span class="r"><i>19</i> vs 3.9</span><span class="v num">142,000</span></div>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="clippers">
+  <div class="wrap">
+    <p class="eyebrow">For clippers</p>
+    <h2 style="margin-top:14px">Anyone with a clip account can join. The rules fit on one screen.</h2>
+    <div class="clip">
+      <ul class="rules">
+        <li><b>01</b><span><strong>Watermark from second three.</strong> CUT bottom right, at least 3 seconds in. Clips with the tag on the first frame do not count; X treats the first frame as the poster.</span></li>
+        <li><b>02</b><span><strong>Real views only.</strong> Minimum 10,000 views per clip to be counted, a cap per account per week, and views are read from X analytics, not screenshots.</span></li>
+        <li><b>03</b><span><strong>One wallet per account.</strong> Register once. The wallet is on Robinhood Chain and it is the only place the payout goes.</span></li>
+        <li><b>04</b><span><strong>Verified accounts first.</strong> The first weeks pay the network's own accounts and clippers we verify by hand. After that, registration is open to anyone who clears the view minimum.</span></li>
+        <li><b>05</b><span><strong>No shilling in the caption.</strong> The clip is the product. The ticker lives in the watermark, not in the text. Captions that read like ads are excluded from the week.</span></li>
+        <li><b>06</b><span><strong>Sunday, 20:00 UTC.</strong> Views are counted, the table is published here, and payouts go out the same hour.</span></li>
+      </ul>
+      <form id="reg" name="clipper" method="POST" action="https://script.google.com/macros/s/AKfycbzo7wEOcv-bsDLyvqudZzaaCdyzzhdHrEFU_gvBewxbch7vumWc9KUO6aMsDasw2MLfig/exec" autocomplete="off">
+        <p style="display:none"><label>Leave this empty<input name="bot-field"></label></p>
+        <p class="eyebrow" style="color:var(--purple2)">Register a clip account</p>
+        <label>X handle<input type="text" name="handle" placeholder="@yourclips" required></label>
+        <label>Wallet on Robinhood Chain<input type="text" name="wallet" placeholder="0x…" pattern="^0x[a-fA-F0-9]{40}$" required></label>
+        <label>Streams you clip<input type="text" name="streams" placeholder="clavicular, adinross, jynxzi"></label>
+        <button class="btn primary" type="submit">Register</button>
+        <p class="ok" id="ok">Registered. We check the account by hand and confirm before the first payout.</p>
+        <p class="ok" id="err" style="color:#ff9900">Could not send. Try again in a minute.</p>
+        <p class="fine">One account per wallet. We verify every account by hand before it is paid.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section id="repo">
+  <div class="wrap">
+    <p class="eyebrow">Open source</p>
+    <h2 style="margin-top:14px">The whole thing is a repo. Run it, fork it, check it.</h2>
+    <p class="lead" style="margin-top:18px">cutchain is the code behind this page. If a number on the board ever looks wrong, the code that produced it is one click away.</p>
+    <div class="repo">
+      <div><div class="path">watch/</div><p>Reads Twitch and Kick chat, measures speed and hot words, logs the moment when chat spikes, cuts the clip through the Twitch API.</p></div>
+      <div><div class="path">contracts/</div><p>The weekly payout contracts on Robinhood Chain. 52 tests.</p></div>
+      <div><div class="path">mint/</div><p>Launch scripts for Robinhood Chain. Dry-run first, always.</p></div>
+      <div><div class="path">board/</div><p>This board. Reads the watcher's API and the chain, updates itself, shows every payout with its transaction.</p></div>
+    </div>
+    <div class="cta"><a class="btn" href="#" aria-disabled="true" title="Repository link goes live with the article">github.com/cutchain · link at launch</a></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span class="big">Every number public.</span>
+    <span>Robinhood Chain</span>
+    <span>71.3M views / 30 days</span>
+    <span>Payouts · Sunday 20:00 UTC</span>
+  </div>
+</footer>
+</div>
+
+<script>
+(function(){
+  var el=document.getElementById('countdown');
+  function next(){var n=new Date();var d=new Date(Date.UTC(n.getUTCFullYear(),n.getUTCMonth(),n.getUTCDate(),20,0,0));
+    var add=(7-d.getUTCDay())%7; d.setUTCDate(d.getUTCDate()+add); if(d<=n) d.setUTCDate(d.getUTCDate()+7); return d;}
+  function tick(){var t=next()-new Date();var h=Math.floor(t/36e5),m=Math.floor(t%36e5/6e4),s=Math.floor(t%6e4/1e3);
+    el.textContent=(h<10?'0':'')+h+':'+(m<10?'0':'')+m+':'+(s<10?'0':'')+s;}
+  tick(); setInterval(tick,1000);
+
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var streams=[
+    {who:'twitch/clavicular',title:'IRL · Miami',base:4.1},
+    {who:'kick/adinross',title:'IRL · LA',base:6.8},
+    {who:'twitch/jynxzi',title:'Rainbow Six',base:9.3},
+    {who:'twitch/caseoh_',title:'Variety',base:5.5}
+  ];
+  var host=document.getElementById('streams');
+  streams.forEach(function(s){
+    var row=document.createElement('div');row.className='stream';
+    row.innerHTML='<div class="who">'+s.who+'<small>'+s.title+'</small></div><canvas width="600" height="68"></canvas><div class="rate"><span class="num">'+s.base.toFixed(0)+'</span><small>base '+s.base.toFixed(1)+'</small></div>';
+    host.appendChild(row);
+    s.row=row;s.cv=row.querySelector('canvas');s.ctx=s.cv.getContext('2d');s.hist=[];s.t=Math.random()*100;s.rateEl=row.querySelector('.rate .num');
+    for(var k=0;k<60;k++) s.hist.push(s.base*(0.7+Math.random()*0.6));
+  });
+  var frame=0;
+  function step(){
+    frame++;
+    streams.forEach(function(s,i){
+      s.t+=0.06;
+      var v=s.base*(0.75+0.5*Math.abs(Math.sin(s.t))+Math.random()*0.3);
+      var cyc=(frame/60)%14; if(i===0 && cyc>10 && cyc<13){v=s.base*(3+7*Math.sin((cyc-10)/3*Math.PI));}
+      if(frame%6===0){s.hist.push(v);if(s.hist.length>60)s.hist.shift();s.rateEl.textContent=Math.round(v);
+        s.row.classList.toggle('hot',v>=Math.max(12,s.base*3));}
+      var c=s.ctx,W=s.cv.width,H=s.cv.height;c.clearRect(0,0,W,H);
+      var max=Math.max(24,s.base*4);var bw=W/60;
+      s.hist.forEach(function(h,j){var hh=Math.min(H,h/max*H);var hot=h>=Math.max(12,s.base*3);
+        c.fillStyle=hot?'#53fc18':'#9146ff';c.globalAlpha=hot?1:0.55;c.fillRect(j*bw,H-hh,bw-2,hh);});
+      c.globalAlpha=1;c.strokeStyle='#2a2a3a';c.beginPath();var by=H-Math.min(H,s.base*3/max*H);c.moveTo(0,by);c.lineTo(W,by);c.stroke();
+    });
+    if(!reduce) requestAnimationFrame(step);
+  }
+  step(); if(reduce){for(var q=0;q<12;q++)step();}
+
+  var f=document.getElementById('reg'),btn=f.querySelector('button');
+  f.addEventListener('submit',function(e){e.preventDefault();
+    var ok=document.getElementById('ok'),err=document.getElementById('err');ok.style.display='none';err.style.display='none';
+    if(!f.checkValidity()){f.reportValidity();return;}
+    btn.disabled=true;btn.textContent='Sending…';
+    var data=new URLSearchParams(new FormData(f)).toString();
+    fetch(f.action,{method:'POST',mode:'no-cors',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:data})
+      .then(function(){ok.style.display='block';f.reset();btn.textContent='Registered';})
+      .catch(function(){err.style.display='block';btn.disabled=false;btn.textContent='Register';});
+  });
+})();
+</script>
+
+</body>
+</html>

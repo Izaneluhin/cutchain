@@ -1,0 +1,197 @@
+{
+  "_status": "PonsV2BuybackVault 0x42df2a798f82289E177311362e8f5ccC45c1219c — Hand-derived from the official Solidity source (github.com/ponsdotdev/ponsfamily, contractsV2/src/v2, commit 845bd54) and docs.ponsfamily.com/v2. NOT compiled and NOT fetched from the explorer (unreachable from the build sandbox). The scripts verify each selector they send against the deployed bytecode first.",
+  "abi": [
+    {
+      "name": "VESTING_DURATION",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "factory",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
+    },
+    {
+      "name": "totalLocked",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "token"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "totalReleased",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "token"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "vestingStart",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "token"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "vestedAmount",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "token"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "releasable",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "token"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "vestingTerms",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "token"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "address",
+          "name": "creatorRecipient"
+        },
+        {
+          "type": "address",
+          "name": "protocolRecipient"
+        },
+        {
+          "type": "uint16",
+          "name": "protocolFeeShareBps"
+        }
+      ]
+    },
+    {
+      "name": "release",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "token"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "released"
+        }
+      ]
+    },
+    {
+      "name": "Locked",
+      "type": "event",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "token",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "depositor",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "amount"
+        },
+        {
+          "type": "uint256",
+          "name": "newVestingStart"
+        }
+      ]
+    },
+    {
+      "name": "Released",
+      "type": "event",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "token",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "creatorAmount"
+        },
+        {
+          "type": "uint256",
+          "name": "protocolAmount"
+        }
+      ]
+    },
+    {
+      "name": "NotVestBeneficiary",
+      "type": "error",
+      "inputs": []
+    }
+  ]
+}

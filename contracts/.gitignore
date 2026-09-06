@@ -1,0 +1,11 @@
+# Foundry build output
+out/
+cache/
+# Local broadcast logs (contain tx history; keep mainnet runs if you want an audit trail)
+broadcast/
+# Environment
+.env
+# Round files produced by tooling/build_round.py live outside the repo unless you want them public
+round_*.json
+!test/fixtures/*.json
+__pycache__/

@@ -1,0 +1,21 @@
+12:10:47 MOCK server listening on 127.0.0.1:6667
+12:10:47 MOCK mock twitch irc on ws://127.0.0.1:6667 rates={'kaicenat': 30.0, 'xqc': 20.0, 'jynxzi': 12.0, 'caseoh_': 6.0}
+12:10:48 MOCK connection open
+12:10:48 MOCK client logged in as justinfan15130
+12:10:48 MOCK client joined ['kaicenat', 'xqc', 'jynxzi', 'caseoh_']
+12:10:58 MOCK sent PING
+12:10:58 MOCK got PONG (1 so far)
+12:11:08 MOCK sent PING
+12:11:08 MOCK got PONG (2 so far)
+12:11:09 MOCK dropping connection to exercise reconnect
+12:11:09 MOCK connection closed
+12:11:09 MOCK connection closed
+12:11:10 MOCK connection open
+12:11:10 MOCK client logged in as justinfan14278
+12:11:10 MOCK client joined ['kaicenat', 'xqc', 'jynxzi', 'caseoh_']
+12:11:20 MOCK sent PING
+12:11:20 MOCK got PONG (3 so far)
+12:11:30 MOCK sent PING
+12:11:30 MOCK got PONG (4 so far)
+12:11:33 MOCK connection closed
+12:11:33 MOCK connection closed

@@ -1,0 +1,727 @@
+{
+  "_status": "PonsV2BondingCurve (one per launch, read from factory.getLaunchedToken) — Hand-derived from the official Solidity source (github.com/ponsdotdev/ponsfamily, contractsV2/src/v2, commit 845bd54) and docs.ponsfamily.com/v2. NOT compiled and NOT fetched from the explorer (unreachable from the build sandbox). The scripts verify each selector they send against the deployed bytecode first. currentSnipeTaxBps(address) is docs-only.",
+  "abi": [
+    {
+      "name": "token",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
+    },
+    {
+      "name": "pairToken",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
+    },
+    {
+      "name": "deployer",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
+    },
+    {
+      "name": "factory",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
+    },
+    {
+      "name": "feePolicy",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
+    },
+    {
+      "name": "feeEscrow",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
+    },
+    {
+      "name": "buybackVault",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
+    },
+    {
+      "name": "protocolFeeRecipient",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
+    },
+    {
+      "name": "buybackCreatorRecipient",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "address"
+        }
+      ]
+    },
+    {
+      "name": "protocolFeeShareBps",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint16"
+        }
+      ]
+    },
+    {
+      "name": "buybackBurnBps",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint16"
+        }
+      ]
+    },
+    {
+      "name": "maxInternalPriceImpactBps",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint16"
+        }
+      ]
+    },
+    {
+      "name": "phantomQuote",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "feeBps",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "creatorTaxBps",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "graduationThreshold",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "buybackEnabled",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "quoteFeeBalance",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "buybackQuoteBalance",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "creatorTaxBalance",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "trackedQuote",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "trackedTokens",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "graduated",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "reservedTokens",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "isNativeQuote",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "sellableTokens",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "getReserves",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "quoteReserve"
+        },
+        {
+          "type": "uint256",
+          "name": "tokenReserve"
+        }
+      ]
+    },
+    {
+      "name": "quoteReserve",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "realQuoteReserve",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "tokenReserve",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "readyToGraduate",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [
+        {
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "currentSnipeTaxBps",
+      "type": "function",
+      "stateMutability": "view",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "recipient"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256"
+        }
+      ]
+    },
+    {
+      "name": "buy",
+      "type": "function",
+      "stateMutability": "payable",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "quoteIn"
+        },
+        {
+          "type": "uint256",
+          "name": "minTokensOut"
+        },
+        {
+          "type": "address",
+          "name": "recipient"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "tokensOut"
+        }
+      ]
+    },
+    {
+      "name": "sell",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "tokensIn"
+        },
+        {
+          "type": "uint256",
+          "name": "minQuoteOut"
+        },
+        {
+          "type": "address",
+          "name": "recipient"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "uint256",
+          "name": "quoteOut"
+        }
+      ]
+    },
+    {
+      "name": "sweepFees",
+      "type": "function",
+      "stateMutability": "nonpayable",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "minBuybackTokensOut"
+        }
+      ],
+      "outputs": []
+    },
+    {
+      "name": "CurveBuy",
+      "type": "event",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "buyer",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "recipient",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "quoteIn"
+        },
+        {
+          "type": "uint256",
+          "name": "tokensOut"
+        },
+        {
+          "type": "uint256",
+          "name": "fee"
+        },
+        {
+          "type": "uint256",
+          "name": "tax"
+        }
+      ]
+    },
+    {
+      "name": "CurveBuyRefunded",
+      "type": "event",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "buyer",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "refund"
+        }
+      ]
+    },
+    {
+      "name": "CurveSell",
+      "type": "event",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "seller",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "recipient",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "tokensIn"
+        },
+        {
+          "type": "uint256",
+          "name": "quoteOut"
+        },
+        {
+          "type": "uint256",
+          "name": "fee"
+        },
+        {
+          "type": "uint256",
+          "name": "tax"
+        }
+      ]
+    },
+    {
+      "name": "FeesSwept",
+      "type": "event",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "protocolAmount"
+        },
+        {
+          "type": "uint256",
+          "name": "buybackAmount"
+        },
+        {
+          "type": "uint256",
+          "name": "creatorAmount"
+        }
+      ]
+    },
+    {
+      "name": "BuybackLocked",
+      "type": "event",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "quoteSpent"
+        },
+        {
+          "type": "uint256",
+          "name": "tokensLocked"
+        }
+      ]
+    },
+    {
+      "name": "CurveCompleted",
+      "type": "event",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "recipient"
+        },
+        {
+          "type": "uint256",
+          "name": "quoteOut"
+        },
+        {
+          "type": "uint256",
+          "name": "tokenOut"
+        }
+      ]
+    },
+    {
+      "name": "Initialized",
+      "type": "event",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "token"
+        }
+      ]
+    },
+    {
+      "name": "CreatorFeeRecipientUpdated",
+      "type": "event",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "previousRecipient",
+          "indexed": true
+        },
+        {
+          "type": "address",
+          "name": "newRecipient",
+          "indexed": true
+        }
+      ]
+    },
+    {
+      "name": "BuybackEnabledUpdated",
+      "type": "event",
+      "inputs": [
+        {
+          "type": "bool",
+          "name": "enabled"
+        }
+      ]
+    },
+    {
+      "name": "AutoGraduationFailed",
+      "type": "event",
+      "inputs": [
+        {
+          "type": "address",
+          "name": "token",
+          "indexed": true
+        },
+        {
+          "type": "uint256",
+          "name": "gasRemaining"
+        }
+      ]
+    },
+    {
+      "name": "CurveGraduated",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "ZeroAmount",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "ZeroAddress",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "SlippageExceeded",
+      "type": "error",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "actual"
+        },
+        {
+          "type": "uint256",
+          "name": "minimum"
+        }
+      ]
+    },
+    {
+      "name": "NotFactory",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "TransferFailed",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "AlreadyGraduated",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "AlreadyInitialized",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "NotInitialized",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "InvalidLaunchEconomics",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "NotReadyToGraduate",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "NotFeeSweepOperator",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "InternalSwapRequiresOperator",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "InvalidFeePolicy",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "MinimumOutputRequired",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "NativeValueMismatch",
+      "type": "error",
+      "inputs": [
+        {
+          "type": "uint256",
+          "name": "supplied"
+        },
+        {
+          "type": "uint256",
+          "name": "expected"
+        }
+      ]
+    },
+    {
+      "name": "UnexpectedNativeValue",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "InsufficientInputAmount",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "InsufficientLiquidity",
+      "type": "error",
+      "inputs": []
+    },
+    {
+      "name": "InsufficientOutputAmount",
+      "type": "error",
+      "inputs": []
+    }
+  ]
+}

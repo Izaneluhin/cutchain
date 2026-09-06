@@ -1,0 +1,282 @@
+################################################################################
+# cutchain watch -- live run, 2026-09-06 12:10 UTC, 45 s, 4 Twitch channels + 1 Kick
+#
+# ENVIRONMENT NOTE (read this first)
+# The build sandbox this was produced in denies ALL egress to Twitch and Kick:
+# one probe to wss://irc-ws.chat.twitch.tv:443 was answered by the organisation's
+# egress proxy with "HTTP 403 (policy denial)", and api.twitch.tv, gql.twitch.tv,
+# kick.com and ws-us2.pusher.com were denied the same way (see the proxy status
+# excerpt at the bottom of this header). The proxy's guidance is not to retry or
+# route around policy denials, so a real Twitch session could not be recorded here.
+#
+# The run below therefore uses tests/mock_irc.py: a local stand-in for Twitch's
+# IRC gateway that speaks the identical dialogue (NICK justinfanNNNNN, CAP REQ,
+# JOIN, 001/376 welcome, CAP ACK, ROOMSTATE, tagged PRIVMSG lines with several
+# lines per frame, "PING :tmi.twitch.tv" every 10 s, and one forced disconnect
+# at t+20 s to exercise reconnect/backoff). The bot binary and code path are the
+# real ones; the only difference is --twitch-irc-url. Kick was attempted for real
+# (kick.com lookup) and failed as expected -> "running with Twitch only".
+# Mock-side log (login, JOIN, PING/PONG exchange, drop) is in mock_irc_run.txt.
+#
+# Commands used here (from the repo root):
+#   python watch/tests/mock_irc.py --port 6667 --rates kaicenat=30,xqc=20,jynxzi=12,caseoh_=6 --drop-after 20
+#   python -m watch --twitch kaicenat,xqc,jynxzi,caseoh_ --kick adinross \
+#       --twitch-irc-url ws://127.0.0.1:6667 --record data/chat.log --port 8787
+# Against real Twitch (outside the sandbox) it is simply:
+#   python -m watch --twitch kaicenat,xqc,jynxzi,caseoh_ --kick adinross --port 8787
+#   (or: bash watch/tests/run_checks.sh, which regenerates this file)
+#
+# Proxy status excerpt (curl "$HTTPS_PROXY/__agentproxy/status"), 11:53-11:54 UTC:
+#   irc-ws.chat.twitch.tv:443  gateway answered 403 to CONNECT (policy denial or upstream failure)
+#   api.twitch.tv:443          gateway answered 403 to CONNECT (policy denial or upstream failure)
+#   kick.com:443               gateway answered 403 to CONNECT (policy denial or upstream failure)
+#   ws-us2.pusher.com:443      gateway answered 403 to CONNECT (policy denial or upstream failure)
+#   gql.twitch.tv:443          gateway answered 403 to CONNECT (policy denial or upstream failure)
+################################################################################
+
+12:10:48 INFO watch: watch 0.1.0 | mode=live | twitch=kaicenat,xqc,jynxzi,caseoh_ | kick=adinross | min_rate=12 spike_factor=3.0 clip_threshold=5 cooldown=120s warmup=30s | data=/home/user/cutchain/watch/data | config=/home/user/cutchain/watch/config.yaml | record=/home/user/cutchain/watch/data/chat.log
+12:10:48 INFO watch.clip: twitch clip creation disabled: TWITCH_CLIENT_ID/TWITCH_TOKEN not set
+12:10:48 INFO watch.api: api listening on http://0.0.0.0:8787 (GET /api/live, /api/moments, /api/health)
+12:10:48 INFO watch.twitch: twitch: connecting to ws://127.0.0.1:6667 for kaicenat, xqc, jynxzi, caseoh_
+12:10:48 twitch/kaicenat rate=0/10s base=0.0 clip=0 top=- (warming up)
+12:10:48 twitch/xqc rate=0/10s base=0.0 clip=0 top=- (warming up)
+12:10:48 twitch/jynxzi rate=0/10s base=0.0 clip=0 top=- (warming up)
+12:10:48 twitch/caseoh_ rate=0/10s base=0.0 clip=0 top=- (warming up)
+12:10:48 kick/adinross rate=0/10s base=0.0 clip=0 top=- (warming up)
+12:10:48 INFO watch.twitch: twitch: joined 4 channel(s) anonymously
+12:10:48 WARNING watch.kick: kick: lookup https://kick.com/api/v2/channels/adinross failed: 403, message='Forbidden', url='http://127.0.0.1:36759'
+12:10:49 WARNING watch.kick: kick: lookup https://kick.com/api/v1/channels/adinross failed: 403, message='Forbidden', url='http://127.0.0.1:36759'
+12:10:49 WARNING watch.kick: kick: could not resolve chatroom id for 'adinross'; skipping
+12:10:49 WARNING watch.kick: kick: no chatroom ids resolved; running with Twitch only (set kick.chatroom_ids in config.yaml or use --kick slug:id)
+12:10:49 twitch/kaicenat rate=2/10s base=0.0 clip=0 top=lulw,xdd (warming up)
+12:10:49 twitch/xqc rate=1/10s base=0.0 clip=0 top=monkas (warming up)
+12:10:49 twitch/jynxzi rate=1/10s base=0.0 clip=0 top=omegalul (warming up)
+12:10:49 twitch/caseoh_ rate=1/10s base=0.0 clip=0 top=cooked (warming up)
+12:10:49 kick/adinross rate=0/10s base=0.0 clip=0 top=- (warming up)
+12:10:50 twitch/kaicenat rate=5/10s base=0.0 clip=0 top=lulw,xdd,monkas (warming up)
+12:10:50 twitch/xqc rate=2/10s base=0.0 clip=0 top=monkas,kekw (warming up)
+12:10:50 twitch/jynxzi rate=3/10s base=0.0 clip=0 top=omegalul,pepelaugh (warming up)
+12:10:50 twitch/caseoh_ rate=1/10s base=0.0 clip=0 top=cooked (warming up)
+12:10:50 kick/adinross rate=0/10s base=0.0 clip=0 top=- (warming up)
+12:10:51 twitch/kaicenat rate=8/10s base=0.0 clip=0 top=lulw,xdd,monkas (warming up)
+12:10:51 twitch/xqc rate=4/10s base=0.0 clip=0 top=monkas,kekw,cooked (warming up)
+12:10:51 twitch/jynxzi rate=4/10s base=0.0 clip=0 top=omegalul,pepelaugh,peak (warming up)
+12:10:51 twitch/caseoh_ rate=2/10s base=0.0 clip=0 top=cooked,xdd (warming up)
+12:10:51 kick/adinross rate=0/10s base=0.0 clip=0 top=- (warming up)
+12:10:52 twitch/kaicenat rate=10/10s base=0.0 clip=0 top=lulw,xdd,monkas (warming up)
+12:10:52 twitch/xqc rate=7/10s base=0.0 clip=0 top=monkas,kekw,cooked (warming up)
+12:10:52 twitch/jynxzi rate=5/10s base=0.0 clip=0 top=omegalul,pepelaugh,peak (warming up)
+12:10:52 twitch/caseoh_ rate=3/10s base=0.0 clip=0 top=cooked,xdd (warming up)
+12:10:52 kick/adinross rate=0/10s base=0.0 clip=0 top=- (warming up)
+12:10:53 twitch/kaicenat rate=14/10s base=0.0 clip=0 top=lulw,monkas,lmaooo (warming up)
+12:10:53 twitch/xqc rate=9/10s base=0.0 clip=0 top=monkas,kekw,cooked (warming up)
+12:10:53 twitch/jynxzi rate=7/10s base=0.0 clip=0 top=omegalul,pepelaugh,peak (warming up)
+12:10:53 twitch/caseoh_ rate=3/10s base=0.0 clip=0 top=cooked,xdd (warming up)
+12:10:53 kick/adinross rate=0/10s base=0.0 clip=0 top=- (warming up)
+12:10:54 twitch/kaicenat rate=18/10s base=0.0 clip=0 top=sheesh,lulw,monkas (warming up)
+12:10:54 twitch/xqc rate=12/10s base=0.0 clip=1 top=monkas,kekw,cooked (warming up)
+12:10:54 twitch/jynxzi rate=8/10s base=0.0 clip=0 top=omegalul,pepelaugh,peak (warming up)
+12:10:54 twitch/caseoh_ rate=3/10s base=0.0 clip=0 top=cooked,xdd (warming up)
+12:10:54 kick/adinross rate=0/10s base=0.0 clip=0 top=- (warming up)
+12:10:55 twitch/kaicenat rate=21/10s base=0.0 clip=0 top=sheesh,lulw,monkas (warming up)
+12:10:55 twitch/xqc rate=14/10s base=0.0 clip=1 top=monkas,kekw,cooked (warming up)
+12:10:55 twitch/jynxzi rate=9/10s base=0.0 clip=0 top=omegalul,pepelaugh,peak (warming up)
+12:10:55 twitch/caseoh_ rate=4/10s base=0.0 clip=0 top=cooked,xdd (warming up)
+12:10:55 kick/adinross rate=0/10s base=0.0 clip=0 top=- (warming up)
+12:10:56 twitch/kaicenat rate=24/10s base=0.0 clip=0 top=lulw,lmaooo,sheesh (warming up)
+12:10:56 twitch/xqc rate=16/10s base=0.0 clip=1 top=monkas,kekw,cooked (warming up)
+12:10:56 twitch/jynxzi rate=10/10s base=0.0 clip=0 top=omegalul,pepelaugh,peak (warming up)
+12:10:56 twitch/caseoh_ rate=4/10s base=0.0 clip=0 top=cooked,xdd (warming up)
+12:10:56 kick/adinross rate=0/10s base=0.0 clip=0 top=- (warming up)
+12:10:57 twitch/kaicenat rate=27/10s base=0.0 clip=0 top=lulw,lmaooo,sheesh (warming up)
+12:10:57 twitch/xqc rate=18/10s base=0.0 clip=1 top=monkas,kekw,cooked (warming up)
+12:10:57 twitch/jynxzi rate=12/10s base=0.0 clip=0 top=kekw,omegalul,pepelaugh (warming up)
+12:10:57 twitch/caseoh_ rate=5/10s base=0.0 clip=0 top=cooked,xdd,else (warming up)
+12:10:57 kick/adinross rate=0/10s base=0.0 clip=0 top=- (warming up)
+12:10:58 twitch/kaicenat rate=31/10s base=31.0 clip=0 top=lulw,xdd,lmaooo (warming up)
+12:10:58 twitch/xqc rate=20/10s base=20.0 clip=1 top=monkas,kekw,pepelaugh (warming up)
+12:10:58 twitch/jynxzi rate=12/10s base=12.0 clip=0 top=kekw,omegalul,pepelaugh (warming up)
+12:10:58 twitch/caseoh_ rate=6/10s base=6.0 clip=0 top=cooked,xdd,else (warming up)
+12:10:58 kick/adinross rate=0/10s base=0.0 clip=0 top=- (warming up)
+12:10:59 twitch/kaicenat rate=32/10s base=31.0 clip=0 top=lulw,xdd,lmaooo (warming up)
+12:10:59 twitch/xqc rate=22/10s base=20.0 clip=1 top=monkas,kekw,pepelaugh (warming up)
+12:10:59 twitch/jynxzi rate=11/10s base=12.0 clip=0 top=kekw,omegalul,pepelaugh (warming up)
+12:10:59 twitch/caseoh_ rate=5/10s base=6.0 clip=0 top=cooked,xdd,else (warming up)
+12:10:59 kick/adinross rate=0/10s base=0.0 clip=0 top=- (warming up)
+12:11:00 twitch/kaicenat rate=33/10s base=31.0 clip=0 top=lulw,xdd,lmaooo (warming up)
+12:11:00 twitch/xqc rate=23/10s base=20.0 clip=1 top=monkas,kekw,cooked (warming up)
+12:11:00 twitch/jynxzi rate=10/10s base=12.0 clip=0 top=kekw,omegalul,pepelaugh (warming up)
+12:11:00 twitch/caseoh_ rate=6/10s base=6.0 clip=0 top=cooked,xdd,else (warming up)
+12:11:00 kick/adinross rate=0/10s base=0.0 clip=0 top=- (warming up)
+12:11:01 twitch/kaicenat rate=34/10s base=31.0 clip=0 top=lmaooo,lulw,xdd (warming up)
+12:11:01 twitch/xqc rate=23/10s base=20.0 clip=1 top=monkas,kekw,cooked (warming up)
+12:11:01 twitch/jynxzi rate=10/10s base=12.0 clip=0 top=kekw,omegalul,pepelaugh (warming up)
+12:11:01 twitch/caseoh_ rate=6/10s base=6.0 clip=0 top=cooked,xdd,else (warming up)
+12:11:01 kick/adinross rate=0/10s base=0.0 clip=0 top=- (warming up)
+12:11:02 twitch/kaicenat rate=34/10s base=31.0 clip=0 top=lmaooo,lulw,xdd (warming up)
+12:11:02 twitch/xqc rate=21/10s base=20.0 clip=1 top=monkas,kekw,cooked (warming up)
+12:11:02 twitch/jynxzi rate=11/10s base=12.0 clip=0 top=kekw,cooked,omegalul (warming up)
+12:11:02 twitch/caseoh_ rate=5/10s base=6.0 clip=0 top=cooked,xdd,else (warming up)
+12:11:02 kick/adinross rate=0/10s base=0.0 clip=0 top=- (warming up)
+12:11:03 twitch/kaicenat rate=33/10s base=31.0 clip=0 top=lmaooo,peak,lulw (warming up)
+12:11:03 twitch/xqc rate=22/10s base=20.0 clip=1 top=monkas,kekw,cooked (warming up)
+12:11:03 twitch/jynxzi rate=10/10s base=12.0 clip=0 top=omegalul,kekw,cooked (warming up)
+12:11:03 twitch/caseoh_ rate=5/10s base=6.0 clip=0 top=cooked,xdd,else (warming up)
+12:11:03 kick/adinross rate=0/10s base=0.0 clip=0 top=- (warming up)
+12:11:04 twitch/kaicenat rate=32/10s base=31.0 clip=0 top=peak,xdd,lmaooo (warming up)
+12:11:04 twitch/xqc rate=20/10s base=20.0 clip=1 top=said,monkas,kekw (warming up)
+12:11:04 twitch/jynxzi rate=10/10s base=12.0 clip=0 top=omegalul,kekw,cooked (warming up)
+12:11:04 twitch/caseoh_ rate=5/10s base=6.0 clip=0 top=cooked,xdd,else (warming up)
+12:11:04 kick/adinross rate=0/10s base=0.0 clip=0 top=- (warming up)
+12:11:05 twitch/kaicenat rate=33/10s base=31.0 clip=0 top=peak,xdd,lmaooo (warming up)
+12:11:05 twitch/xqc rate=20/10s base=20.0 clip=1 top=said,monkas,kekw (warming up)
+12:11:05 twitch/jynxzi rate=10/10s base=12.0 clip=0 top=omegalul,kekw,cooked (warming up)
+12:11:05 twitch/caseoh_ rate=5/10s base=6.0 clip=0 top=said,cooked,xdd (warming up)
+12:11:05 kick/adinross rate=0/10s base=0.0 clip=0 top=- (warming up)
+12:11:06 twitch/kaicenat rate=33/10s base=31.1 clip=0 top=peak,xdd,lmaooo (warming up)
+12:11:06 twitch/xqc rate=21/10s base=20.0 clip=1 top=said,monkas,kekw (warming up)
+12:11:06 twitch/jynxzi rate=11/10s base=12.0 clip=0 top=omegalul,peak,kekw (warming up)
+12:11:06 twitch/caseoh_ rate=5/10s base=6.0 clip=0 top=said,cooked,xdd (warming up)
+12:11:06 kick/adinross rate=0/10s base=0.0 clip=0 top=- (warming up)
+12:11:07 twitch/kaicenat rate=33/10s base=31.1 clip=1 top=peak,xdd,lmaooo (warming up)
+12:11:07 twitch/xqc rate=22/10s base=20.0 clip=1 top=said,monkas,kekw (warming up)
+12:11:07 twitch/jynxzi rate=11/10s base=12.0 clip=0 top=omegalul,peak,lets (warming up)
+12:11:07 twitch/caseoh_ rate=4/10s base=6.0 clip=0 top=said,cooked,xdd (warming up)
+12:11:07 kick/adinross rate=0/10s base=0.0 clip=0 top=- (warming up)
+12:11:08 twitch/kaicenat rate=33/10s base=31.1 clip=1 top=peak,lulw,xdd (warming up)
+12:11:08 twitch/xqc rate=23/10s base=20.1 clip=1 top=said,lets,gooo (warming up)
+12:11:08 twitch/jynxzi rate=12/10s base=12.0 clip=0 top=omegalul,peak,lets (warming up)
+12:11:08 twitch/caseoh_ rate=4/10s base=6.0 clip=0 top=said,cooked,xdd (warming up)
+12:11:08 kick/adinross rate=0/10s base=0.0 clip=0 top=- (warming up)
+12:11:09 WARNING watch.twitch: twitch: connection error: ConnectionClosedError: received 1012 (service restart) mock restart; then sent 1012 (service restart) mock restart
+12:11:09 INFO watch.twitch: twitch: reconnecting in 1.3s
+12:11:09 twitch/kaicenat rate=30/10s base=31.1 clip=1 top=peak,lulw,xdd (warming up)
+12:11:09 twitch/xqc rate=20/10s base=20.1 clip=1 top=said,lets,gooo (warming up)
+12:11:09 twitch/jynxzi rate=12/10s base=12.0 clip=0 top=omegalul,peak,lets (warming up)
+12:11:09 twitch/caseoh_ rate=4/10s base=6.0 clip=0 top=said,cooked,xdd (warming up)
+12:11:09 kick/adinross rate=0/10s base=0.0 clip=0 top=- (warming up)
+12:11:10 INFO watch.twitch: twitch: connecting to ws://127.0.0.1:6667 for kaicenat, xqc, jynxzi, caseoh_
+12:11:10 INFO watch.twitch: twitch: joined 4 channel(s) anonymously
+12:11:10 twitch/kaicenat rate=29/10s base=31.1 clip=1 top=peak,lulw,xdd (warming up)
+12:11:10 twitch/xqc rate=21/10s base=20.1 clip=1 top=monkas,said,lets (warming up)
+12:11:10 twitch/jynxzi rate=13/10s base=12.0 clip=0 top=omegalul,peak,lets (warming up)
+12:11:10 twitch/caseoh_ rate=4/10s base=6.0 clip=0 top=said,cooked,xdd (warming up)
+12:11:10 kick/adinross rate=0/10s base=0.0 clip=0 top=- (warming up)
+12:11:11 twitch/kaicenat rate=27/10s base=31.0 clip=1 top=peak,lulw,xdd (warming up)
+12:11:11 twitch/xqc rate=21/10s base=20.1 clip=1 top=chat,monkas,said (warming up)
+12:11:11 twitch/jynxzi rate=13/10s base=12.0 clip=0 top=omegalul,peak,true (warming up)
+12:11:11 twitch/caseoh_ rate=4/10s base=5.9 clip=0 top=xdd,said,cooked (warming up)
+12:11:11 kick/adinross rate=0/10s base=0.0 clip=0 top=- (warming up)
+12:11:12 twitch/kaicenat rate=27/10s base=31.0 clip=1 top=lmaooo,peak,lulw (warming up)
+12:11:12 twitch/xqc rate=23/10s base=20.1 clip=1 top=pepelaugh,chat,monkas (warming up)
+12:11:12 twitch/jynxzi rate=12/10s base=12.0 clip=0 top=omegalul,peak,true (warming up)
+12:11:12 twitch/caseoh_ rate=5/10s base=5.9 clip=0 top=xdd,said,cooked (warming up)
+12:11:12 kick/adinross rate=0/10s base=0.0 clip=0 top=- (warming up)
+12:11:13 twitch/kaicenat rate=27/10s base=31.0 clip=1 top=lmaooo,icant,peak (warming up)
+12:11:13 twitch/xqc rate=22/10s base=20.1 clip=1 top=monkas,pepelaugh,chat (warming up)
+12:11:13 twitch/jynxzi rate=11/10s base=12.0 clip=0 top=omegalul,peak,true (warming up)
+12:11:13 twitch/caseoh_ rate=6/10s base=5.9 clip=0 top=xdd,else,any1 (warming up)
+12:11:13 kick/adinross rate=0/10s base=0.0 clip=0 top=- (warming up)
+12:11:14 twitch/kaicenat rate=27/10s base=31.0 clip=1 top=lulw,lmaooo,game (warming up)
+12:11:14 twitch/xqc rate=22/10s base=20.1 clip=1 top=monkas,pepelaugh,chat (warming up)
+12:11:14 twitch/jynxzi rate=11/10s base=12.0 clip=0 top=omegalul,peak,true (warming up)
+12:11:14 twitch/caseoh_ rate=6/10s base=5.9 clip=0 top=xdd,else,any1 (warming up)
+12:11:14 kick/adinross rate=0/10s base=0.0 clip=0 top=- (warming up)
+12:11:15 twitch/kaicenat rate=26/10s base=31.0 clip=1 top=lulw,lmaooo,game (warming up)
+12:11:15 twitch/xqc rate=22/10s base=20.1 clip=2 top=monkas,pepelaugh,chat (warming up)
+12:11:15 twitch/jynxzi rate=12/10s base=12.0 clip=0 top=omegalul,peak,true (warming up)
+12:11:15 twitch/caseoh_ rate=6/10s base=5.9 clip=0 top=xdd,else,any1 (warming up)
+12:11:15 kick/adinross rate=0/10s base=0.0 clip=0 top=- (warming up)
+12:11:16 twitch/kaicenat rate=27/10s base=31.0 clip=1 top=lulw,xdd,lmaooo (warming up)
+12:11:16 twitch/xqc rate=20/10s base=20.1 clip=2 top=monkas,pepelaugh,chat (warming up)
+12:11:16 twitch/jynxzi rate=10/10s base=11.9 clip=0 top=omegalul,peak,true (warming up)
+12:11:16 twitch/caseoh_ rate=7/10s base=5.9 clip=0 top=xdd,else,any1 (warming up)
+12:11:16 kick/adinross rate=0/10s base=0.0 clip=0 top=- (warming up)
+12:11:17 twitch/kaicenat rate=26/10s base=31.0 clip=1 top=lulw,xdd,monkas (warming up)
+12:11:17 twitch/xqc rate=19/10s base=20.1 clip=2 top=monkas,pepelaugh,chat (warming up)
+12:11:17 twitch/jynxzi rate=9/10s base=11.9 clip=0 top=cooked,omegalul,peak (warming up)
+12:11:17 twitch/caseoh_ rate=8/10s base=6.0 clip=0 top=xdd,else,any1 (warming up)
+12:11:17 kick/adinross rate=0/10s base=0.0 clip=0 top=- (warming up)
+12:11:18 twitch/kaicenat rate=25/10s base=30.9 clip=1 top=lulw,xdd,monkas
+12:11:18 twitch/xqc rate=17/10s base=20.1 clip=2 top=monkas,cooked,pepelaugh
+12:11:18 twitch/jynxzi rate=10/10s base=11.9 clip=0 top=cooked,omegalul,peak
+12:11:18 twitch/caseoh_ rate=7/10s base=6.0 clip=0 top=xdd,else,any1
+12:11:18 kick/adinross rate=0/10s base=0.0 clip=0 top=-
+12:11:19 twitch/kaicenat rate=28/10s base=30.9 clip=1 top=icant,monkas,lmaooo
+12:11:19 twitch/xqc rate=19/10s base=20.1 clip=2 top=cooked,pepelaugh,lets
+12:11:19 twitch/jynxzi rate=11/10s base=11.9 clip=0 top=cooked,peak,true
+12:11:19 twitch/caseoh_ rate=7/10s base=6.0 clip=0 top=xdd,else,any1
+12:11:19 kick/adinross rate=0/10s base=0.0 clip=0 top=-
+12:11:20 twitch/kaicenat rate=27/10s base=30.9 clip=1 top=icant,lmaooo,sheesh
+12:11:20 twitch/xqc rate=17/10s base=20.1 clip=2 top=cooked,pepelaugh,lets
+12:11:20 twitch/jynxzi rate=9/10s base=11.9 clip=0 top=cooked,peak,true
+12:11:20 twitch/caseoh_ rate=7/10s base=6.0 clip=0 top=xdd,else,any1
+12:11:20 kick/adinross rate=0/10s base=0.0 clip=0 top=-
+12:11:21 twitch/kaicenat rate=28/10s base=30.9 clip=2 top=icant,sheesh,game
+12:11:21 twitch/xqc rate=17/10s base=20.1 clip=2 top=pepelaugh,lets,gooo
+12:11:21 twitch/jynxzi rate=9/10s base=11.9 clip=0 top=cooked,true,lets
+12:11:21 twitch/caseoh_ rate=7/10s base=6.0 clip=0 top=else,any1,lagging
+12:11:21 kick/adinross rate=0/10s base=0.0 clip=0 top=-
+12:11:22 twitch/kaicenat rate=30/10s base=30.9 clip=2 top=icant,sheesh,game
+12:11:22 twitch/xqc rate=17/10s base=20.0 clip=2 top=pepelaugh,lets,gooo
+12:11:22 twitch/jynxzi rate=10/10s base=11.9 clip=0 top=cooked,true,lets
+12:11:22 twitch/caseoh_ rate=6/10s base=6.0 clip=0 top=else,any1,lagging
+12:11:22 kick/adinross rate=0/10s base=0.0 clip=0 top=-
+12:11:23 twitch/kaicenat rate=30/10s base=30.9 clip=3 top=icant,sadge,game
+12:11:23 twitch/xqc rate=18/10s base=20.0 clip=2 top=true,lets,gooo
+12:11:23 twitch/jynxzi rate=10/10s base=11.9 clip=0 top=cooked,lets,gooo
+12:11:23 twitch/caseoh_ rate=6/10s base=6.0 clip=0 top=else,any1,lagging
+12:11:23 kick/adinross rate=0/10s base=0.0 clip=0 top=-
+12:11:24 twitch/kaicenat rate=29/10s base=30.9 clip=3 top=icant,sadge,peak
+12:11:24 twitch/xqc rate=19/10s base=20.0 clip=1 top=true,lets,gooo
+12:11:24 twitch/jynxzi rate=9/10s base=11.9 clip=0 top=cooked,kekw,stream
+12:11:24 twitch/caseoh_ rate=7/10s base=6.0 clip=0 top=else,any1,lagging
+12:11:24 kick/adinross rate=0/10s base=0.0 clip=0 top=-
+12:11:25 twitch/kaicenat rate=29/10s base=30.9 clip=3 top=icant,sadge,lulw
+12:11:25 twitch/xqc rate=19/10s base=20.0 clip=1 top=true,sheesh,pepelaugh
+12:11:25 twitch/jynxzi rate=7/10s base=11.9 clip=0 top=cooked,stream,clueless
+12:11:25 twitch/caseoh_ rate=6/10s base=6.0 clip=0 top=else,any1,lagging
+12:11:25 kick/adinross rate=0/10s base=0.0 clip=0 top=-
+12:11:26 twitch/kaicenat rate=29/10s base=30.9 clip=3 top=icant,sadge,peak
+12:11:26 twitch/xqc rate=21/10s base=20.0 clip=1 top=true,sheesh,pepelaugh
+12:11:26 twitch/jynxzi rate=9/10s base=11.9 clip=0 top=cooked,stream,copium
+12:11:26 twitch/caseoh_ rate=6/10s base=6.0 clip=0 top=else,any1,lagging
+12:11:26 kick/adinross rate=0/10s base=0.0 clip=0 top=-
+12:11:27 twitch/kaicenat rate=30/10s base=30.9 clip=3 top=icant,sadge,peak
+12:11:27 twitch/xqc rate=21/10s base=20.0 clip=1 top=true,sheesh,pepelaugh
+12:11:27 twitch/jynxzi rate=10/10s base=11.9 clip=0 top=cooked,stream,said
+12:11:27 twitch/caseoh_ rate=6/10s base=6.0 clip=0 top=said,xdd,monkas
+12:11:27 kick/adinross rate=0/10s base=0.0 clip=0 top=-
+12:11:28 twitch/kaicenat rate=31/10s base=30.9 clip=3 top=icant,sadge,pogu
+12:11:28 twitch/xqc rate=22/10s base=20.0 clip=1 top=true,chat,pogu
+12:11:28 twitch/jynxzi rate=9/10s base=11.8 clip=0 top=cooked,stream,said
+12:11:28 twitch/caseoh_ rate=6/10s base=6.0 clip=0 top=xdd,monkas,lmaooo
+12:11:28 kick/adinross rate=0/10s base=0.0 clip=0 top=-
+12:11:29 twitch/kaicenat rate=31/10s base=30.9 clip=4 top=icant,pogu,sadge
+12:11:29 twitch/xqc rate=21/10s base=20.0 clip=1 top=true,chat,pogu
+12:11:29 twitch/jynxzi rate=9/10s base=11.8 clip=0 top=cooked,stream,said
+12:11:29 twitch/caseoh_ rate=6/10s base=6.0 clip=0 top=xdd,monkas,lmaooo
+12:11:29 kick/adinross rate=0/10s base=0.0 clip=0 top=-
+12:11:30 twitch/kaicenat rate=32/10s base=30.9 clip=4 top=icant,sadge,chat
+12:11:30 twitch/xqc rate=23/10s base=20.1 clip=1 top=true,clueless,chat
+12:11:30 twitch/jynxzi rate=10/10s base=11.8 clip=0 top=cooked,stream,copium
+12:11:30 twitch/caseoh_ rate=5/10s base=6.0 clip=0 top=xdd,monkas,peak
+12:11:30 kick/adinross rate=0/10s base=0.0 clip=0 top=-
+12:11:31 twitch/kaicenat rate=32/10s base=30.9 clip=4 top=icant,sadge,copium
+12:11:31 twitch/xqc rate=23/10s base=20.1 clip=2 top=true,clueless,chat
+12:11:31 twitch/jynxzi rate=10/10s base=11.8 clip=0 top=stream,cooked,copium
+12:11:31 twitch/caseoh_ rate=4/10s base=6.0 clip=0 top=xdd,monkas,said
+12:11:31 kick/adinross rate=0/10s base=0.0 clip=0 top=-
+12:11:32 twitch/kaicenat rate=31/10s base=30.9 clip=4 top=icant,sadge,copium
+12:11:32 twitch/xqc rate=21/10s base=20.1 clip=2 top=true,chat,pogu
+12:11:32 twitch/jynxzi rate=10/10s base=11.8 clip=0 top=stream,copium,clueless
+12:11:32 twitch/caseoh_ rate=5/10s base=6.0 clip=0 top=real,xdd,monkas
+12:11:32 kick/adinross rate=0/10s base=0.0 clip=0 top=-
+12:11:33 INFO watch.replay: recorded 293 messages to /home/user/cutchain/watch/data/chat.log
+12:11:33 INFO watch: bye (0 moment(s) this session)
+
+--- GET /api/live (captured at t+45s)
+{"now": "2026-09-06T12:11:33.521Z", "channels": [{"key": "kick/adinross", "platform": "kick", "channel": "adinross", "rate": 0, "baseline": 0.0, "clip_pressure": 0, "top_words": [], "last_message_ts": null, "msgs_total": 0, "threshold": 12.0, "warmed_up": true, "cooldown_left_s": 0.0, "moments": 0, "updated_ts": "2026-09-06T12:11:32.855Z"}, {"key": "twitch/caseoh_", "platform": "twitch", "channel": "caseoh_", "rate": 5, "baseline": 5.96, "clip_pressure": 0, "top_words": ["real", "xdd", "monkas", "said", "pogu"], "last_message_ts": "2026-09-06T12:11:32.535Z", "msgs_total": 24, "threshold": 17.88, "warmed_up": true, "cooldown_left_s": 0.0, "moments": 0, "updated_ts": "2026-09-06T12:11:32.855Z"}, {"key": "twitch/jynxzi", "platform": "twitch", "channel": "jynxzi", "rate": 10, "baseline": 11.82, "clip_pressure": 0, "top_words": ["stream", "copium", "clueless", "sheesh", "monkas"], "last_message_ts": "2026-09-06T12:11:32.535Z", "msgs_total": 48, "threshold": 35.45, "warmed_up": true, "cooldown_left_s": 0.0, "moments": 0, "updated_ts": "2026-09-06T12:11:32.855Z"}, {"key": "twitch/kaicenat", "platform": "twitch", "channel": "kaicenat", "rate": 31, "baseline": 30.88, "clip_pressure": 4, "top_words": ["icant", "sadge", "copium", "pogu", "lulw"], "last_message_ts": "2026-09-06T12:11:32.535Z", "msgs_total": 132, "threshold": 92.65, "warmed_up": true, "cooldown_left_s": 0.0, "moments": 0, "updated_ts": "2026-09-06T12:11:32.855Z"}, {"key": "twitch/xqc", "platform": "twitch", "channel": "xqc", "rate": 21, "baseline": 20.07, "clip_pressure": 2, "top_words": ["true", "chat", "pogu", "peak", "lets"], "last_message_ts": "2026-09-06T12:11:32.535Z", "msgs_total": 89, "threshold": 60.2, "warmed_up": true, "cooldown_left_s": 0.0, "moments": 0, "updated_ts": "2026-09-06T12:11:32.855Z"}]}
+--- GET /api/health
+{"status": "ok", "now": "2026-09-06T12:11:33.531Z", "uptime_s": 44.8, "channels": 5, "moments": 0, "version": "0.1.0", "mode": "live", "clips_enabled": false, "twitch_channels": ["kaicenat", "xqc", "jynxzi", "caseoh_"], "kick_channels": ["adinross"], "kick_status": "unavailable", "thresholds": {"min_rate": 12, "spike_factor": 3.0, "clip_threshold": 5, "cooldown_s": 120, "warmup_s": 30, "rate_window_s": 10, "hot_window_s": 30, "baseline_tau_s": 300, "peak_track_s": 10.0, "top_n": 5, "sample_n": 5}}
+--- recorded 293 messages to watch/data/chat.log

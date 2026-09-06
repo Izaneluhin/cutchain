@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>cutchain board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{--bg:#0b0b10;--bg2:#101018;--panel:#07070b;--line:#1e1e2a;--line2:#2a2a3a;--ink:#f2f0f7;--ink2:#a9a6b8;--ink3:#6d6a7c;--purple:#9146ff;--purple2:#b98cff;--green:#53fc18;--amber:#ff9900;
+    --display:'Poppins',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,Menlo,monospace}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--mono);font-size:13px;line-height:1.5;
+    background-image:linear-gradient(rgba(70,70,95,.16) 1px,transparent 1px),linear-gradient(90deg,rgba(70,70,95,.16) 1px,transparent 1px);background-size:48px 48px}
+  .wrap{max-width:1240px;margin:0 auto;padding:22px}
+  header{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+  .brand{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:-.02em;display:flex;align-items:center;gap:10px}
+  .brand i{width:14px;height:14px;background:var(--green);border-radius:2px;box-shadow:0 0 18px rgba(83,252,24,.6)}
+  .brand small{font-family:var(--mono);font-weight:400;font-size:12px;color:var(--ink3);letter-spacing:.12em;text-transform:uppercase}
+  .status{margin-left:auto;display:flex;align-items:center;gap:10px;color:var(--ink2);font-size:12px}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--amber)}
+  .dot.on{background:var(--green);box-shadow:0 0 12px var(--green);animation:pulse 1.4s infinite}
+  @keyframes pulse{50%{opacity:.35}}
+  .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+  .tile{border:1px solid var(--line2);border-radius:10px;background:var(--bg2);padding:14px 16px}
+  .tile .k{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
+  .tile .v{font-family:var(--display);font-weight:800;font-size:28px;letter-spacing:-.02em;margin-top:2px;font-variant-numeric:tabular-nums}
+  .tile .v.g{color:var(--green)} .tile .v.p{color:var(--purple2)}
+  .tile .s{font-size:11px;color:var(--ink2)}
+  .grid{display:grid;grid-template-columns:1fr 1.2fr;gap:12px}
+  .panel{border:1px solid var(--line2);border-radius:10px;background:var(--panel);overflow:hidden}
+  .panel h2{margin:0;padding:12px 16px;border-bottom:1px solid var(--line);font-size:11px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);display:flex;gap:10px;align-items:center}
+  .panel h2 span{margin-left:auto;color:var(--ink3);letter-spacing:0;text-transform:none}
+  .body{padding:8px 16px 14px}
+  .stream{display:grid;grid-template-columns:150px 1fr 70px;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+  .stream:first-child{border-top:0}
+  .stream .who{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .stream .who small{display:block;color:var(--ink3);font-size:11px}
+  .stream canvas{width:100%;height:34px;display:block}
+  .stream .rate{text-align:right}
+  .stream .rate small{display:block;color:var(--ink3);font-size:11px}
+  .stream.hot .rate{color:var(--green)}
+  .mo{display:grid;grid-template-columns:150px 1fr 82px 96px;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+  .mo.hd{border-top:0;padding-top:4px;color:var(--ink3);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+  .mo .ts{display:flex;flex-direction:column;line-height:1.3}
+  .mo .ts b{font-weight:400;color:var(--ink3);font-size:11px}
+  .mo .w{color:var(--ink2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .mo .r i{font-style:normal;color:var(--green)}
+  .mo .c{text-align:right}
+  .mo .c a{color:var(--purple2);text-decoration:none}
+  .mo .c .none{color:var(--ink3)}
+  .empty{padding:30px 16px;color:var(--ink3);text-align:center}
+  footer{margin-top:18px;color:var(--ink3);font-size:11px;display:flex;gap:18px;flex-wrap:wrap}
+  footer code{color:var(--ink2)}
+  @media (max-width:900px){.grid{grid-template-columns:1fr}.tiles{grid-template-columns:1fr 1fr}.stream{grid-template-columns:120px 1fr 60px}.mo{grid-template-columns:1fr auto;grid-template-rows:auto auto}.mo.hd{display:none}.mo .ts{grid-column:1}.mo .c{grid-column:2;grid-row:1}.mo .w{grid-column:1;grid-row:2}.mo .r{grid-column:2;grid-row:2;text-align:right}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand"><i></i>CUT <small>board</small></div>
+    <div class="status"><span class="dot" id="dot"></span><span id="statusText">connecting to watch…</span></div>
+  </header>
+
+  <div class="tiles">
+    <div class="tile"><div class="k">Streams watched</div><div class="v" id="tChannels">0</div><div class="s" id="tPlatforms">twitch · kick</div></div>
+    <div class="tile"><div class="k">Moments today</div><div class="v g" id="tMoments">0</div><div class="s" id="tLast">no moment yet</div></div>
+    <div class="tile"><div class="k">Hottest chat now</div><div class="v p" id="tHot">–</div><div class="s" id="tHotRate">msgs / 10s</div></div>
+    <div class="tile"><div class="k">Clips cut</div><div class="v" id="tClips">0</div><div class="s" id="tClipNote">needs TWITCH_TOKEN</div></div>
+  </div>
+
+  <div class="grid">
+    <div class="panel">
+      <h2>Chat speed · msgs / 10s vs 5-min baseline <span id="liveAt"></span></h2>
+      <div class="body" id="streams"><div class="empty">no channels yet</div></div>
+    </div>
+    <div class="panel">
+      <h2>Moments <span id="momentsCount"></span></h2>
+      <div class="body" id="moments"><div class="empty">no moments yet</div></div>
+    </div>
+  </div>
+
+  <footer>
+    <span>api: <code id="apiUrl"></code></span>
+    <span>run the watcher: <code>cutchain watch --twitch clavicular,xqc --kick adinross</code></span>
+    <span>demo: <code>cutchain replay</code></span>
+  </footer>
+</div>
+
+<script>
+(function(){
+  var q=new URLSearchParams(location.search);
+  var API=(q.get('api')||'http://localhost:8787').replace(/\/$/,'');
+  document.getElementById('apiUrl').textContent=API;
+  var dot=document.getElementById('dot'),statusText=document.getElementById('statusText');
+  var streamsEl=document.getElementById('streams'),momentsEl=document.getElementById('moments');
+  var rows={};var hist={};var online=false;var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function fmt(n){return (n||0).toLocaleString('en-US');}
+  function hhmmss(iso){try{var d=new Date(iso);return d.toTimeString().slice(0,8);}catch(e){return '';}}
+
+  function row(ch){
+    var key=ch.platform+'/'+ch.channel;
+    if(!rows[key]){
+      var el=document.createElement('div');el.className='stream';
+      el.innerHTML='<div class="who">'+key+'<small></small></div><canvas width="600" height="68"></canvas><div class="rate"><span class="num">0</span><small>base 0.0</small></div>';
+      rows[key]={el:el,cv:el.querySelector('canvas'),rate:el.querySelector('.rate .num'),base:el.querySelector('.rate small'),sub:el.querySelector('.who small')};
+      hist[key]=[];
+      if(streamsEl.querySelector('.empty'))streamsEl.innerHTML='';
+      streamsEl.appendChild(el);
+    }
+    return rows[key];
+  }
+  function draw(key,base){
+    var r=rows[key],c=r.cv.getContext('2d'),W=r.cv.width,H=r.cv.height,h=hist[key];
+    c.clearRect(0,0,W,H);var max=Math.max(24,base*4),bw=W/60;
+    h.forEach(function(v,j){var hh=Math.min(H,v/max*H);var hot=v>=Math.max(12,base*3);c.fillStyle=hot?'#53fc18':'#9146ff';c.globalAlpha=hot?1:.55;c.fillRect(j*bw,H-hh,bw-2,hh);});
+    c.globalAlpha=1;c.strokeStyle='#2a2a3a';c.beginPath();var by=H-Math.min(H,base*3/max*H);c.moveTo(0,by);c.lineTo(W,by);c.stroke();
+  }
+  function renderLive(data){
+    var chans=data.channels||data||[];var hot=null;
+    chans.forEach(function(ch){
+      var key=ch.platform+'/'+ch.channel;var r=row(ch);var rate=+ch.rate||0,base=+ch.baseline||0;
+      hist[key].push(rate);if(hist[key].length>60)hist[key].shift();
+      r.rate.textContent=Math.round(rate);r.base.textContent='base '+base.toFixed(1);
+      r.sub.textContent=(ch.top_words||[]).slice(0,3).join(' · ')||'—';
+      var isHot=rate>=Math.max(12,base*3);r.el.classList.toggle('hot',isHot);
+      if(!hot||rate>hot.rate)hot={key:key,rate:rate};
+      draw(key,base);
+    });
+    document.getElementById('tChannels').textContent=chans.length;
+    var plats={};chans.forEach(function(c){plats[c.platform]=1;});
+    document.getElementById('tPlatforms').textContent=Object.keys(plats).join(' · ')||'twitch · kick';
+    if(hot){document.getElementById('tHot').textContent=hot.key.split('/')[1];document.getElementById('tHotRate').textContent=Math.round(hot.rate)+' msgs / 10s';}
+    document.getElementById('liveAt').textContent=new Date().toTimeString().slice(0,8);
+  }
+  function renderMoments(list){
+    list=list||[];if(!list.length){momentsEl.innerHTML='<div class="empty">no moments yet. when chat spikes, the moment lands here.</div>';return;}
+    var html='<div class="mo hd"><span>Time · stream</span><span>Chat said</span><span>Rate</span><span style="text-align:right">Clip</span></div>';
+    list.slice(0,40).forEach(function(m){
+      var words=(m.top_words||[]).slice(0,3).join(' · ');
+      var clip=m.clip_url?'<a href="'+m.clip_url+'" target="_blank" rel="noopener">open clip</a>':'<span class="none">'+(m.status||'detected')+'</span>';
+      html+='<div class="mo"><span class="ts"><b>'+hhmmss(m.ts)+'</b>'+m.platform+'/'+m.channel+'</span><span class="w">'+words+'</span><span class="r"><i>'+Math.round(m.rate||0)+'</i> vs '+(+m.baseline||0).toFixed(1)+'</span><span class="c">'+clip+'</span></div>';
+    });
+    momentsEl.innerHTML=html;
+    document.getElementById('momentsCount').textContent=list.length+' total';
+    var today=new Date().toDateString();var n=list.filter(function(m){return new Date(m.ts).toDateString()===today;}).length;
+    document.getElementById('tMoments').textContent=n;
+    document.getElementById('tLast').textContent='last '+hhmmss(list[0].ts)+' · '+list[0].platform+'/'+list[0].channel;
+    var clips=list.filter(function(m){return m.clip_url;}).length;
+    document.getElementById('tClips').textContent=clips;
+    document.getElementById('tClipNote').textContent=clips?'via twitch api':'needs TWITCH_TOKEN';
+  }
+  function setStatus(ok,msg){online=ok;dot.className='dot'+(ok?' on':'');statusText.textContent=msg;}
+
+  function tick(){
+    fetch(API+'/api/live?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(d){setStatus(true,'watch connected');renderLive(d);}).catch(function(){setStatus(false,'watch offline · start it with cutchain watch');});
+  }
+  function moments(){
+    fetch(API+'/api/moments?limit=50&t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(d){renderMoments(d.moments||d);}).catch(function(){});
+  }
+  tick();moments();
+  setInterval(tick,reduce?5000:1000);setInterval(moments,5000);
+})();
+</script>
+</body>
+</html>

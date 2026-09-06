@@ -1,0 +1,44 @@
+# Node
+node_modules/
+mint/node_modules/
+npm-debug.log*
+
+# Foundry (lib/ is installed with `forge install foundry-rs/forge-std@v1.9.7 --no-git`)
+contracts/out/
+contracts/cache/
+contracts/lib/
+contracts/broadcast/
+
+# Secrets: only the .env.example files are committed
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+
+# Databases and watcher runtime data (demo_chat.log stays)
+*.db
+watch/data/moments.jsonl
+watch/data/watch.db
+watch/data/chat.log
+
+# Python
+__pycache__/
+*.py[cod]
+.mypy_cache/
+.pytest_cache/
+.venv/
+
+# Editors / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Scratch
+/tmp/
+
+# site: raw screenshot sources and the inlined preview build
+site/img/*.png
+site/fragment.html

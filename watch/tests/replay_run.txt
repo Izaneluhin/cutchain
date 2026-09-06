@@ -1,0 +1,225 @@
+################################################################################
+# cutchain watch -- replay run, 2026-09-06 12:11 UTC
+# Command (from the repo root):
+#   python -m watch --replay data/demo_chat.log --speed 10 --port 8787
+# data/demo_chat.log: 187 synthetic messages, 3 minutes of #clavicular, ~4 msgs/10 s
+# baseline, spike at 2:00 (~40 msgs/10 s). Expected: exactly one moment.
+# Timestamps in the status lines are the log's virtual clock (2026-09-05 20:00 UTC).
+# After the replay the API stays up (no --once) and was queried; output appended.
+################################################################################
+
+12:11:33 INFO watch: watch 0.1.0 | mode=replay /home/user/cutchain/watch/data/demo_chat.log | twitch=clavicular,xqc | kick=adinross | min_rate=12 spike_factor=3.0 clip_threshold=5 cooldown=120s warmup=30s | data=/home/user/cutchain/watch/data | config=/home/user/cutchain/watch/config.yaml
+12:11:33 INFO watch.clip: twitch clip creation disabled: TWITCH_CLIENT_ID/TWITCH_TOKEN not set
+12:11:33 INFO watch.api: api listening on http://0.0.0.0:8787 (GET /api/live, /api/moments, /api/health)
+12:11:33 INFO watch.replay: replay: 187 messages spanning 177s from /home/user/cutchain/watch/data/demo_chat.log at 10.0x
+20:00:03 twitch/clavicular rate=1/10s base=0.0 clip=0 top=- (warming up)
+20:00:04 twitch/clavicular rate=1/10s base=0.0 clip=0 top=- (warming up)
+20:00:05 twitch/clavicular rate=2/10s base=0.0 clip=0 top=icant (warming up)
+20:00:06 twitch/clavicular rate=2/10s base=0.0 clip=0 top=icant (warming up)
+20:00:07 twitch/clavicular rate=3/10s base=0.0 clip=0 top=icant,live,long (warming up)
+20:00:08 twitch/clavicular rate=3/10s base=0.0 clip=0 top=icant,live,long (warming up)
+20:00:09 twitch/clavicular rate=3/10s base=0.0 clip=0 top=icant,live,long (warming up)
+20:00:10 twitch/clavicular rate=4/10s base=0.0 clip=0 top=icant,live,long (warming up)
+20:00:11 twitch/clavicular rate=4/10s base=0.0 clip=0 top=icant,live,long (warming up)
+20:00:12 twitch/clavicular rate=3/10s base=3.0 clip=0 top=icant,live,long (warming up)
+20:00:13 twitch/clavicular rate=4/10s base=3.0 clip=0 top=icant,live,long (warming up)
+20:00:14 twitch/clavicular rate=4/10s base=3.0 clip=0 top=icant,live,long (warming up)
+20:00:15 twitch/clavicular rate=4/10s base=3.0 clip=0 top=icant,live,long (warming up)
+20:00:16 twitch/clavicular rate=4/10s base=3.0 clip=0 top=icant,live,long (warming up)
+20:00:17 twitch/clavicular rate=4/10s base=3.0 clip=0 top=icant,live,long (warming up)
+20:00:18 twitch/clavicular rate=4/10s base=3.0 clip=0 top=icant,live,long (warming up)
+20:00:19 twitch/clavicular rate=4/10s base=3.0 clip=0 top=icant,live,long (warming up)
+20:00:20 twitch/clavicular rate=4/10s base=3.0 clip=0 top=icant,live,long (warming up)
+20:00:21 twitch/clavicular rate=4/10s base=3.0 clip=0 top=icant,live,long (warming up)
+20:00:22 twitch/clavicular rate=5/10s base=3.0 clip=0 top=icant,live,long (warming up)
+20:00:23 twitch/clavicular rate=4/10s base=3.0 clip=0 top=icant,live,long (warming up)
+20:00:24 twitch/clavicular rate=5/10s base=3.0 clip=0 top=icant,live,long (warming up)
+20:00:25 twitch/clavicular rate=4/10s base=3.0 clip=0 top=icant,live,long (warming up)
+20:00:26 twitch/clavicular rate=4/10s base=3.1 clip=0 top=icant,live,long (warming up)
+20:00:27 twitch/clavicular rate=4/10s base=3.1 clip=0 top=icant,live,long (warming up)
+20:00:28 twitch/clavicular rate=4/10s base=3.1 clip=0 top=icant,live,long (warming up)
+20:00:29 twitch/clavicular rate=5/10s base=3.1 clip=0 top=icant,live,long (warming up)
+20:00:30 twitch/clavicular rate=4/10s base=3.1 clip=0 top=icant,live,long (warming up)
+20:00:31 twitch/clavicular rate=5/10s base=3.1 clip=0 top=icant,live,long (warming up)
+20:00:32 twitch/clavicular rate=4/10s base=3.1 clip=0 top=icant,live,long
+20:00:33 twitch/clavicular rate=5/10s base=3.1 clip=0 top=icant,live,long
+20:00:34 twitch/clavicular rate=4/10s base=3.1 clip=0 top=icant,live,long
+20:00:35 twitch/clavicular rate=4/10s base=3.1 clip=0 top=live,long,pepelaugh
+20:00:36 twitch/clavicular rate=5/10s base=3.1 clip=0 top=live,long,pepelaugh
+20:00:37 twitch/clavicular rate=4/10s base=3.1 clip=0 top=pepelaugh,sheesh,tier
+20:00:38 twitch/clavicular rate=5/10s base=3.1 clip=0 top=pepelaugh,sheesh,tier
+20:00:39 twitch/clavicular rate=4/10s base=3.1 clip=0 top=pepelaugh,sheesh,tier
+20:00:40 twitch/clavicular rate=4/10s base=3.1 clip=0 top=sheesh,tier,list
+20:00:41 twitch/clavicular rate=4/10s base=3.1 clip=0 top=sheesh,tier,list
+20:00:42 twitch/clavicular rate=4/10s base=3.1 clip=0 top=sheesh,tier,list
+20:00:43 twitch/clavicular rate=3/10s base=3.1 clip=0 top=tier,list,sadge
+20:00:44 twitch/clavicular rate=4/10s base=3.1 clip=0 top=tier,list,sadge
+20:00:45 twitch/clavicular rate=4/10s base=3.1 clip=0 top=sadge,energy,locked
+20:00:46 twitch/clavicular rate=4/10s base=3.1 clip=0 top=sadge,energy,locked
+20:00:47 twitch/clavicular rate=4/10s base=3.1 clip=0 top=energy,locked,chat
+20:00:48 twitch/clavicular rate=3/10s base=3.1 clip=0 top=energy,locked,chat
+20:00:49 twitch/clavicular rate=4/10s base=3.1 clip=0 top=energy,locked,chat
+20:00:50 twitch/clavicular rate=4/10s base=3.1 clip=0 top=locked,chat,pogu
+20:00:51 twitch/clavicular rate=4/10s base=3.1 clip=0 top=collab,locked,chat
+20:00:52 twitch/clavicular rate=4/10s base=3.1 clip=0 top=collab,chat,pogu
+20:00:53 twitch/clavicular rate=4/10s base=3.1 clip=0 top=collab,chat,pogu
+20:00:54 twitch/clavicular rate=4/10s base=3.1 clip=0 top=cooked,earlier,collab
+20:00:55 twitch/clavicular rate=4/10s base=3.1 clip=0 top=cooked,earlier,collab
+20:00:56 twitch/clavicular rate=4/10s base=3.2 clip=0 top=cooked,earlier,collab
+20:00:57 twitch/clavicular rate=4/10s base=3.2 clip=0 top=cooked,earlier,collab
+20:00:58 twitch/clavicular rate=4/10s base=3.2 clip=0 top=cooked,earlier,collab
+20:00:59 twitch/clavicular rate=4/10s base=3.2 clip=0 top=collab,bedge,lulw
+20:01:00 twitch/clavicular rate=4/10s base=3.2 clip=0 top=collab,bedge,lulw
+20:01:01 twitch/clavicular rate=4/10s base=3.2 clip=0 top=collab,lulw,raid
+20:01:02 twitch/clavicular rate=4/10s base=3.2 clip=0 top=collab,lulw,raid
+20:01:03 twitch/clavicular rate=4/10s base=3.2 clip=0 top=collab,raid,icant
+20:01:04 twitch/clavicular rate=4/10s base=3.2 clip=0 top=collab,raid,icant
+20:01:05 twitch/clavicular rate=4/10s base=3.2 clip=0 top=collab,raid,icant
+20:01:06 twitch/clavicular rate=4/10s base=3.2 clip=0 top=collab,raid,icant
+20:01:07 twitch/clavicular rate=4/10s base=3.2 clip=0 top=collab,raid,icant
+20:01:08 twitch/clavicular rate=5/10s base=3.2 clip=0 top=collab,peak,icant
+20:01:09 twitch/clavicular rate=4/10s base=3.2 clip=0 top=collab,peak,icant
+20:01:10 twitch/clavicular rate=5/10s base=3.2 clip=0 top=collab,peak,icant
+20:01:11 twitch/clavicular rate=4/10s base=3.2 clip=0 top=peak,icant,water
+20:01:12 twitch/clavicular rate=4/10s base=3.2 clip=0 top=peak,icant,water
+20:01:13 twitch/clavicular rate=5/10s base=3.2 clip=0 top=peak,icant,water
+20:01:14 twitch/clavicular rate=4/10s base=3.2 clip=0 top=peak,icant,water
+20:01:15 twitch/clavicular rate=4/10s base=3.2 clip=0 top=peak,icant,water
+20:01:16 twitch/clavicular rate=4/10s base=3.2 clip=0 top=peak,water,needs
+20:01:17 twitch/clavicular rate=4/10s base=3.2 clip=0 top=peak,water,needs
+20:01:18 twitch/clavicular rate=4/10s base=3.2 clip=0 top=peak,water,needs
+20:01:19 twitch/clavicular rate=4/10s base=3.2 clip=0 top=peak,collab,cooked
+20:01:20 twitch/clavicular rate=4/10s base=3.2 clip=0 top=peak,collab,cooked
+20:01:21 twitch/clavicular rate=4/10s base=3.2 clip=0 top=peak,cooked,earlier
+20:01:22 twitch/clavicular rate=4/10s base=3.2 clip=0 top=peak,cooked,earlier
+20:01:23 twitch/clavicular rate=4/10s base=3.2 clip=0 top=peak,cooked,earlier
+20:01:24 twitch/clavicular rate=4/10s base=3.2 clip=0 top=peak,sheesh,locked
+20:01:25 twitch/clavicular rate=5/10s base=3.2 clip=0 top=peak,sheesh,locked
+20:01:26 twitch/clavicular rate=4/10s base=3.2 clip=0 top=peak,locked,bedge
+20:01:27 twitch/clavicular rate=4/10s base=3.2 clip=0 top=peak,locked,bedge
+20:01:28 twitch/clavicular rate=4/10s base=3.2 clip=0 top=peak,live,long
+20:01:29 twitch/clavicular rate=4/10s base=3.3 clip=0 top=peak,live,long
+20:01:30 twitch/clavicular rate=4/10s base=3.3 clip=0 top=peak,live,long
+20:01:31 twitch/clavicular rate=4/10s base=3.3 clip=0 top=peak,live,long
+20:01:32 twitch/clavicular rate=4/10s base=3.3 clip=0 top=peak,live,long
+20:01:33 twitch/clavicular rate=4/10s base=3.3 clip=0 top=peak,live,long
+20:01:34 twitch/clavicular rate=4/10s base=3.3 clip=0 top=peak,live,long
+20:01:35 twitch/clavicular rate=4/10s base=3.3 clip=0 top=peak,live,long
+20:01:36 twitch/clavicular rate=4/10s base=3.3 clip=0 top=live,long,peak
+20:01:37 twitch/clavicular rate=5/10s base=3.3 clip=0 top=live,long,lets
+20:01:38 twitch/clavicular rate=4/10s base=3.3 clip=0 top=live,long,lets
+20:01:39 twitch/clavicular rate=4/10s base=3.3 clip=0 top=live,long,lets
+20:01:40 twitch/clavicular rate=4/10s base=3.3 clip=0 top=live,long,lets
+20:01:41 twitch/clavicular rate=4/10s base=3.3 clip=0 top=live,long,lets
+20:01:42 twitch/clavicular rate=5/10s base=3.3 clip=0 top=live,long,lets
+20:01:43 twitch/clavicular rate=4/10s base=3.3 clip=0 top=live,long,lets
+20:01:44 twitch/clavicular rate=5/10s base=3.3 clip=0 top=live,long,lets
+20:01:45 twitch/clavicular rate=4/10s base=3.3 clip=0 top=live,long,lets
+20:01:46 twitch/clavicular rate=4/10s base=3.3 clip=0 top=live,long,lets
+20:01:47 twitch/clavicular rate=4/10s base=3.3 clip=0 top=live,long,germany
+20:01:48 twitch/clavicular rate=4/10s base=3.3 clip=0 top=germany,hello,lets
+20:01:49 twitch/clavicular rate=5/10s base=3.3 clip=0 top=germany,hello,lets
+20:01:50 twitch/clavicular rate=4/10s base=3.3 clip=0 top=germany,hello,lets
+20:01:51 twitch/clavicular rate=4/10s base=3.3 clip=0 top=germany,hello,lets
+20:01:52 twitch/clavicular rate=4/10s base=3.3 clip=0 top=germany,hello,lets
+20:01:53 twitch/clavicular rate=4/10s base=3.3 clip=0 top=germany,hello,lets
+20:01:54 twitch/clavicular rate=3/10s base=3.3 clip=0 top=germany,hello,lets
+20:01:55 twitch/clavicular rate=4/10s base=3.3 clip=0 top=lets,gooo,live
+20:01:56 twitch/clavicular rate=4/10s base=3.3 clip=0 top=lets,gooo,live
+20:01:57 twitch/clavicular rate=4/10s base=3.3 clip=0 top=lets,gooo,live
+20:01:58 twitch/clavicular rate=4/10s base=3.3 clip=0 top=lets,gooo,real
+20:01:59 twitch/clavicular rate=3/10s base=3.3 clip=0 top=lets,gooo,real
+20:02:00 twitch/clavicular rate=6/10s base=3.3 clip=0 top=lets,gooo,sheesh
+20:02:01 twitch/clavicular rate=10/10s base=3.4 clip=0 top=lets,gooo,sheesh
+=======================================================================================
+=== MOMENT #1 twitch/clavicular rate 13 vs base 3.4 (clip pressure 2, reason spike) ===
+    20:02:02  top: lets, gooo, clip, sheesh, collab
+    > ivar: he's cooked
+    > emotecheck: AINT NO WAY
+    > dubs_only: clip it clip it
+    > ashton_v: CLIP THAT
+    > xanderr: NAHHH
+=======================================================================================
+20:02:02 twitch/clavicular rate=13/10s base=3.4 clip=2 top=lets,gooo,clip
+12:11:46 INFO watch.clip: clip skipped (no TWITCH_TOKEN) for twitch/clavicular
+=== MOMENT #1 no clip (detected: no TWITCH_TOKEN) ===
+20:02:03 twitch/clavicular rate=17/10s base=3.4 clip=4 top=clip,lets,gooo (cooldown 119s)
+20:02:04 twitch/clavicular rate=21/10s base=3.5 clip=5 top=clip,lulw,lets (cooldown 118s)
+20:02:05 twitch/clavicular rate=24/10s base=3.6 clip=5 top=clip,lulw,nahhh (cooldown 117s)
+20:02:06 twitch/clavicular rate=28/10s base=3.6 clip=5 top=clip,lulw,loool (cooldown 116s)
+20:02:07 twitch/clavicular rate=31/10s base=3.7 clip=5 top=clip,lulw,kekw (cooldown 115s)
+20:02:08 twitch/clavicular rate=35/10s base=3.8 clip=7 top=clip,lulw,clipper (cooldown 114s)
+20:02:09 twitch/clavicular rate=39/10s base=4.0 clip=9 top=clip,clipper,lulw (cooldown 113s)
+20:02:10 twitch/clavicular rate=40/10s base=4.1 clip=11 top=clip,clipper,lulw (cooldown 112s)
+20:02:11 twitch/clavicular rate=40/10s base=4.2 clip=12 top=clip,clipper,lulw (cooldown 111s)
+20:02:12 twitch/clavicular rate=41/10s base=4.3 clip=12 top=clip,clipper,lulw (cooldown 110s)
+=== MOMENT #1 twitch/clavicular saved: peak rate 40/10s vs base 3.4, clip pressure 12, top: clip, clipper, lulw, kekw, loool | clip: none [detected] ===
+20:02:13 twitch/clavicular rate=40/10s base=4.4 clip=12 top=clip,cooked,clipper (cooldown 109s)
+20:02:14 twitch/clavicular rate=40/10s base=4.6 clip=12 top=clip,cooked,clipper (cooldown 108s)
+20:02:15 twitch/clavicular rate=40/10s base=4.7 clip=14 top=clip,cooked,clipper (cooldown 107s)
+20:02:16 twitch/clavicular rate=40/10s base=4.8 clip=14 top=clip,cooked,clipper (cooldown 106s)
+20:02:17 twitch/clavicular rate=41/10s base=4.9 clip=15 top=clip,cooked,clipper (cooldown 105s)
+20:02:18 twitch/clavicular rate=40/10s base=5.0 clip=15 top=clip,cooked,clipper (cooldown 104s)
+20:02:19 twitch/clavicular rate=40/10s base=5.1 clip=15 top=clip,cooked,clipper (cooldown 103s)
+20:02:20 twitch/clavicular rate=41/10s base=5.3 clip=15 top=clip,cooked,clipper (cooldown 102s)
+20:02:21 twitch/clavicular rate=40/10s base=5.4 clip=15 top=clip,cooked,clipper (cooldown 101s)
+20:02:22 twitch/clavicular rate=39/10s base=5.5 clip=15 top=clip,cooked,clipper (cooldown 100s)
+20:02:23 twitch/clavicular rate=41/10s base=5.6 clip=17 top=clip,cooked,lulw (cooldown 99s)
+20:02:24 twitch/clavicular rate=40/10s base=5.7 clip=17 top=clip,cooked,lulw (cooldown 98s)
+20:02:25 twitch/clavicular rate=41/10s base=5.8 clip=17 top=clip,cooked,lulw (cooldown 97s)
+20:02:26 twitch/clavicular rate=41/10s base=6.0 clip=18 top=clip,cooked,lulw (cooldown 96s)
+20:02:27 twitch/clavicular rate=39/10s base=6.1 clip=18 top=clip,cooked,nahhh (cooldown 95s)
+20:02:28 twitch/clavicular rate=40/10s base=6.2 clip=18 top=clip,cooked,nahhh (cooldown 94s)
+20:02:29 twitch/clavicular rate=40/10s base=6.3 clip=19 top=clip,cooked,nahhh (cooldown 93s)
+20:02:30 twitch/clavicular rate=36/10s base=6.4 clip=20 top=clip,cooked,nahhh (cooldown 92s)
+20:02:31 twitch/clavicular rate=33/10s base=6.5 clip=20 top=clip,cooked,clipper (cooldown 91s)
+20:02:32 twitch/clavicular rate=30/10s base=6.6 clip=18 top=clip,cooked,clipper (cooldown 90s)
+20:02:33 twitch/clavicular rate=26/10s base=6.6 clip=16 top=clip,cooked,clipper (cooldown 89s)
+20:02:34 twitch/clavicular rate=23/10s base=6.7 clip=15 top=clip,cooked,poggers (cooldown 88s)
+20:02:35 twitch/clavicular rate=19/10s base=6.7 clip=15 top=clip,cooked,poggers (cooldown 87s)
+20:02:36 twitch/clavicular rate=15/10s base=6.7 clip=15 top=clip,cooked,poggers (cooldown 86s)
+20:02:37 twitch/clavicular rate=13/10s base=6.8 clip=16 top=clip,cooked,poggers (cooldown 85s)
+20:02:38 twitch/clavicular rate=10/10s base=6.8 clip=14 top=clip,cooked,poggers (cooldown 84s)
+20:02:39 twitch/clavicular rate=6/10s base=6.8 clip=12 top=clip,cooked,poggers (cooldown 83s)
+20:02:40 twitch/clavicular rate=6/10s base=6.8 clip=10 top=clip,cooked,poggers (cooldown 82s)
+20:02:41 twitch/clavicular rate=7/10s base=6.8 clip=9 top=cooked,clip,fight (cooldown 81s)
+20:02:42 twitch/clavicular rate=7/10s base=6.8 clip=9 top=clip,cooked,fight (cooldown 80s)
+20:02:43 twitch/clavicular rate=6/10s base=6.8 clip=9 top=clip,cooked,omegalul (cooldown 79s)
+20:02:44 twitch/clavicular rate=7/10s base=6.8 clip=9 top=clip,cooked,omegalul (cooldown 78s)
+20:02:45 twitch/clavicular rate=6/10s base=6.8 clip=7 top=clip,cooked,omegalul (cooldown 77s)
+20:02:46 twitch/clavicular rate=7/10s base=6.8 clip=7 top=clip,cooked,omegalul (cooldown 76s)
+20:02:47 twitch/clavicular rate=7/10s base=6.8 clip=6 top=clip,cooked,ratio (cooldown 75s)
+20:02:48 twitch/clavicular rate=6/10s base=6.8 clip=6 top=clip,cooked,omegalul (cooldown 74s)
+20:02:49 twitch/clavicular rate=7/10s base=6.8 clip=6 top=clip,cooked,omegalul (cooldown 73s)
+20:02:50 twitch/clavicular rate=7/10s base=6.8 clip=6 top=clip,cooked,minute (cooldown 72s)
+20:02:51 twitch/clavicular rate=6/10s base=6.8 clip=6 top=clip,cooked,minute (cooldown 71s)
+20:02:52 twitch/clavicular rate=6/10s base=6.8 clip=6 top=clip,minute,needs (cooldown 70s)
+20:02:53 twitch/clavicular rate=7/10s base=6.8 clip=4 top=clip,minute,needs (cooldown 69s)
+20:02:54 twitch/clavicular rate=6/10s base=6.8 clip=4 top=clip,minute,needs (cooldown 68s)
+20:02:55 twitch/clavicular rate=7/10s base=6.8 clip=4 top=clip,minute,needs (cooldown 67s)
+20:02:56 twitch/clavicular rate=7/10s base=6.8 clip=3 top=clip,minute,needs (cooldown 66s)
+20:02:57 twitch/clavicular rate=6/10s base=6.8 clip=3 top=clip,minute,needs (cooldown 65s)
+20:02:58 twitch/clavicular rate=7/10s base=6.8 clip=3 top=clip,minute,needs (cooldown 64s)
+20:02:59 twitch/clavicular rate=7/10s base=6.8 clip=2 top=minute,needs,clip (cooldown 63s)
+20:03:00 twitch/clavicular rate=6/10s base=6.8 clip=1 top=minute,needs,happened (cooldown 62s)
+20:03:01 twitch/clavicular rate=6/10s base=6.8 clip=1 top=minute,needs,happened (cooldown 61s)
+20:03:02 twitch/clavicular rate=5/10s base=6.8 clip=1 top=happened,highlights,goes (cooldown 60s)
+20:03:03 twitch/clavicular rate=4/10s base=6.7 clip=1 top=highlights,goes,minute (cooldown 59s)
+20:03:04 twitch/clavicular rate=4/10s base=6.7 clip=1 top=highlights,goes,minute (cooldown 58s)
+20:03:05 twitch/clavicular rate=3/10s base=6.7 clip=1 top=minute,needs,unreal (cooldown 57s)
+20:03:06 twitch/clavicular rate=2/10s base=6.7 clip=1 top=minute,needs,unreal (cooldown 56s)
+20:03:07 twitch/clavicular rate=2/10s base=6.7 clip=0 top=minute,needs,unreal (cooldown 55s)
+20:03:08 twitch/clavicular rate=1/10s base=6.7 clip=0 top=minute,needs,unreal (cooldown 54s)
+20:03:09 twitch/clavicular rate=0/10s base=6.7 clip=0 top=minute,needs,unreal (cooldown 53s)
+20:03:10 twitch/clavicular rate=0/10s base=6.6 clip=0 top=minute,needs,unreal (cooldown 52s)
+--- replay finished: 187 messages, 1 moment(s) fired, 1 in watch.db ---
+12:11:53 INFO watch: API still serving on port 8787; press Ctrl+C to exit (or use --once)
+12:11:55 INFO watch: bye (1 moment(s) this session)
+
+--- GET /api/moments?limit=50 (captured after replay, API still up)
+{"now": "2026-09-06T12:11:55.620Z", "moments": [{"id": 1, "ts": "2026-09-05T20:02:02.888Z", "platform": "twitch", "channel": "clavicular", "rate": 40, "baseline": 3.39, "clip_pressure": 12, "top_words": ["clip", "clipper", "lulw", "kekw", "loool"], "sample_messages": ["iamgroot: POGGERS", "noahhhh: L", "mewing_mike: LMAOOO", "zoomerboi: CLIP IT", "mogger_7: moment of the year"], "clip_url": null, "status": "detected", "reason": "spike", "clip_id": null, "edit_url": null, "error": null}]}
+--- GET /api/health
+{"status": "ok", "now": "2026-09-06T12:11:55.628Z", "uptime_s": 21.8, "channels": 1, "moments": 1, "version": "0.1.0", "mode": "replay", "clips_enabled": false, "twitch_channels": ["clavicular", "xqc"], "kick_channels": ["adinross"], "kick_status": "disabled", "thresholds": {"min_rate": 12, "spike_factor": 3.0, "clip_threshold": 5, "cooldown_s": 120, "warmup_s": 30, "rate_window_s": 10, "hot_window_s": 30, "baseline_tau_s": 300, "peak_track_s": 10.0, "top_n": 5, "sample_n": 5}}
+--- watch/data/moments.jsonl (1 line(s)):
+{"id": 1, "ts": "2026-09-05T20:02:02.888Z", "platform": "twitch", "channel": "clavicular", "rate": 40, "baseline": 3.39, "clip_pressure": 12, "top_words": ["clip", "clipper", "lulw", "kekw", "loool"], "sample_messages": ["iamgroot: POGGERS", "noahhhh: L", "mewing_mike: LMAOOO", "zoomerboi: CLIP IT", "mogger_7: moment of the year"], "clip_url": null, "status": "detected", "reason": "spike", "clip_id": null, "edit_url": null, "error": null}
+--- sqlite: 1 row(s) in moments

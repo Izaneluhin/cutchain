@@ -1,0 +1,25 @@
+[profile.default]
+src = "src"
+test = "test"
+script = "script"
+out = "out"
+libs = ["lib"]
+solc_version = "0.8.30"
+# Robinhood Chain runs Arbitrum Nitro. Shanghai (PUSH0, no MCOPY/TSTORE) is supported by every
+# Nitro chain since ArbOS 11 and is the conservative choice; bump to "cancun" once the chain's
+# ArbOS version has been confirmed (see deploy.md).
+evm_version = "shanghai"
+optimizer = true
+optimizer_runs = 1_000_000
+via_ir = false
+bytecode_hash = "ipfs"
+# Tests read the Merkle fixtures produced by tooling/build_round.py.
+fs_permissions = [{ access = "read", path = "./test/fixtures" }]
+# Verified sources are easier to read with a fixed formatter config.
+fmt = { line_length = 120, tab_width = 4, bracket_spacing = false, int_types = "long" }
+
+[rpc_endpoints]
+# RPC_URL is read from the environment (see .env.example)
+robinhood = "${RPC_URL}"
+robinhood_public = "https://rpc.mainnet.chain.robinhood.com"
+robinhood_testnet = "https://rpc.testnet.chain.robinhood.com"

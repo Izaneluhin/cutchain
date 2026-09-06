@@ -1,0 +1,29 @@
+{
+  "_status": "UNVERIFIED — the Pons v1 locker (0x736D76699C26D0d966744cAe304C000d471f7F35) has no published source/ABI that could be retrieved from this sandbox. The three functions below are exactly what the verified PonsLaunchFactory source calls through IPonsLaunchLocker (contractsV1/src/interfaces/ILaunchpad.sol). Anything else, in particular the creator claim function, is unknown; claim.ts probes the locker bytecode for candidate selectors instead of assuming one.",
+  "abi": [
+    {
+      "type": "function",
+      "name": "protocolFeeRecipient",
+      "stateMutability": "view",
+      "inputs": [],
+      "outputs": [{ "name": "", "type": "address" }]
+    },
+    {
+      "type": "function",
+      "name": "lockPosition",
+      "stateMutability": "nonpayable",
+      "inputs": [{ "name": "token", "type": "address" }],
+      "outputs": []
+    },
+    {
+      "type": "function",
+      "name": "setFeeRedirect",
+      "stateMutability": "nonpayable",
+      "inputs": [
+        { "name": "token", "type": "address" },
+        { "name": "newFeeWallet", "type": "address" }
+      ],
+      "outputs": []
+    }
+  ]
+}

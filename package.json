@@ -1,0 +1,25 @@
+{
+  "name": "cutchain",
+  "version": "0.1.0",
+  "private": true,
+  "description": "cutchain: clip Twitch and Kick streams, post with the CUT watermark, get paid weekly by views on Robinhood Chain.",
+  "license": "MIT",
+  "bin": {
+    "cutchain": "bin/cutchain.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "watch": "node bin/cutchain.js watch",
+    "replay": "node bin/cutchain.js replay",
+    "board": "node bin/cutchain.js board",
+    "launch": "node bin/cutchain.js launch",
+    "status": "node bin/cutchain.js status",
+    "claim": "node bin/cutchain.js claim",
+    "pool": "node bin/cutchain.js pool",
+    "round": "node bin/cutchain.js round",
+    "doctor": "node bin/cutchain.js doctor",
+    "test": "node bin/cutchain.js test"
+  }
+}

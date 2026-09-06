@@ -1,0 +1,33 @@
+{
+  "name": "cutchain-mint",
+  "version": "0.2.0",
+  "private": true,
+  "description": "cutchain: launch on Pons V2 (Robinhood Chain), create Uniswap V3 side pools against Stock Tokens, claim creator fees from the Fee Escrow, read curve/graduation status.",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "launch": "tsx launch.ts",
+    "pool": "tsx pool.ts",
+    "claim": "tsx claim.ts",
+    "status": "tsx status.ts",
+    "launch:v1": "tsx launch-v1.ts",
+    "claim:v1": "tsx claim-v1.ts",
+    "status:v1": "tsx status-v1.ts",
+    "abis": "tsx scripts/write_abis.ts",
+    "mock": "tsx tests/mock_rpc.ts",
+    "typecheck": "tsc --noEmit",
+    "test:dry": "tsx launch.ts --name CutTest --symbol CUTT --dry-run && tsx pool.ts --token 0x0000000000000000000000000000000000000001 --price 0.001 --dry-run && tsx claim.ts --token 0x0000000000000000000000000000000000000001 --dry-run"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "tsx": "^4.23.13",
+    "typescript": "^7.0.2",
+    "viem": "^2.56.3"
+  },
+  "devDependencies": {
+    "@types/node": "^26.4.1"
+  }
+}

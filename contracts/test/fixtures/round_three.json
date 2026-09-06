@@ -1,0 +1,45 @@
+{
+  "round": 7,
+  "token": null,
+  "total": "100",
+  "totalViews": 60,
+  "recipients": 3,
+  "merkleRoot": "0x1f787501ca295cf99d4f73501fe0e4f10c1a46ed5a7d789f75f5bb9a30c5b7a2",
+  "leafEncoding": "keccak256(bytes.concat(keccak256(abi.encode(uint256 roundId, uint256 index, address account, uint256 amount))))",
+  "pairHashing": "keccak256(min(a,b) \u2016 max(a,b)); odd node carried up unchanged",
+  "claims": [
+    {
+      "index": 0,
+      "account": "0x0000000000000000000000000000000000000001",
+      "handle": "@a",
+      "views": 10,
+      "amount": "16",
+      "proof": [
+        "0xc49fa74c771a49e2f7f69f524fe49c0ca3d027ec247df1b01de073d22a366435",
+        "0x2e49a4743f708ad4ace6589bf12dac3b558914ae44f3959a7a54b124e1d6efaa"
+      ]
+    },
+    {
+      "index": 1,
+      "account": "0x0000000000000000000000000000000000000002",
+      "handle": "@b",
+      "views": 20,
+      "amount": "33",
+      "proof": [
+        "0xd86b52c511a984b86e99ed886990405f0939209ff6ffb584f8e39b73df851770",
+        "0x2e49a4743f708ad4ace6589bf12dac3b558914ae44f3959a7a54b124e1d6efaa"
+      ]
+    },
+    {
+      "index": 2,
+      "account": "0x0000000000000000000000000000000000000003",
+      "handle": "@c",
+      "views": 30,
+      "amount": "51",
+      "proof": [
+        "0xef0ec27efbad63a1806986b87e6a368851e326b55734e962d7716969673b7e33"
+      ]
+    }
+  ],
+  "excluded": []
+}

@@ -1,0 +1,83 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  watch:
+    name: watch (python 3.11)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: watch/requirements.txt
+      - run: pip install -r watch/requirements.txt
+      - run: python -m watch.tests.test_watch
+      # The replay is deterministic and offline: it must fire exactly one moment.
+      - run: python -m watch --replay data/demo_chat.log --speed 0 --once --status-every 60 --data-dir /tmp/watch-ci --port 8787
+
+  contracts:
+    name: contracts (foundry)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: contracts
+    steps:
+      - uses: actions/checkout@v4
+      - uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: stable
+      # lib/ is gitignored; forge-std is pinned to the version the tests were written against.
+      - run: forge install foundry-rs/forge-std@v1.9.7 --no-git
+      - run: forge --version
+      - run: forge build --sizes
+      - run: forge test -vv
+
+  mint:
+    name: mint (typecheck + dry runs)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mint
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          # mint/package.json declares engines.node >=22.
+          node-version: 22
+          cache: npm
+          cache-dependency-path: mint/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      # test:dry does not need the network: with an unreachable RPC every script prints
+      # calldata only and exits 0. An unroutable RPC_URL keeps CI offline and fast.
+      - run: npm run test:dry
+        env:
+          RPC_URL: http://127.0.0.1:9
+
+  cli:
+    name: cutchain cli
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: node bin/cutchain.js help
+      - run: node bin/cutchain.js round --help
+      - run: node bin/cutchain.js round contracts/tooling/views.example.csv 202637 --total 5e21 --token 0x000000000000000000000000000000000000BbBB --out /tmp/round_ci.json --quiet
+      - run: python3 -c "import json;a=json.load(open('/tmp/round_ci.json'));b=json.load(open('rounds/round_example.json'));assert a==b, 'round output differs from rounds/round_example.json'"
+      # doctor never fails the job; it prints OK/MISSING per line (the RPC probe may be MISSING on a runner).
+      - run: node bin/cutchain.js doctor
