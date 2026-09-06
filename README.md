@@ -2,7 +2,7 @@
   <img src="./assets/avatar.jpg" width="128" alt="cutchain — pixel scissors">
 </p>
 
-<img src="./assets/banner.png" alt="CUT — Clip. Post. Get paid. — 8-bit banner on Robinhood Chain" width="100%">
+<img src="./assets/banner.png?v=8bit" alt="CUT — Clip. Post. Get paid. — 8-bit banner on Robinhood Chain" width="100%">
 
 <p align="center">
   <a href="https://cutchain.live">cutchain.live</a> ·
