@@ -63,7 +63,7 @@ with ETH on Robinhood Chain, and both stay in `.env` files that are gitignored.
 |---|---|---|
 | `doctor` | Checks toolchain, dependencies, env files and probes the RPC | nothing |
 | `watch --twitch a,b --kick c` | Reads chat, measures speed, logs moments, cuts clips | `TWITCH_TOKEN` only for clips |
-| `replay` | Replays `watch/data/demo_chat.log` through the same detector | nothing |
+| `replay` | Replays `watch/data/demo_chat.log` through the same detector, from a clean store | nothing |
 | `board [--port 8788]` | Serves the live board for the watcher API | nothing |
 | `launch --name --symbol [--creator-tax-bps] [--buybacks] [--dev-buy-eth] [--dry-run]` | Launches the token on Pons v2 | `PRIVATE_KEY` unless `--dry-run` |
 | `status --token 0x…` | Curve progress, price, graduation, accrued fees | nothing |
@@ -91,8 +91,8 @@ serves `GET /api/live`, `GET /api/moments?limit=50` and `GET /api/health`.
 
 ```sh
 cutchain watch --twitch clavicular,xqc --kick adinross --port 8787
-cutchain watch --twitch kaicenat --record watch/data/chat.log     # record a real night
-cutchain watch --replay watch/data/chat.log --speed 5              # replay it, same detector
+cutchain watch --twitch kaicenat --record data/chat.log     # record a real night
+cutchain watch --replay data/chat.log --speed 5              # replay it, same detector
 ```
 
 Thresholds live in `watch/config.yaml`. Details, API shapes and the Kick caveats are in

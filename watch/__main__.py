@@ -12,7 +12,7 @@ from dataclasses import asdict
 from typing import Any
 
 from . import __version__
-from .api import build_app, start_api
+from .api import PortInUse, build_app, start_api
 from .clip import Clipper, clipper_from_env
 from .config import Settings, build_settings, load_dotenv
 from .console import fmt_clip_result, fmt_final, fmt_moment, fmt_status
@@ -43,7 +43,7 @@ class Watcher:
 
     def __init__(self, settings: Settings) -> None:
         self.settings = settings
-        self.store = MomentStore(settings.data_dir)
+        self.store = MomentStore(settings.data_dir, fresh=settings.fresh)
         self.detector = Detector(settings.thresholds, next_id=self.store.next_id)
         self.clipper: Clipper = clipper_from_env(os.environ)
         self.recorder = Recorder(settings.record) if settings.record else None
@@ -175,6 +175,7 @@ class Watcher:
         s = self.settings
         stop = asyncio.Event()
         loop = asyncio.get_running_loop()
+        loop.set_exception_handler(_quiet_transport_errors)
         for sig in (signal.SIGINT, signal.SIGTERM):
             try:
                 loop.add_signal_handler(sig, stop.set)
@@ -214,6 +215,22 @@ def describe(settings: Settings) -> str:
     return " | ".join(parts)
 
 
+
+def _quiet_transport_errors(loop: "asyncio.AbstractEventLoop", context: dict) -> None:
+    """Keep one known-harmless asyncio callback error out of the terminal.
+
+    When a proxy rejects the websocket CONNECT, ``websockets`` touches a
+    response that never arrived inside ``connection_lost`` and raises
+    ``AttributeError: 'NoneType' object has no attribute 'status_code'``.
+    The reconnect loop already handles the failure, so the traceback is noise.
+    """
+    exc = context.get("exception")
+    if isinstance(exc, AttributeError) and "status_code" in str(exc):
+        log.debug("suppressed transport error: %s", context.get("message"))
+        return
+    loop.default_exception_handler(context)
+
+
 def main(argv: list[str] | None = None) -> int:
     load_dotenv()
     settings = build_settings(argv)
@@ -224,6 +241,9 @@ def main(argv: list[str] | None = None) -> int:
     log.info(describe(settings))
     try:
         asyncio.run(Watcher(settings).run())
+    except PortInUse as exc:
+        log.error("%s", exc)
+        return 3
     except KeyboardInterrupt:
         pass
     return 0

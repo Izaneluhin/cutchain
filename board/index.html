@@ -64,7 +64,7 @@
 
   <div class="tiles">
     <div class="tile"><div class="k">Streams watched</div><div class="v" id="tChannels">0</div><div class="s" id="tPlatforms">twitch · kick</div></div>
-    <div class="tile"><div class="k">Moments today</div><div class="v g" id="tMoments">0</div><div class="s" id="tLast">no moment yet</div></div>
+    <div class="tile"><div class="k">Moments</div><div class="v g" id="tMoments">0</div><div class="s" id="tLast">no moment yet</div></div>
     <div class="tile"><div class="k">Hottest chat now</div><div class="v p" id="tHot">–</div><div class="s" id="tHotRate">msgs / 10s</div></div>
     <div class="tile"><div class="k">Clips cut</div><div class="v" id="tClips">0</div><div class="s" id="tClipNote">needs TWITCH_TOKEN</div></div>
   </div>
@@ -144,8 +144,11 @@
     });
     momentsEl.innerHTML=html;
     document.getElementById('momentsCount').textContent=list.length+' total';
-    var today=new Date().toDateString();var n=list.filter(function(m){return new Date(m.ts).toDateString()===today;}).length;
-    document.getElementById('tMoments').textContent=n;
+    document.getElementById('tMoments').textContent=list.length;
+    var today=new Date().toDateString();
+    var n=list.filter(function(m){return new Date(m.ts).toDateString()===today;}).length;
+    var sub=document.getElementById('tMoments').parentNode.querySelector('.s');
+    if(sub&&n!==list.length){sub.setAttribute('data-today',n);}
     document.getElementById('tLast').textContent='last '+hhmmss(list[0].ts)+' · '+list[0].platform+'/'+list[0].channel;
     var clips=list.filter(function(m){return m.clip_url;}).length;
     document.getElementById('tClips').textContent=clips;

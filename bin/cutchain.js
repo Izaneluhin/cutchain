@@ -135,7 +135,8 @@ function cmdWatch(args) {
 }
 
 function cmdReplay(args) {
-  return cmdWatch(['--replay', 'data/demo_chat.log', '--speed', '10', ...args]);
+  // --fresh so a repeated demo shows one moment, not a pile from earlier runs
+  return cmdWatch(['--replay', 'data/demo_chat.log', '--speed', '10', '--fresh', ...args]);
 }
 
 // ---------------------------------------------------------------------------

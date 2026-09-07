@@ -51,6 +51,7 @@ are written, the recorder is flushed, the API and SQLite handle are closed.
 | `--twitch a,b` / `--kick slug[,slug:chatroom_id]` | channels to watch |
 | `--port 8787`, `--host 0.0.0.0` | HTTP API bind |
 | `--record path` | append every message as JSON to `path` |
+| `--fresh` | wipe `moments.jsonl` and `watch.db` before starting (used by `cutchain replay`) |
 | `--replay path --speed N` | replay a log; `--speed 0` = as fast as possible; `--once` exits when done (default keeps the API up) |
 | `--min-rate 12 --spike-factor 3 --clip-threshold 5 --cooldown 120 --warmup 30` | detection thresholds |
 | `--status-every N` | print the per-channel status line every N seconds |

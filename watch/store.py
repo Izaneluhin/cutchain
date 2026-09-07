@@ -36,11 +36,17 @@ CREATE INDEX IF NOT EXISTS moments_ts ON moments(ts DESC);
 
 
 class MomentStore:
-    def __init__(self, data_dir: Path) -> None:
+    def __init__(self, data_dir: Path, fresh: bool = False) -> None:
         self.data_dir = data_dir
         self.data_dir.mkdir(parents=True, exist_ok=True)
         self.jsonl_path = data_dir / "moments.jsonl"
         self.db_path = data_dir / "watch.db"
+        if fresh:
+            for stale in (self.jsonl_path, self.db_path):
+                try:
+                    stale.unlink()
+                except FileNotFoundError:
+                    pass
         self._db = sqlite3.connect(self.db_path)
         self._db.row_factory = sqlite3.Row
         self._db.executescript(SCHEMA)

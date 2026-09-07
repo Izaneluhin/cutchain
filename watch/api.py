@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+import errno
 import time
 from typing import Any, Awaitable, Callable
 
@@ -81,10 +82,27 @@ async def health(request: web.Request) -> web.Response:
     return web.json_response(body)
 
 
+class PortInUse(RuntimeError):
+    """Raised instead of a raw OSError so the CLI can print one clean line."""
+
+    def __init__(self, host: str, port: int) -> None:
+        self.host, self.port = host, port
+        super().__init__(
+            f"port {port} is already in use "
+            f"(another watcher is running? try --port {port + 1})"
+        )
+
+
 async def start_api(app: web.Application, host: str, port: int) -> web.AppRunner:
     runner = web.AppRunner(app, access_log=None)
     await runner.setup()
     site = web.TCPSite(runner, host, port)
-    await site.start()
+    try:
+        await site.start()
+    except OSError as exc:
+        await runner.cleanup()
+        if exc.errno in (errno.EADDRINUSE, errno.EACCES):
+            raise PortInUse(host, port) from None
+        raise
     log.info("api listening on http://%s:%d (GET /api/live, /api/moments, /api/health)", host, port)
     return runner

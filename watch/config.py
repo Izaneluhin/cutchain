@@ -36,6 +36,7 @@ class Settings:
     replay: Path | None = None
     speed: float = 1.0
     once: bool = False
+    fresh: bool = False
     status_every: int = 1
     twitch_irc_url: str | None = None
     kick_pusher_url: str | None = None
@@ -122,6 +123,7 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--record", help="append every chat message to this JSONL log")
     p.add_argument("--replay", help="replay a recorded log instead of connecting")
     p.add_argument("--speed", type=float, help="replay speed multiplier (0 = as fast as possible)")
+    p.add_argument("--fresh", action="store_true", help="clear stored moments before starting (demo runs)")
     p.add_argument("--once", action="store_true", help="exit when the replay finishes instead of keeping the API up")
     p.add_argument("--status-every", type=int, help="print channel status every N seconds (default 1)")
     p.add_argument("--min-rate", type=int)
@@ -164,6 +166,7 @@ def build_settings(argv: list[str] | None = None) -> Settings:
         record=resolve_path(args.record or cfg.get("record")),
         replay=resolve_path(args.replay),
         speed=args.speed if args.speed is not None else float(cfg.get("speed", 1.0)),
+        fresh=bool(getattr(args, "fresh", False)),
         once=bool(args.once),
         status_every=max(1, args.status_every or int(cfg.get("status_every", 1))),
         twitch_irc_url=args.twitch_irc_url or twitch_cfg.get("irc_url"),
