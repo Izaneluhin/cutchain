@@ -24,8 +24,9 @@ Twitch belongs to Amazon. Kick belongs to a casino. The moments that do millions
 month belong to nobody, and the people who cut and post them get a notification. cutchain is
 the pipe that turns that into money on Robinhood Chain: a watcher reads Twitch and Kick chat
 and logs the moment when chat spikes, clippers post the clip with the `CUT` watermark, the
-token's trading fees land in an immutable splitter, and every Sunday the clipper share is paid
-out by views through a Merkle round. Local, open, non-custodial, dry run by default.
+token's creator fees are claimed to the creator wallet, and every Sunday the clipper share is
+sent to a Merkle distributor and paid out by views. Every transfer is on the explorer. Local,
+open, non-custodial, dry run by default.
 
 The tool works without owning any token. Nothing here is financial advice and nothing here
 promises a payout: the clipper pool is exactly as big as the week's fees.
@@ -179,10 +180,8 @@ flowchart LR
   C --> X[clip posted on X with the CUT watermark]
   X -->|views| V[views.csv]
   P[Pons v2 trades] -->|fee + creator tax| E[Fee Escrow]
-  E -->|claim| CP[CutPool]
-  CP -->|bps| D[dev]
-  CP -->|bps| TM[team]
-  CP -->|bps| MD[MerkleDistributor]
+  E -->|claim| CW[creator wallet]
+  CW -->|clipper share| MD[MerkleDistributor]
   V -->|build_round| R[round_n.json]
   R -->|setRound| MD
   MD -->|claim with proof| CL[clippers]
@@ -225,7 +224,11 @@ first, with your own key, and it refuses to send if the on-chain contract does n
 it expects.
 
 **Where do the payouts come from?** From the token's trading fees and creator tax, nothing
-else. No fees, no pool. The split is in the contract and cannot be changed after deployment.
+else. No fees, no pool. Pons pays the creator fees to the creator wallet; before every round
+the clipper share is forwarded to the `MerkleDistributor`, so the week's amount sits in a
+contract, visible on the explorer, before anybody claims. `CutPool` in `contracts/` is the
+trustless alternative: point the token's fee recipient at it and the split stops depending on
+anyone forwarding anything.
 
 **Do I need the token to use the code?** No.
 
